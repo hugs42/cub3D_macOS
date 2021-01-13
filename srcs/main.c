@@ -6,7 +6,7 @@
 /*   By: s72h <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/27 14:26:27 by s72h              #+#    #+#             */
-/*   Updated: 2021/01/13 13:01:41 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/01/13 15:03:01 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,12 +149,14 @@ int		ft_parse_arg(int argc, char **argv, t_data *data)
 int		ft_check_ext(char *str)
 {
 	int		len;
+	int		res;
 	char	*tmp;
 
 	len = 0;
+	res = 1;
 	len = ft_strlen(str);
 	tmp = ft_substr(str, len - 4, len);
-	if (!ft_strncmp(tmp, ".cub", 4))
+	if (ft_strncmp(tmp, ".cub", 4) != 0)
 		return (ERROR);
 	return (SUCCESS);
 }
@@ -169,7 +171,7 @@ int		ft_check_arg(int argc, char **argv)
 		id_error = 1;
 	if (argc > 3)
 		id_error = 2;
-	if (id_error != 0)// || ft_check_ext(argv[1]) == ERROR)
+	if ((id_error != 0) || (ft_check_ext(argv[1]) == ERROR))
 		return (ERROR);
 	return (SUCCESS);
 }
