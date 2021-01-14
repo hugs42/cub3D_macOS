@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: s72h <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/23 13:26:29 by s72h              #+#    #+#             */
-/*   Updated: 2020/05/25 20:18:53 by s72h             ###   ########.fr       */
+/*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
+/*   Updated: 2021/01/14 18:17:25 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@
 # define EAST 1
 # define SOUTH 2
 # define WEST 3
+# define BUFFER_SIZE 4096
 
 # define WIN_W 1200
 # define WIN_H 800
 
 # include "./../libft/libft.h"
-# include "./../get_next_line/get_next_line.h"
+# include "./get_next_line.h"
 # include <mlx.h>
 # include <math.h>
 # include <time.h>
@@ -125,5 +126,9 @@ typedef struct		s_game
 	t_sprite		*sprite;
 	
 }					t_game;
+
+int		ft_check_arg(int argc, char **argv);
+int		ft_check_ext(char *str);
+int		ft_check_char(t_data *data, char *line);
 
 #endif

@@ -3,15 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: s72h <marvin@42.fr>                        +#+  +:+       +#+         #
+#    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2020/03/23 12:17:59 by s72h              #+#    #+#              #
-#    Updated: 2020/05/26 10:31:03 by s72h             ###   ########.fr        #
+#    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
+#    Updated: 2021/01/14 18:15:06 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-LIBS = -lmlx -lm -framework OpenGL -framework Appkit -lm
-#MLX = gcc -I /usr/X11/include -g -L /usr/X11/lib -lX11 -lmlx -lXext <fichier(s) .c>
+LIBS = -lmlx -lm -framework OpenGL -framework Appkit# -lm
 
 DIR_I_LIB = /usr/local/include/
 
@@ -23,7 +22,8 @@ INCLUDE = ./includes/cub3d.h
 
 #CFLAGS = -Wall -Wextra -Werror
 
-SRCS = main.c
+SRCS = main.c /
+		check.c
 
 #SRCS_BONUS = 
 
@@ -41,7 +41,7 @@ $(NAMELIB):
 
 $(NAME): $(NAMELIB) $(OBJS) $(OBJS_BONUS) #$(MLX)
 	@ar -x libft.a
-	@gcc $(CFLAGS) -I $(DIR_I_LIB) -L $(DIR_LIB) -o $(NAME) $(OBJS) $(LIBS)
+	@clang $(CFLAGS) -I $(DIR_I_LIB) -L $(DIR_LIB) -o $(NAME) $(OBJS) $(LIBS)
 
 	@ar rc $(NAME) $(OBJS)
 
@@ -56,7 +56,7 @@ clean:
 fclean: clean
 	$(MAKE) fclean -C ./libft
 	rm -rf $(NAME)
-	rm -rf cub3d.bmp
+#	rm -rf cub3d.bmp
 
 re : fclean all
 

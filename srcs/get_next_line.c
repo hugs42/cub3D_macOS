@@ -6,11 +6,11 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/25 18:44:22 by hugsbord          #+#    #+#             */
-/*   Updated: 2020/03/03 15:22:30 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/01/14 18:02:03 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "./../includes/cub3d.h"
 
 size_t		ft_strlen(const char *s)
 {

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: s72h <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/27 14:26:27 by s72h              #+#    #+#             */
-/*   Updated: 2021/01/13 15:03:01 by hugsbord         ###   ########.fr       */
+/*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
+/*   Updated: 2021/01/14 19:07:04 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
-#include <mlx.h>
 
 int		ft_init_map(t_data *data)
 {
@@ -82,7 +81,6 @@ int		ft_get_res(t_data *data, char *line)
 	int		i;
 
 	i = 0;
-	printf("OK\n");
 	while (line[i])
 	{
 		if (ft_isdigit(line[i]))// || (ft_isspace(line[i])))
@@ -99,6 +97,18 @@ int		ft_get_res(t_data *data, char *line)
 	return (0);
 }
 
+
+int		ft_parse_map(t_data *data, char *line)
+{
+	if (ft_check_char(data, line) == ERROR)
+	{
+		ft_putstr_fd("Error : invalid map\n", 1);
+		return (ERROR);
+	}
+	printf("%s\n", line);
+	return (0);
+}
+
 int		ft_parse_line(t_data *data, char *line)
 {
 	int		len;
@@ -107,22 +117,33 @@ int		ft_parse_line(t_data *data, char *line)
 	len = 0;
 	i = 0;
 	len = ft_strlen(line);
-	if (line[0] == '\n' || line[0] == '\0' || len == 0)
+	if (line[i] == '\n' || line[i] == '\0' || len == 0)
 		return (SUCCESS);
-	else if (line[0] == 'R' && line[1] == ' ')
+	else if (line[i] == 'R' && line[i + 1] == ' ')
 		ft_get_res(data, line);
-	else if (line[0] == 'N' && line[1] == 'O')
+	else if (line[i] == 'N' && line[i + 1] == 'O')
 		data->north = 1;
-	else if (line[0] == 'S' && line[1] == 'O')
+	else if (line[i] == 'S' && line[i + 1] == 'O')
 		data->south = 1;
-	else if (line[0] == 'W' && line[1] == 'E')
+	else if (line[i] == 'W' && line[i + 1] == 'E')
 		data->west = 1;
-	else if (line[0] == 'E' && line[1] == 'A')
+	else if (line[i] == 'E' && line[i + 1] == 'A')
 		data->east = 1;
-	else if (line [0] == 'S' && line[1] == ' ')
+	else if (line [i] == 'S' && line[i + 1] == ' ')
 		data->sprite = 1;
-	else if (line[0] == 'F' && line[1] == ' ')
+	else if (line[i] == 'F' && line[i + 1] == ' ')
 		data->ground = 1;
+	else if (line[i] == ' ' || line[i] == '1')
+	{
+		while (line[i] == ' ')
+			i++;
+		if (line[i] == '1')
+		{
+			if (ft_parse_map(data, line))
+				return (ERROR);
+		}
+	}
+//	printf("%s\n", line);
 	return (SUCCESS);
 }
 
@@ -143,36 +164,6 @@ int		ft_parse_arg(int argc, char **argv, t_data *data)
 		free(line);
 	}
 	close(fd);
-	return (SUCCESS);
-}
-
-int		ft_check_ext(char *str)
-{
-	int		len;
-	int		res;
-	char	*tmp;
-
-	len = 0;
-	res = 1;
-	len = ft_strlen(str);
-	tmp = ft_substr(str, len - 4, len);
-	if (ft_strncmp(tmp, ".cub", 4) != 0)
-		return (ERROR);
-	return (SUCCESS);
-}
-
-int		ft_check_arg(int argc, char **argv)
-{
-	int		id_error;
-	char	*type;
-
-	id_error = 0;
-	if (argc < 2)
-		id_error = 1;
-	if (argc > 3)
-		id_error = 2;
-	if ((id_error != 0) || (ft_check_ext(argv[1]) == ERROR))
-		return (ERROR);
 	return (SUCCESS);
 }
 
