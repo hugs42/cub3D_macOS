@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 18:18:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/25 09:59:29 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/25 13:24:28 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,31 +21,56 @@ int		ft_check_config(t_data *data)
 	return (0);
 }
 
+int		ft_check_first_space(t_data *data)
+{
+	int x;
+	int y;
+
+	x = 0;
+	y = 0;
+	while (x < data->nb_lines)
+	{
+		y = 0;
+		while (data->map[x][y] != '\0')
+		{
+			if (ft_is_not_wall(data->map[x][y]))
+			{
+				data->first_space_x = x;
+				return (SUCCESS);
+			}
+			y++;
+		}
+		x++;
+	}
+	return (ERROR);
+}
+
 int		ft_check_map_size(t_data *data)
 {
 	int x;
 	int y;
+	int z;
 	int count;
 
 	x = 0;
 	y = 0;
 	count = 0;
-	printf("%d lines\n", data->nb_lines);
-	if (data->nb_lines < 3)
-	{
-		printf("Ok");
+	if (data->nb_lines < 2)
 		return (ft_error(SMALL_MAP));
-	}
-	while (x < data->nb_lines)
+//	while (data->map[data->first_space_x][data->first_space_y
+	ft_check_first_space(data);
+	x = data->first_space_x - 1;
+	z = data->first_space_x + 1;
+	while (x <= z)
 	{
 		y = 0;
+		count = 0;
 		while (data->map[x][y] != '\0')
 		{
 			if (!(ft_isspace(data->map[x][y])))
 				count++;
 			y++;
 		}
-//		printf("count %d", count);
 		if (count < 3)
 			return (ft_error(SMALL_MAP));
 		x++;
@@ -149,9 +174,14 @@ int		ft_check_arg(int argc, char **argv)
 
 	if (argc < 2)
 		return (ft_error(TOO_FEW_ARG));
-	if (argc > 2)
-		return (ft_error(TOO_MUCH_ARG));
 	if (ft_check_ext(argv[1]) == ERROR)
 		return (ft_error(BAD_EXTENSION));
+	if (argc == 3)
+	{
+		if ((ft_strncmp(argv[2], "--save", 6) != 0 || ft_strlen(argv[2]) != 6))
+			return  (ft_error(ERR_ARG_SAVE));
+	}
+	if (argc > 3)
+		return (ft_error(TOO_MUCH_ARG));
 	return (SUCCESS);
 }

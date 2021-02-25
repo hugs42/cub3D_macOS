@@ -6,18 +6,11 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/25 11:16:23 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/25 13:26:09 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
-
-int		ft_init_map(t_data *data)
-{
-//	if (!(data->map = malloc(sizeof(t_map))))
-//		return (ERROR);
-	return (0);
-}
 
 int		ft_init_data(t_data *data)
 {
@@ -43,6 +36,7 @@ int		ft_init_data(t_data *data)
 	data->config_done = 0;
 	data->is_player = 0;
 	data->player_dir = 0;
+	data->first_space_x = 0;
 	//	ft_init_sprite();
 //	ft_init_map(data);
 //	ft_init_user();
@@ -58,6 +52,12 @@ int		ft_init_game(t_game *game)
 	return (SUCCESS);
 }
 
+int		ft_is_player(char c)
+{
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		return (1);
+	return (0);
+}
 
 void	ft_fill_spaces(t_data *data)
 {
@@ -76,6 +76,8 @@ void	ft_fill_spaces(t_data *data)
 		{
 			if (ft_isspace(data->map[x][y]))
 				data->map[x][y] = '1';
+			if (ft_is_player(data->map[x][y]))
+				data->map[x][y] = '0';
 			y++;
 		}
 		if (len < data->max_len)
@@ -184,20 +186,14 @@ int		ft_check_border_bottom(t_data *data)
 	int x;
 	int y;
 
-//	printf("%d total\n", data->nb_lines);
 	x = data->nb_lines;
-//	y = ft_strlen(data->map[x]);
 	y = 0;
 	while (ft_isspace(data->map[x][y]))
 		y++;
 	while (data->map[x][y] != '\0')
 	{
-		if (ft_is_not_wall(data->map[x][y]))// || (!(ft_isspace(data->map[x][y]))))
+		if (ft_is_not_wall(data->map[x][y]))
 			return (ft_error(MISSING_WALL));
-		if (ft_isspace(data->map[x][y]))
-		{
-//				ft_check_border_inside(data, x, y);
-		}
 		y++;
 	}
 	return (SUCCESS);
@@ -214,15 +210,9 @@ int		ft_check_border_left(t_data *data, int x, int y, int len)
 			if (data->map[x][y - 2] == '1')
 				break;
 			if (data->map[x][y - 1] != '1')
-			{
-				ft_putstr_fd("map non fermee first ", 1);
-				return (ERROR);
-			}
+				return (ft_error(MISSING_WALL));
 			if (data->map[x - 1][y - 1] != '1')
-			{
-				ft_putstr_fd("map non fermee top ", 1);
-				return (ERROR);
-			}
+				return (ft_error(MISSING_WALL));
 			else
 				break;
 		}
@@ -242,15 +232,9 @@ int		ft_check_border_right(t_data *data, int x, int y)
 			if (data->map[x][y + 2] == '1')
 				break;
 			if (data->map[x][y + 1] != '1')
-			{
-				ft_putstr_fd("map non fermee last ", 1);
-				return (ERROR);
-			}
+				return (ft_error(MISSING_WALL));
 			if (data->map[x - 1][y + 1] != '1')
-			{
-				ft_putstr_fd("map non fermee toplst ", 1);
-				return (ERROR);
-			}
+				return (ft_error(MISSING_WALL));
 			else
 				break;
 		}
@@ -350,9 +334,9 @@ int		ft_parse_map(t_data *data, char *line)
 			}
 		}
 	}
-	if (ft_check_border(data) != SUCCESS)
-		return (ERROR);
 	if (ft_check_map_size(data) != SUCCESS)
+		return (ERROR);
+	if (ft_check_border(data) != SUCCESS)
 		return (ERROR);
 	if (ft_check_wall(data) != SUCCESS)
 		return (ERROR);
@@ -420,8 +404,10 @@ int		ft_parse_arg(int argc, char **argv, t_data *data)
 	t_data		*map_buff;
 
 	ret = 1;
-	if ((fd = open(argv[1], O_RDWR)) < 0)
-		return (ERROR);
+	if ((fd = open(argv[1], O_DIRECTORY) != -1))
+		return (ft_error(DIRECTORY));
+	if ((fd = open(argv[1], O_RDONLY)) < 0)
+		return (ft_error(WRONG_FILE));
 	while ((ret =  get_next_line(fd, &line)) > 0)
 	{
 		if (ft_parse_line(data, line) != SUCCESS)
@@ -437,7 +423,7 @@ int		ft_parse_arg(int argc, char **argv, t_data *data)
 		printf("%s\n", data->map[i]);
 		i++;
 	}
-	printf("\n %d", data->start_map);
+	printf("\n start_map = %d\n", data->start_map);
 	return (SUCCESS);
 }
 

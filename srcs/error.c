@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:26:11 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/25 10:45:20 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/25 12:30:50 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,12 @@ int		ft_error(int error)
 		ft_putstr_fd("Error: too small map ...\n", 1);
 	else if (error == ERR_PLAYER)
 		ft_putstr_fd("Error: wrong number of player in map ...\n", 1);
+	else if (error == ERR_ARG_SAVE)
+		ft_putstr_fd("Error: the third argument is not --save ...\n", 1);
+	else if (error == DIRECTORY)
+		ft_putstr_fd("Error: second argument is a directory ...\n", 1);
+	else if (error == WRONG_FILE)
+		ft_putstr_fd("Error: file is misssing or is incorrect ...\n", 1);
 	ft_putstr_fd("Leaving program\n", 1);
 	return (ERROR);
 }

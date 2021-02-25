@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/25 10:54:31 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/25 13:10:11 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@
 # define MALLOC_ERR -8
 # define SMALL_MAP -9
 # define ERR_PLAYER -10
+# define ERR_ARG_SAVE -11
+# define DIRECTORY -12
+# define WRONG_FILE -13
 # define SUCCESS 1
 # define ERR 0
 
@@ -120,6 +123,8 @@ typedef struct		s_data
 	int				player_dir;
 	int				player_pos_x;
 	int				player_pos_y;
+	int				first_space_x;
+	int				first_space_y;
 	int				x;
 	int				y;
 	int				start_map;
