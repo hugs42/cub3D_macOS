@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 18:18:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/25 13:24:28 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/25 16:40:30 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int		ft_check_map_size(t_data *data)
 	count = 0;
 	if (data->nb_lines < 2)
 		return (ft_error(SMALL_MAP));
-//	while (data->map[data->first_space_x][data->first_space_y
 	ft_check_first_space(data);
 	x = data->first_space_x - 1;
 	z = data->first_space_x + 1;
@@ -152,6 +151,7 @@ int		ft_check_char(t_data *data, char *line)
 	}
 	data->nb_lines++;
 	data->len = len;
+//	printf("nb_lines = %d ", data->nb_lines);
 	return (SUCCESS);
 }
 

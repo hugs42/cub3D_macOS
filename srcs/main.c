@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/25 13:26:09 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/25 19:24:48 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,7 @@ int		ft_init_data(t_data *data)
 	data->is_player = 0;
 	data->player_dir = 0;
 	data->first_space_x = 0;
-	//	ft_init_sprite();
-//	ft_init_map(data);
-//	ft_init_user();
-//	ft_init_sounds();
-return (0);
+	return (0);
 }
 
 int		ft_init_game(t_game *game)
@@ -105,7 +101,7 @@ void	ft_get_player(t_data *data, int x, int y)
 		data->player_dir = WEST;
 	data->player_pos_x = x;
 	data->player_pos_y = y;
-	printf("x=%d y=%d\n", data->player_pos_x, data->player_pos_y);
+	printf("\nx=%d y=%d\n", data->player_pos_x, data->player_pos_y);
 }
 
 int		ft_check_player(t_data *data)
@@ -252,6 +248,7 @@ int		ft_check_border(t_data *data)
 	x = 0;
 	y = 0;
 	len = 0;
+	printf("datanb_lines %d", data->nb_lines);
 	while (x <= data->nb_lines)
 	{
 		y = 0;
@@ -275,22 +272,20 @@ int		ft_check_border(t_data *data)
 
 int		ft_get_map(t_data *data, char *line)
 {
-	static int i = 0;
-	int j;
-	int len;
+	static int x = 0;
+	int y;
 
-	j = 0;
-	len = ft_strlen(line);
-	data->map[i] = NULL;
-	if (!(data->map[i] = (char*)malloc(sizeof(char) * data->max_len + 1)))
+	y = 0;
+	data->map[x] = NULL;
+	if (!(data->map[x] = (char*)malloc(sizeof(char) * data->max_len + 1)))
 		return (ERROR);
-	while (line[j] != '\0')
+	while (line[y] != '\0')
 	{
-		data->map[i][j] = line[j];
-		j++;
+		data->map[x][y] = line[y];
+		y++;
 	}
-	data->map[i][j] = '\0';
-	i++;
+	data->map[x][y] = '\0';
+	x++;
 	return (SUCCESS);
 }
 
@@ -298,9 +293,6 @@ int		ft_parse_info_map(t_data *data, char *line)
 {
 	if (ft_check_char(data, line) == ERROR)
 		return (ft_error(WRONG_CHAR));
-//	if (data->nb_total_lines == data->start_map)
-//		if (ft_check_border_top_bottom(data, line) != SUCCESS)
-//			return (ERROR);
 	if (data->len > data->max_len)
 		data->max_len = data->len;
 	return (SUCCESS);
@@ -315,23 +307,20 @@ int		ft_parse_map(t_data *data, char *line)
 
 	ret = 1;
 	fd = open(line, O_RDONLY);
-	if (!(data->map = (char**)malloc(sizeof(char*) * data->nb_lines)))
+	if (!(data->map = (char**)malloc(sizeof(char*) * data->nb_lines + 1)))
 		return (ft_error(MALLOC_ERR));
 	data->nb_total_lines = 0;
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
-		data->nb_total_lines += 1;
+		data->nb_total_lines++;
 		if (data->nb_total_lines >= data->start_map)
 		{
 			if (ft_check_empty_line(data, line) == ERROR)
 				return (ft_error(EMPTY_LINE));
 			while (ft_isspace(line[i]))
 				i++;
-			if (line[i] == '1' || line[i] == '0')
-			{
-				if (ft_get_map(data, line) != SUCCESS)
-					return (ft_error(MALLOC_ERR));
-			}
+			if (ft_get_map(data, line) != SUCCESS)
+				return (ft_error(MALLOC_ERR));
 		}
 	}
 	if (ft_check_map_size(data) != SUCCESS)
@@ -344,6 +333,7 @@ int		ft_parse_map(t_data *data, char *line)
 		return (ERROR);
 	ft_fill_spaces(data);
 	close(fd);
+	free(data->map);
 	return (SUCCESS);
 }
 
@@ -396,7 +386,7 @@ int		ft_parse_line(t_data *data, char *line)
 }
 
 
-int		ft_parse_arg(int argc, char **argv, t_data *data)
+int		ft_parser(int argc, char **argv, t_data *data)
 {
 	int			fd;
 	int			ret;
@@ -420,10 +410,10 @@ int		ft_parse_arg(int argc, char **argv, t_data *data)
 	int i = 0;
 	while (i <= data->nb_lines)
 	{
-		printf("%s\n", data->map[i]);
+		printf(" %s -%d\n",data->map[i],i);
 		i++;
 	}
-	printf("\n start_map = %d\n", data->start_map);
+//	printf("\n start_map = %d\n", data->start_map);
 	return (SUCCESS);
 }
 
@@ -434,7 +424,7 @@ int		main(int argc, char **argv)
 	if (ft_check_arg(argc, argv) != SUCCESS)
 		return (ERROR);
 	ft_init_game(&game);
-	if (ft_parse_arg(argc, argv, &game.data) != SUCCESS)
+	if (ft_parser(argc, argv, &game.data) != SUCCESS)
 		return (ERROR);
 //	mlx_loop(game);
 	return (0);
