@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/01/14 18:17:25 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/25 10:54:31 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,23 @@
 # define CAM_LEFT 123
 # define CAM_DOWN 125
 # define CAM_UP 126
-# define ERROR_INF -1
+# define ERROR -1
+# define EMPTY_LINE -2
+# define WRONG_CHAR -3
+# define MISSING_WALL -4
+# define TOO_FEW_ARG -5
+# define TOO_MUCH_ARG -6
+# define BAD_EXTENSION -7
+# define MALLOC_ERR -8
+# define SMALL_MAP -9
+# define ERR_PLAYER -10
 # define SUCCESS 1
 # define ERR 0
-# define NORTH 0
-# define EAST 1
-# define SOUTH 2
-# define WEST 3
+
+# define NORTH 33
+# define EAST 34
+# define SOUTH 35
+# define WEST 36
 # define BUFFER_SIZE 4096
 
 # define WIN_W 1200
@@ -73,7 +83,9 @@ typedef struct		s_path
 
 typedef struct		s_map
 {
-	char			**map;
+	char			**map_buff;
+	int				x;
+	int				y;
 	unsigned int	width;
 	unsigned int	height;
 }					t_map;
@@ -92,11 +104,27 @@ typedef struct		s_data
 	unsigned int	screen_h;
 	int				is_width;
 	int				tmp;
+	int				res;
 	int				north;
 	int				south;
 	int				west;
 	int				east;
 	int				sprite;
+	int				ceiling;
+	int				config_done;
+	int				len;
+	int				max_len;
+	int				nb_lines;
+	int				nb_total_lines;
+	int				is_player;
+	int				player_dir;
+	int				player_pos_x;
+	int				player_pos_y;
+	int				x;
+	int				y;
+	int				start_map;
+	char			**map;
+//	t_map			map;
 	char			*path_textures;
 	int				ground;
 }					t_data;
@@ -130,5 +158,13 @@ typedef struct		s_game
 int		ft_check_arg(int argc, char **argv);
 int		ft_check_ext(char *str);
 int		ft_check_char(t_data *data, char *line);
-
+int		ft_check_char_first_line(t_data *data, char *line);
+int		ft_get_res(t_data *data, char *line);
+int		ft_get_nb(int i, char *line, t_data *data);
+int		ft_check_empty_line(t_data *data, char *line);
+int		ft_start_map(t_data *data, char *line);
+int		ft_check_config(t_data *data);
+int		ft_error(int error);
+int		ft_is_not_wall(char c);
+int		ft_check_map_size(t_data *data);
 #endif
