@@ -1,20 +1,16 @@
-R 848 480
+R    8248    480
 NO textures/sky_1.xpm
 SO textures/sky_1.xpm
 WE textures/sky_1.xpm
 EA textures/sky_1.xpm
-S textures/sprite_1.xpm
-SU textures/sprite_2.xpm
-SC textures/sprite_3.xpm
-F 184,113,39
-C 51,198,227
 
-1
+S textures/sprite_1.xpm
+
+F 184,113,39
+C 51,198,207
+C 51,198,207
+
+
 111
-111
-111
-11
-1
-111
-121
+1N1
 111

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/25 21:48:56 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/26 10:36:02 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@
 # define ERR_ARG_SAVE -11
 # define DIRECTORY -12
 # define WRONG_FILE -13
+# define WRONG_CONFIG -14
+# define CONFIG_DOUBLE -15
+# define MISSING_MAP -16
 # define SUCCESS 1
 # define ERR 0
 
@@ -115,6 +118,7 @@ typedef struct		s_data
 	int				sprite;
 	int				ceiling;
 	int				config_done;
+	int				config_double;
 	int				len;
 	int				max_len;
 	int				nb_lines;
@@ -170,6 +174,8 @@ int		ft_get_res(t_data *data, char *line);
 int		ft_get_nb(int i, char *line, t_data *data);
 int		ft_check_empty_line(t_data *data, char *line);
 int		ft_start_map(t_data *data, char *line);
+int		ft_check_config_done(t_data *data);
+int		ft_check_config_double(t_data *data);
 int		ft_check_config(t_data *data);
 int		ft_error(int error);
 int		ft_is_not_wall(char c);

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 09:49:03 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/24 11:59:00 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/26 10:12:36 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int				ft_get_res(t_data *data, char *line)
 	i = 0;
 	while (line[i])
 	{
+		if (ft_isspace(line[i]))
+			i++;
 		if (ft_isdigit(line[i]))// || (ft_isspace(line[i])))
 		{
 			i += ft_get_nb(i, line, data);
