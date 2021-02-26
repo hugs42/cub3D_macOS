@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/25 13:10:11 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/25 21:48:56 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ typedef struct		s_data
 	int				first_space_y;
 	int				x;
 	int				y;
+	int				z;
+	int				fd;
 	int				start_map;
 	char			**map;
 //	t_map			map;

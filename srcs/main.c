@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/25 19:24:48 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/26 09:01:15 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,12 +285,15 @@ int		ft_get_map(t_data *data, char *line)
 		y++;
 	}
 	data->map[x][y] = '\0';
+//	ft_putstr_fd(data->map[x], 1);
+//	printf(" %s -%d\n", data->map[x], x);
 	x++;
 	return (SUCCESS);
 }
 
 int		ft_parse_info_map(t_data *data, char *line)
 {
+//	printf("LOL");
 	if (ft_check_char(data, line) == ERROR)
 		return (ft_error(WRONG_CHAR));
 	if (data->len > data->max_len)
@@ -307,6 +310,8 @@ int		ft_parse_map(t_data *data, char *line)
 
 	ret = 1;
 	fd = open(line, O_RDONLY);
+	printf("%d start_map ", data->start_map);
+	printf("%d nbl ", data->nb_lines);
 	if (!(data->map = (char**)malloc(sizeof(char*) * data->nb_lines + 1)))
 		return (ft_error(MALLOC_ERR));
 	data->nb_total_lines = 0;
@@ -333,23 +338,21 @@ int		ft_parse_map(t_data *data, char *line)
 		return (ERROR);
 	ft_fill_spaces(data);
 	close(fd);
+	i = 0;
+	while (i <= data->nb_lines)
+	{
+		printf(" %s -%d\n", data->map[i], i);
+		i++;
+	}
 	free(data->map);
 	return (SUCCESS);
 }
 
-int		ft_parse_line(t_data *data, char *line)
+int		ft_parse_config(t_data *data,  char *line, int i)
 {
-	int		len;
-	int		i;
-
-	len = 0;
-	i = 0;
-	len = ft_strlen(line);
-	data->nb_total_lines += 1;
-	ft_check_config(data);
-	if (line[i] == '\n' || line[i] == '\0' || len == 0)
-		return (SUCCESS);
-	else if (line[0] == 'R' && line[i + 1] == ' ')
+//	if (line[i] == '\n' || line[i] == '\0' || len == 0)
+//		return (SUCCESS);
+	if (line[0] == 'R' && line[i + 1] == ' ')
 		ft_get_res(data, line);
 	else if (line[0] == 'N' && line[i + 1] == 'O')
 		data->north = 1;
@@ -365,7 +368,40 @@ int		ft_parse_line(t_data *data, char *line)
 		data->ground = 1;
 	else if (line[0] == 'C' && line[i + 1] == ' ')
 		data->ceiling = 1;
-	else if (data->start_map == 0 && data->config_done == 1)
+	return (SUCCESS);
+}
+
+int		ft_parse_line(t_data *data, char *line)
+{
+	int		len;
+	int		i;
+
+	len = 0;
+	i = 0;
+	len = ft_strlen(line);
+	data->nb_total_lines += 1;
+	ft_check_config(data);
+//	printf("LOL");
+	if (line[i] == '\n' || line[i] == '\0' || len == 0)
+		return (SUCCESS);
+	ft_parse_config(data, line, i);
+/*	else if (line[0] == 'R' && line[i + 1] == ' ')
+		ft_get_res(data, line);
+	else if (line[0] == 'N' && line[i + 1] == 'O')
+		data->north = 1;
+	else if (line[0] == 'S' && line[i + 1] == 'O')
+		data->south = 1;
+	else if (line[0] == 'W' && line[i + 1] == 'E')
+		data->west = 1;
+	else if (line[0] == 'E' && line[i + 1] == 'A')
+		data->east = 1;
+	else if (line[0] == 'S' && line[i + 1] == ' ')
+		data->sprite = 1;
+	else if (line[0] == 'F' && line[i + 1] == ' ')
+		data->ground = 1;
+	else if (line[0] == 'C' && line[i + 1] == ' ')
+		data->ceiling = 1;*/
+	if (data->start_map == 0 && data->config_done == 1)
 	{
 		if (ft_check_char_first_line(data, line) == ERROR)
 			return (ERROR);
@@ -385,35 +421,26 @@ int		ft_parse_line(t_data *data, char *line)
 	return (SUCCESS);
 }
 
-
 int		ft_parser(int argc, char **argv, t_data *data)
 {
-	int			fd;
 	int			ret;
 	char		*line;
 	t_data		*map_buff;
 
 	ret = 1;
-	if ((fd = open(argv[1], O_DIRECTORY) != -1))
+	if ((data->fd = open(argv[1], O_DIRECTORY) != -1))
 		return (ft_error(DIRECTORY));
-	if ((fd = open(argv[1], O_RDONLY)) < 0)
+	if ((data->fd = open(argv[1], O_RDONLY)) < 0)
 		return (ft_error(WRONG_FILE));
-	while ((ret =  get_next_line(fd, &line)) > 0)
+	while ((ret = get_next_line(data->fd, &line)) > 0)
 	{
 		if (ft_parse_line(data, line) != SUCCESS)
 			return (ERROR);
 		free(line);
 	}
-	close(fd);
+	close(data->fd);
 	if (ft_parse_map(data, argv[1]) != SUCCESS)
 		return (ERROR);
-	int i = 0;
-	while (i <= data->nb_lines)
-	{
-		printf(" %s -%d\n",data->map[i],i);
-		i++;
-	}
-//	printf("\n start_map = %d\n", data->start_map);
 	return (SUCCESS);
 }
 
