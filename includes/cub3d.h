@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/27 11:28:38 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/27 16:26:05 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@
 typedef struct		s_img
 {
 	void			*img_ptr;
-	int				*data;
 	char			*addr;
 	int				size_l;
 	int				bpp;
@@ -153,12 +152,13 @@ typedef struct		s_sprite
 typedef struct		s_mlx
 {
 	void			*mlx_ptr;
-	void			*win_ptr;
-//	s_img			*img;
+	void			*win;
+//	t_img			*img;
 }					t_mlx;
 
 typedef struct		s_game
 {
+	t_img			img;
 	t_mlx			mlx;
 	t_data			data;
 	t_cam			cam;
@@ -180,4 +180,8 @@ int		ft_check_config(t_data *data);
 int		ft_error(int error);
 int		ft_is_not_wall(char c);
 int		ft_check_map_size(t_data *data);
+int		ft_textures(t_data *data, char *line);
+int		ft_skip_spaces(char *str, int i);
+int		ft_skip_spaces2(t_data *data, int x, int y);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/27 11:35:36 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/27 17:03:39 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,28 @@ int		ft_init_data(t_data *data)
 	return (0);
 }
 
+int		ft_init_img(t_img *img)
+{
+	img->img_ptr = NULL;
+	img->addr = NULL;
+	img->size_l = 0;
+	img->bpp = 0;
+	img->endian = 0;
+	return (0);
+}
+
+int		ft_init_mlx(t_mlx *mlx)
+{
+	mlx->mlx_ptr = NULL;
+	mlx->win = NULL;
+	return (0);
+}
+
 int		ft_init_game(t_game *game)
 {
 	ft_init_data(&game->data);
+	ft_init_img(&game->img);
+	ft_init_mlx(&game->mlx);
 	game->sprite = NULL;
 
 	return (SUCCESS);
@@ -165,8 +184,9 @@ int		ft_check_wall(t_data *data)
 		y = 0;
 		while (data->map[x][y] != '\0')
 		{
-			while (ft_isspace(data->map[x][y]))
-				y++;
+//			while (ft_isspace(data->map[x][y]))
+//				y++;
+			y = ft_skip_spaces2(data, x, y);
 			if (ft_is_not_wall(data->map[x][y]))
 				if (ft_check_neighborhood(data, x, y) != SUCCESS)
 					return (ft_error(MISSING_WALL));
@@ -184,8 +204,9 @@ int		ft_check_border_bottom(t_data *data)
 
 	x = data->nb_lines;
 	y = 0;
-	while (ft_isspace(data->map[x][y]))
-		y++;
+//	while (ft_isspace(data->map[x][y]))
+//		y++;
+	y = ft_skip_spaces2(data, x, y);
 	while (data->map[x][y] != '\0')
 	{
 		if (ft_is_not_wall(data->map[x][y]))
@@ -199,8 +220,9 @@ int		ft_check_border_left(t_data *data, int x, int y, int len)
 {
 	while (y <= len)
 	{
-		while (ft_isspace(data->map[x][y]))
-			y++;
+//		while (ft_isspace(data->map[x][y]))
+//			y++;
+		y = ft_skip_spaces2(data, x, y);
 		if (ft_is_not_wall(data->map[x][y]))
 		{
 			if (data->map[x][y - 2] == '1')
@@ -332,8 +354,9 @@ int		ft_parse_map(t_data *data, char *line)
 		{
 			if (ft_check_empty_line(data, line) == ERROR)
 				return (ft_error(EMPTY_LINE));
-			while (ft_isspace(line[i]))
-				i++;
+			i = ft_skip_spaces(line, i);
+//			while (ft_isspace(line[i]))
+//				i++;
 			if (ft_get_map(data, line) != SUCCESS)
 				return (ft_error(MALLOC_ERR));
 		}
@@ -364,12 +387,17 @@ int		ft_parse_config(t_data *data,  char *line, int i)
 	static int x = 0;
 	x++;
 //	printf("line= %d %s\n", x, line);
-	while (ft_isspace(line[i]))
-		i++;
+//	printf("start_map= %d \n", data->start_map);
+
+//	while (ft_isspace(line[i]))
+//		i++;
 	if (line[i] == 'R' && line[i + 1] == ' ')
 		ft_get_res(data, line);
 	else if (line[i] == 'N' && line[i + 1] == 'O')
+	{
 		data->north += 1;
+//		ft_textures(data, line);
+	}
 	else if (line[i] == 'S' && line[i + 1] == 'O')
 		data->south += 1;
 	else if (line[i] == 'W' && line[i + 1] == 'E')
@@ -382,14 +410,18 @@ int		ft_parse_config(t_data *data,  char *line, int i)
 		data->ground += 1;
 	else if (line[i] == 'C' && line[i + 1] == ' ')
 		data->ceiling += 1;
+/*	else if (line[i] == '1' && line[i + 1] == '1' && line[i + 1] == '1')
+	
+//		data->start_map2 = 1;
+		if ((data->config_done == 0) && (line[i] != ' '))
+			return ft_error(ERR_ARG_SAVE);
+	}*/
 	ft_check_config_double(data);
 	if (data->config_double != 0)
 	{
 //		printf("TOP");
 		return (ft_error(CONFIG_DOUBLE));
 	}
-//	else if (ft_isalnum(line[i]))
-//		return ft_error(MISSING_WALL);
 	return (SUCCESS);
 }
 
@@ -401,15 +433,14 @@ int		ft_parse_line(t_data *data, char *line)
 
 	len = 0;
 	i = 0;
-
+//	printf("start_map= %d \n", data->start_map);
 	len = ft_strlen(line);
 	data->nb_total_lines += 1;
-//	ft_check_config_double(data);
 	ft_check_config_done(data);
-
+	i = ft_skip_spaces(line, i);
 	if (line[i] == '\n' || line[i] == '\0' || len == 0)
 		return (SUCCESS);
-	if (ft_parse_config(data, line, i) != SUCCESS)
+	else if (ft_parse_config(data, line, i) != SUCCESS)
 		return (ERROR);
 	if (data->start_map == 0 && data->config_done == 1)
 	{
@@ -420,8 +451,7 @@ int		ft_parse_line(t_data *data, char *line)
 	}
 	else if (data->start_map != 0 && data->nb_total_lines >= data->start_map)
 	{
-		while (ft_isspace(line[i]))
-			i++;
+		i = ft_skip_spaces(line, i);
 		if (!(ft_isspace(line[i])))
 		{
 			if (ft_parse_info_map(data, line) != SUCCESS)
@@ -435,7 +465,6 @@ int		ft_parser(int argc, char **argv, t_data *data)
 {
 	int			ret;
 	char		*line;
-	t_data		*map_buff;
 
 	ret = 1;
 	if ((data->fd = open(argv[1], O_DIRECTORY) != -1))
@@ -462,6 +491,26 @@ int		ft_parser(int argc, char **argv, t_data *data)
 	return (SUCCESS);
 }
 
+void	ft_mlx_pixel_put(t_img *img, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = img->addr + (y * img->size_l + x * (img->bpp / 8));
+	*(unsigned int*)dst = color;
+}
+
+int		ft_mlx(t_data *data, t_img *img, t_mlx *mlx)
+{
+	mlx->mlx_ptr = mlx_init();
+	mlx->win = (mlx_new_window(mlx->mlx_ptr, data->screen_w, data->screen_h, "cub3D"));
+	img->img_ptr = mlx_new_image(mlx->mlx_ptr, 333, 333);
+	img->addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->size_l, &img->endian);
+	ft_mlx_pixel_put(img, 5, 5, 0x00FF0000);
+	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, img->img_ptr, 0, 0);
+	mlx_loop(mlx->mlx_ptr);
+	return (0);
+}
+
 int		main(int argc, char **argv)
 {
 	t_game		game;
@@ -471,6 +520,7 @@ int		main(int argc, char **argv)
 	ft_init_game(&game);
 	if (ft_parser(argc, argv, &game.data) != SUCCESS)
 		return (ERROR);
-//	mlx_loop(game);
+	ft_mlx(&game.data, &game.img, &game.mlx);
+
 	return (0);
 }

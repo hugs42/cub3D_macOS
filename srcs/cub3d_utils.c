@@ -6,11 +6,26 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 09:49:03 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/26 10:12:36 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/27 14:46:23 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
+
+int			ft_skip_spaces2(t_data  *data, int x, int y)
+{
+	while (ft_isspace(data->map[x][y]))
+		y++;
+	return (y);
+
+}
+
+int			ft_skip_spaces(char *str, int i)
+{
+	while (ft_isspace(str[i]))
+		i++;
+	return (i);
+}
 
 int			ft_is_not_wall(char c)
 {
