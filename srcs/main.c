@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/26 12:56:58 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/27 11:35:36 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int		ft_init_data(t_data *data)
 	data->is_player = 0;
 	data->player_dir = 0;
 	data->first_space_x = 0;
+	data->is_space = 0;
 	return (0);
 }
 
@@ -288,10 +289,25 @@ int		ft_get_map(t_data *data, char *line)
 	return (SUCCESS);
 }
 
+int		ft_check_space(t_data *data, char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i] != '\0')
+	{
+		if (ft_is_not_wall(line[i]))
+			data->is_space = 1;
+		i++;
+	}
+	return (0);
+}
+
 int		ft_parse_info_map(t_data *data, char *line)
 {
 	if (ft_check_char(data, line) == ERROR)
 		return (ft_error(WRONG_CHAR));
+	ft_check_space(data, line);
 	if (data->len > data->max_len)
 		data->max_len = data->len;
 	return (SUCCESS);
@@ -434,10 +450,11 @@ int		ft_parser(int argc, char **argv, t_data *data)
 	}
 	if (data->start_map == 0)
 		return (ft_error(MISSING_MAP));
-//	printf("%d conf", data->config_done);
 	if (data->config_done == 0)
 		return (ft_error(WRONG_CONFIG));
-	else if (data->config_double != 0)
+	if (data->is_space == 0)
+		return (ft_error(ERR_PLAYER));
+	if (data->config_double != 0)
 		return (ft_error(CONFIG_DOUBLE));
 	close(data->fd);
 	if (ft_parse_map(data, argv[1]) != SUCCESS)

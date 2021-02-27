@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/26 10:36:02 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/27 11:28:38 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,6 @@ typedef struct		s_data
 	int				player_pos_x;
 	int				player_pos_y;
 	int				first_space_x;
-	int				first_space_y;
 	int				x;
 	int				y;
 	int				z;
@@ -138,6 +137,7 @@ typedef struct		s_data
 //	t_map			map;
 	char			*path_textures;
 	int				ground;
+	int				is_space;
 }					t_data;
 
 typedef struct		s_sprite
