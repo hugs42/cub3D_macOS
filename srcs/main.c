@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/27 17:03:39 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/28 10:18:55 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -499,14 +499,46 @@ void	ft_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+int		deal_key(int key, void *param, t_mlx *mlx)
+{
+	ft_putnbr_fd(key, 1);
+//	mlx_pixel_put(mlx->mlx_ptr, mlx->win, 5, 5, 0x00FFF000);
+	return (0);
+}
+
 int		ft_mlx(t_data *data, t_img *img, t_mlx *mlx)
 {
+	int x;
+	int y;
+	x = 0;
+	y = 0;
+	int z = 0;
 	mlx->mlx_ptr = mlx_init();
 	mlx->win = (mlx_new_window(mlx->mlx_ptr, data->screen_w, data->screen_h, "cub3D"));
-	img->img_ptr = mlx_new_image(mlx->mlx_ptr, 333, 333);
+	img->img_ptr = mlx_new_image(mlx->mlx_ptr, data->screen_w, data->screen_h);
 	img->addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->size_l, &img->endian);
-	ft_mlx_pixel_put(img, 5, 5, 0x00FF0000);
+	while (x < data->screen_w)
+	{
+		int y = 0;
+		while (y < data->screen_h / 2)
+		{
+			ft_mlx_pixel_put(img, x, y, 0xFFFFF30);
+			y++;
+		}
+		x++;
+	}
+//	x = 0;
+	while (x < data->screen_h)
+	{
+		int y = 0;
+		while (y < 155)
+		{
+			ft_mlx_pixel_put(img, x, y, 0x00FFF000);
+			y++;
+		}
+	}
 	mlx_put_image_to_window(mlx->mlx_ptr, mlx->win, img->img_ptr, 0, 0);
+	mlx_key_hook(mlx->win, deal_key, (void *)0);
 	mlx_loop(mlx->mlx_ptr);
 	return (0);
 }
