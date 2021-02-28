@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/28 10:18:55 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/28 11:29:07 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,28 +42,32 @@ int		ft_init_data(t_data *data)
 	return (0);
 }
 
-int		ft_init_img(t_img *img)
+int		ft_init_img(t_game *game)
 {
-	img->img_ptr = NULL;
-	img->addr = NULL;
-	img->size_l = 0;
-	img->bpp = 0;
-	img->endian = 0;
-	return (0);
+	if (!(game->img = (t_img *)malloc(sizeof(t_img))))
+		return (ERROR);
+	game->img->img_ptr = NULL;
+	game->img->addr = NULL;
+	game->img->size_l = 0;
+	game->img->bpp = 0;
+	game->img->endian = 0;
+	return (SUCCESS);
 }
 
-int		ft_init_mlx(t_mlx *mlx)
+int		ft_init_mlx(t_game *game)
 {
-	mlx->mlx_ptr = NULL;
-	mlx->win = NULL;
+	if (!(game->mlx = (t_mlx *)malloc(sizeof(t_mlx))))
+		return (ERROR);
+	game->mlx->mlx_ptr = NULL;
+	game->mlx->win = NULL;
 	return (0);
 }
 
 int		ft_init_game(t_game *game)
 {
 	ft_init_data(&game->data);
-	ft_init_img(&game->img);
-	ft_init_mlx(&game->mlx);
+	ft_init_img(game);
+	ft_init_mlx(game);
 	game->sprite = NULL;
 
 	return (SUCCESS);
@@ -499,14 +503,41 @@ void	ft_mlx_pixel_put(t_img *img, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int		deal_key(int key, void *param, t_mlx *mlx)
+int		ft_deal_key(int key, void *param, t_mlx *mlx)
 {
 	ft_putnbr_fd(key, 1);
 //	mlx_pixel_put(mlx->mlx_ptr, mlx->win, 5, 5, 0x00FFF000);
 	return (0);
 }
 
-int		ft_mlx(t_data *data, t_img *img, t_mlx *mlx)
+int		ft_game_init(t_game *game, t_data *data)
+{
+	game->mlx->mlx_ptr = mlx_init();
+	game->mlx->win =
+	game->mlx->win = (mlx_new_window(game->mlx->mlx_ptr, data->screen_w, 
+	data->screen_h, "cub3D"));
+	game->img->img_ptr = mlx_new_image(game->mlx->mlx_ptr, data->screen_w,
+	data->screen_h);
+	game->img->addr = mlx_get_data_addr(game->img->img_ptr, &game->img->bpp,
+	&game->img->size_l, &game->img->endian);
+
+	return (0);
+}
+
+int		ft_game_hook(t_game *game, t_data *data)
+{
+//	mlx_hook(game->
+	return (0);
+}
+
+int		ft_game(t_game *game, t_data *data)
+{
+	ft_game_init(game, data);
+	mlx_loop(game->mlx->mlx_ptr);
+	return (0);
+}
+
+/*int		ft_mlx(t_data *data, t_img *img, t_mlx *mlx)
 {
 	int x;
 	int y;
@@ -522,7 +553,8 @@ int		ft_mlx(t_data *data, t_img *img, t_mlx *mlx)
 		int y = 0;
 		while (y < data->screen_h / 2)
 		{
-			ft_mlx_pixel_put(img, x, y, 0xFFFFF30);
+//			ft_mlx_pixel_put(img, x, y, 0xFFFFF30);
+			mlx_pixel_put(mlx->mlx_ptr, mlx->win, x, y, 0x00FFFFFF);
 			y++;
 		}
 		x++;
@@ -541,7 +573,7 @@ int		ft_mlx(t_data *data, t_img *img, t_mlx *mlx)
 	mlx_key_hook(mlx->win, deal_key, (void *)0);
 	mlx_loop(mlx->mlx_ptr);
 	return (0);
-}
+}*/
 
 int		main(int argc, char **argv)
 {
@@ -552,7 +584,7 @@ int		main(int argc, char **argv)
 	ft_init_game(&game);
 	if (ft_parser(argc, argv, &game.data) != SUCCESS)
 		return (ERROR);
-	ft_mlx(&game.data, &game.img, &game.mlx);
-
+//	ft_mlx(&game.data, &game.img, &game.mlx);
+	ft_game(&game, &game.data);
 	return (0);
 }

@@ -6,17 +6,21 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/27 16:26:05 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/02/28 11:02:03 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# define SUCCESS 1
+# define ERROR -1
 # define PI 3.1415
 # define CASE_X 20
 # define CASE_Y 15
 # define BLOCK_SIZE 64
+# define KEY_PRESS 55
+# define KEY_RELEASE 66
 # define FOC 60
 # define ESC 53
 # define TOWARD 13
@@ -26,7 +30,6 @@
 # define CAM_LEFT 123
 # define CAM_DOWN 125
 # define CAM_UP 126
-# define ERROR -1
 # define EMPTY_LINE -2
 # define WRONG_CHAR -3
 # define MISSING_WALL -4
@@ -42,8 +45,6 @@
 # define WRONG_CONFIG -14
 # define CONFIG_DOUBLE -15
 # define MISSING_MAP -16
-# define SUCCESS 1
-# define ERR 0
 
 # define NORTH 33
 # define EAST 34
@@ -158,8 +159,8 @@ typedef struct		s_mlx
 
 typedef struct		s_game
 {
-	t_img			img;
-	t_mlx			mlx;
+	t_img			*img;
+	t_mlx			*mlx;
 	t_data			data;
 	t_cam			cam;
 	t_sprite		*sprite;
