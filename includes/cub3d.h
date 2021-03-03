@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/28 11:02:03 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/03 10:05:20 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,13 @@
 # define BLOCK_SIZE 64
 # define KEY_PRESS 55
 # define KEY_RELEASE 66
+# define KEY_FORWARD 67
+# define KEY_BACK 68
+# define KEY_LEFT 69
+# define KEY_RIGHT 70
+# define KEY_LEFT_ROT 71
+# define KEY_RIGHT_ROT 72
+# define KEY_EXIT 73
 # define FOC 60
 # define ESC 53
 # define TOWARD 13
@@ -45,6 +52,7 @@
 # define WRONG_CONFIG -14
 # define CONFIG_DOUBLE -15
 # define MISSING_MAP -16
+
 
 # define NORTH 33
 # define EAST 34
@@ -72,13 +80,13 @@ typedef struct		s_img
 	int				endian;
 }					t_img;
 
-typedef struct		s_pos
+typedef struct		s_player
 {
 	unsigned int	pos_x;
 	unsigned int	pos_y;
 	unsigned int	dir_x;
 	unsigned int	dir_y;
-}					t_pos;
+}					t_player;
 
 typedef struct		s_path
 {
@@ -95,7 +103,7 @@ typedef struct		s_map
 	unsigned int	width;
 	unsigned int	height;
 }					t_map;
-
+/*
 typedef struct		s_cam
 {
 	t_pos			pos;
@@ -103,7 +111,7 @@ typedef struct		s_cam
 	t_pos			dir_x;
 	t_pos			plane;
 }					t_cam;
-
+*/
 typedef struct		s_data
 {
 	unsigned int	screen_w;
@@ -134,12 +142,11 @@ typedef struct		s_data
 	int				fd;
 	int				start_map;
 	char			**map;
-//	t_map			map;
 	char			*path_textures;
 	int				ground;
 	int				is_space;
 }					t_data;
-
+/*
 typedef struct		s_sprite
 {
 	t_pos			pos_x;
@@ -147,14 +154,36 @@ typedef struct		s_sprite
 	t_pos			x_dir;
 	t_pos			planel;
 }					t_sprite;
+*/
+typedef struct		s_ray
+{
+	double			pos_x;
+	double			pos_y;
+	double			dir_x;
+	double			dir_y;
+	double			plan_x;
+	double			plan_y;
+	double			ray_dir_x;
+	double			ray_dir_y;
+	double			map_x;
+	double			map_y;
 
+}					t_ray;
 
+typedef struct		s_event
+{
+	int				forward;
+	int				back;
+	int				right;
+	int				left;
+	int				right_rot;
+	int				left_rot;
+}					t_event;
 
 typedef struct		s_mlx
 {
 	void			*mlx_ptr;
 	void			*win;
-//	t_img			*img;
 }					t_mlx;
 
 typedef struct		s_game
@@ -162,9 +191,10 @@ typedef struct		s_game
 	t_img			*img;
 	t_mlx			*mlx;
 	t_data			data;
-	t_cam			cam;
-	t_sprite		*sprite;
-	
+	t_player		*player;
+	t_ray			ray;
+//	t_cam			cam;
+	t_event			event;
 }					t_game;
 
 int		ft_check_arg(int argc, char **argv);
@@ -184,5 +214,9 @@ int		ft_check_map_size(t_data *data);
 int		ft_textures(t_data *data, char *line);
 int		ft_skip_spaces(char *str, int i);
 int		ft_skip_spaces2(t_data *data, int x, int y);
-
+int		ft_press_key(int key, t_game *game);
+int		ft_release_key(int key, t_game *game);
+int		ft_exit(t_game *game);
+int		ft_key_events(t_game *game);
+int		ft_init_raycasting(t_game *game);
 #endif

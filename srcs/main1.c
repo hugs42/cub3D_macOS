@@ -6,13 +6,13 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/03 10:06:23 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/02 17:37:41 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
 
-int		ft_init_data_1(t_data *data)
+int		ft_init_data(t_data *data)
 {
 	data->screen_w = 0;
 	data->screen_h = 0;
@@ -33,12 +33,6 @@ int		ft_init_data_1(t_data *data)
 	data->east = 0;
 	data->west = 0;
 	data->ceiling = 0;
-	return (0);
-}
-
-int		ft_init_data_2(t_data *data)
-{
-	data->sprite = 0;
 	data->config_done = 0;
 	data->config_double = 0;
 	data->is_player = 0;
@@ -69,7 +63,7 @@ int		ft_init_mlx(t_game *game)
 	return (0);
 }
 
-int		ft_init_event(t_game *game)
+/*int		ft_init_event(t_game *game)
 {
 	game->event.forward = 0;
 	game->event.back = 0;
@@ -78,15 +72,16 @@ int		ft_init_event(t_game *game)
 	game->event.right_rot = 0;
 	game->event.left_rot = 0;
 	return (0);
-}
+}*/
 
 int		ft_init_game(t_game *game)
 {
-	ft_init_data_1(&game->data);
-	ft_init_data_2(&game->data);
+	ft_init_data(&game->data);
 	ft_init_img(game);
 	ft_init_mlx(game);
-	ft_init_event(game);
+//	ft_init_event(game);
+//	game->sprite = NULL;
+
 	return (SUCCESS);
 }
 
@@ -205,6 +200,8 @@ int		ft_check_wall(t_data *data)
 		y = 0;
 		while (data->map[x][y] != '\0')
 		{
+//			while (ft_isspace(data->map[x][y]))
+//				y++;
 			y = ft_skip_spaces2(data, x, y);
 			if (ft_is_not_wall(data->map[x][y]))
 				if (ft_check_neighborhood(data, x, y) != SUCCESS)
@@ -223,6 +220,8 @@ int		ft_check_border_bottom(t_data *data)
 
 	x = data->nb_lines;
 	y = 0;
+//	while (ft_isspace(data->map[x][y]))
+//		y++;
 	y = ft_skip_spaces2(data, x, y);
 	while (data->map[x][y] != '\0')
 	{
@@ -287,6 +286,7 @@ int		ft_check_border(t_data *data)
 	x = 0;
 	y = 0;
 	len = 0;
+//	printf("datanb_lines %d", data->nb_lines);
 	while (x <= data->nb_lines)
 	{
 		y = 0;
@@ -371,6 +371,8 @@ int		ft_parse_map(t_data *data, char *line)
 			if (ft_check_empty_line(data, line) == ERROR)
 				return (ft_error(EMPTY_LINE));
 			i = ft_skip_spaces(line, i);
+//			while (ft_isspace(line[i]))
+//				i++;
 			if (ft_get_map(data, line) != SUCCESS)
 				return (ft_error(MALLOC_ERR));
 		}
@@ -432,7 +434,10 @@ int		ft_parse_config(t_data *data,  char *line, int i)
 	}*/
 	ft_check_config_double(data);
 	if (data->config_double != 0)
+	{
+//		printf("TOP");
 		return (ft_error(CONFIG_DOUBLE));
+	}
 	return (SUCCESS);
 }
 
@@ -509,7 +514,7 @@ void	ft_mlx_pixel_put(t_img *img, int x, int y, int color)
 	dst = img->addr + (y * img->size_l + x * (img->bpp / 8));
 	*(unsigned int*)dst = color;
 }
-
+/*
 int		ft_deal_key(int key, t_game *game)
 {
 //	if (key == 
@@ -531,18 +536,9 @@ int		ft_game_init(t_game *game, t_data *data)
 	return (0);
 }
 
-int		ft_raycasting(t_game *game)
-{
-	ft_init_raycasting(game);
-	return (0);
-}
-
-int		ft_game_loop(t_game *game, t_data *data)
+int		ft_game_hook(t_game *game, t_data *data)
 {
 //	mlx_hook(game->
-	ft_key_events(game);
-//	mlx_clear_window(game->mlx->win, game->mlx->mlx_ptr);
-	ft_raycasting(game);
 	return (0);
 }
 
@@ -551,14 +547,13 @@ int		ft_game(t_game *game, t_data *data)
 {
 	ft_game_init(game, data);
 	mlx_key_hook(game->mlx->win, ft_deal_key, game);
-	mlx_hook(game->mlx->win, 2, 1L << 0, ft_press_key, game);
-	mlx_hook(game->mlx->win, 3, 1L << 1, ft_release_key, game);
-	mlx_hook(game->mlx->win, 17, 1L << 17, ft_exit, game);
-	mlx_loop_hook(game->mlx->mlx_ptr, ft_game_loop, game);
+	mlx_hook(game->mlx->win, KEY_PRESS, 1L << 0, ft_press_key, game);
+	mlx_hook(game->mlx->win, KEY_RELEASE, 1L << 0, ft_release_key, game);
+	mlx_hook(game->mlx->win, KEY_EXIT, 0, ft_exit, game);
 	mlx_loop(game->mlx->mlx_ptr);
 	return (0);
 }
-
+*/
 int		main(int argc, char **argv)
 {
 	t_game		game;
@@ -568,6 +563,6 @@ int		main(int argc, char **argv)
 	ft_init_game(&game);
 	if (ft_parser(argc, argv, &game.data) != SUCCESS)
 		return (ERROR);
-	ft_game(&game, &game.data);
+//	ft_game(&game, &game.data);
 	return (0);
 }

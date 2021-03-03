@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:26:11 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/27 11:10:15 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/02 17:26:20 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,5 @@ int		ft_error(int error)
 	if (error == MALLOC_ERR)
 		ft_putstr_fd("Error: memory not correctly allocated (malloc) ...\n", 1);
 	ft_putstr_fd("Leaving program\n", 1);
-	return (ERROR);
+	exit(0);
 }

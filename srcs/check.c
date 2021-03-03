@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 18:18:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/26 12:37:43 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/03 08:24:04 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		ft_check_config_double(t_data *data)
 {
 	if (data->res > 1 || data->north > 1 || data->south > 1 || data->west
-	> 1 || data->east > 1 || data->south > 1 || data->sprite > 1 || data->
+	> 1 || data->east > 1 || data->sprite > 1 || data->
 	ground > 1 || data->ceiling > 1)
 		data->config_double = 1;
 	return (0);
