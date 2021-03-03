@@ -26,6 +26,11 @@ SRCS = main.c \
 		get_next_line.c \
 		check.c \
 		cub3d_utils.c \
+		key_events.c \
+		textures.c \i
+		init_raycasting \
+		move.c			\
+		error.c	
 
 #SRCS_BONUS = 
 
