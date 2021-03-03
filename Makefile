@@ -10,13 +10,9 @@
 #                                                                              #
 # **************************************************************************** #
 
-LIBS = -lmlx -lm -framework OpenGL -framework Appkit
 
-DIR_I_LIB = /usr/local/include/
 
-DIR_LIB = /usr/local/lib/
-
-NAME = cub3D
+NAME = Cub3D
 
 #INCLUDE = ./includes/cub3d.h
 
@@ -27,49 +23,44 @@ SRCS = main.c \
 		check.c \
 		cub3d_utils.c \
 		key_events.c \
-		textures.c \i
-		init_raycasting \
+		textures.c \
+		init_raycasting.c \
 		move.c			\
 		error.c	
 
-#SRCS_BONUS = 
-
 SRCS_DIR = srcs
 
-INC_DIR = include
+INC_DIR = includes
 
 OBJSRCS = $(SRCS:.c=.o)
 OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 
-MLX =  libmlx.dylib
+MLX =  libmlx.a
+MLX_DIR = minilibx-linux
+
+LIB_MAC = -I /usr/local/include -L /usr/local/lib -lmlx -lm -framework OpenGL -framework Appkit
 
 CC = clang
 
 all : $(NAME)
 
-$(NAMELIB):
-	make -C ./libft
-	cp ./libft/$(NAMELIB)
+#$(NAMELIB):
+#	make -C ./libft
+#	cp ./libft/$(NAMELIB)
 
-$(NAME): $(NAMELIB) $(OBJSRCS)
-	ar -x libft.a
-	clang $(CFLAGS) -I $(DIR_I_LIB) -L $(DIR_LIB) -o $(NAME) $(OBJSRCS) $(LIBS)
+$(NAME): $(OBJSRCS) #$(NAMELIB) $(OBJSRCS)
+	make -C libft
+	clang -I $(DIR_I_LIB) -L $(DIR_LIB) -o $(NAME) $(OBJSRCS) $(LIBS)
 
-#	@ar rc $(NAME) $(OBJS)
-
-#$(MLX):
-#	@$(MAKE) -C mlx
-#	@mv mlx/$(MLX)
-
-#$(NAME): $(NAMELIB) $(OBJSRCS)
-#	$(CC) $(OBJSRCS) -o $(NAME) $(LIBS)
+%.o: %.c
+	clang $(FLAGS) $(INC) -o $@ -c $<
 
 clean:
-	rm -rf $(OBJSRCS) $(OBJS_BONUS)
+	rm -rf $(OBJSRCS) #$(OBJS_BONUS)
 	make clean -C ./libft
 
 fclean: clean
-	make fclean -C ./libft
+#	make fclean -C ./libft
 	rm -rf $(NAME)
 #	rm -rf cub3d.bmp
 
