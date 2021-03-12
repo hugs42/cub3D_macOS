@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 09:49:03 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/02/27 14:46:23 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/12 09:52:22 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,6 @@ int			ft_is_not_wall(char c)
 		return (1);
 	return (0);
 }
-
-void		**ft_calloc_buff(void **buff, int len, int j)
-{
-	void	**dest;
-	int		i;
-
-	i = 0;
-	dest = ft_calloc(j + 2, len);
-	while (i < j)
-	{
-		dest[i] = buff[i];
-		i++;
-	}
-	if (j > 0)
-		free(buff);
-	return (dest);
-}
-
 
 int			ft_get_nb(int i, char *line,t_data *data)
 {
@@ -98,7 +80,5 @@ int				ft_get_res(t_data *data, char *line)
 			i++;
 		}
 	data->res = 1;
-	printf("%d\n", data->screen_w);
-	printf("%d\n", data->screen_h);
 	return (0);
 }

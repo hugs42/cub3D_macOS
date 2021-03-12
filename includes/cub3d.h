@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/03 10:05:20 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/12 11:42:17 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,17 @@
 # define CASE_X 20
 # define CASE_Y 15
 # define BLOCK_SIZE 64
-# define KEY_PRESS 55
-# define KEY_RELEASE 66
-# define KEY_FORWARD 67
-# define KEY_BACK 68
-# define KEY_LEFT 69
-# define KEY_RIGHT 70
-# define KEY_LEFT_ROT 71
-# define KEY_RIGHT_ROT 72
-# define KEY_EXIT 73
+# define KEY_PRESS 2
+# define KEY_RELEASE 3
+# define KEY_FORWARD 13
+# define KEY_BACK 1
+# define KEY_LEFT 0
+# define KEY_RIGHT 2
+# define KEY_LEFT_ROT 123
+# define KEY_RIGHT_ROT 124
+# define KEY_EXIT 53
 # define FOC 60
 # define ESC 53
-# define TOWARD 13
-# define LEFT 0
-# define RIGHT 2
 # define CAM_RIGHT 124
 # define CAM_LEFT 123
 # define CAM_DOWN 125
@@ -52,7 +49,8 @@
 # define WRONG_CONFIG -14
 # define CONFIG_DOUBLE -15
 # define MISSING_MAP -16
-
+# define PATH_ERR -17
+# define XPM_ERR -18
 
 # define NORTH 33
 # define EAST 34
@@ -80,22 +78,14 @@ typedef struct		s_img
 	int				endian;
 }					t_img;
 
-typedef struct		s_player
-{
-	unsigned int	pos_x;
-	unsigned int	pos_y;
-	unsigned int	dir_x;
-	unsigned int	dir_y;
-}					t_player;
-
-typedef struct		s_path
+/*typedef struct		s_path
 {
 	int				x;
 	int				y;
 	int				nb;
-}					t_path;
+}					t_path;*/
 
-typedef struct		s_map
+/*typedef struct		s_map
 {
 	char			**map_buff;
 	int				x;
@@ -103,14 +93,6 @@ typedef struct		s_map
 	unsigned int	width;
 	unsigned int	height;
 }					t_map;
-/*
-typedef struct		s_cam
-{
-	t_pos			pos;
-	t_pos			dir;
-	t_pos			dir_x;
-	t_pos			plane;
-}					t_cam;
 */
 typedef struct		s_data
 {
@@ -120,9 +102,13 @@ typedef struct		s_data
 	int				tmp;
 	int				res;
 	int				north;
+	int				curr_north;
 	int				south;
+	int				curr_south;
 	int				west;
+	int				curr_west;
 	int				east;
+	int				curr_east;
 	int				sprite;
 	int				ceiling;
 	int				config_done;
@@ -142,7 +128,12 @@ typedef struct		s_data
 	int				fd;
 	int				start_map;
 	char			**map;
-	char			*path_textures;
+	char			*path;
+	char			*path_no;
+	char			*path_so;
+	char			*path_ea;
+	char			*path_we;
+	char			*path_sp;
 	int				ground;
 	int				is_space;
 }					t_data;
@@ -155,6 +146,19 @@ typedef struct		s_sprite
 	t_pos			planel;
 }					t_sprite;
 */
+typedef struct		s_player
+{
+	char			dir;
+	double			pos_x;
+	double			pos_y;
+	double			dir_x;
+	double			dir_y;
+	double			plan_x;
+	double			plan_y;
+	double			move_speed;
+	double			rot_speed;
+}					t_player;
+
 typedef struct		s_ray
 {
 	double			pos_x;
@@ -163,11 +167,30 @@ typedef struct		s_ray
 	double			dir_y;
 	double			plan_x;
 	double			plan_y;
+	double			ray_x;
+	double			cam_x;
 	double			ray_dir_x;
 	double			ray_dir_y;
-	double			map_x;
-	double			map_y;
-
+	int				map_x;
+	int				map_y;
+	int				line_height;
+	double			delta_dist_x;
+	double			delta_dist_y;
+	double			step_x;
+	double			step_y;
+	double			side_dist_x;
+	double			side_dist_y;
+	double			*z_buffer;
+	int				hit;
+	double			side;
+	double			perp_wall_dist;
+	int				draw_start;
+	int				draw_end;
+	int				x;
+	int				y;
+	double			wall_x;
+	double			time;
+	double			old_time;
 }					t_ray;
 
 typedef struct		s_event
@@ -186,6 +209,7 @@ typedef struct		s_mlx
 	void			*win;
 }					t_mlx;
 
+
 typedef struct		s_game
 {
 	t_img			*img;
@@ -193,12 +217,12 @@ typedef struct		s_game
 	t_data			data;
 	t_player		*player;
 	t_ray			ray;
-//	t_cam			cam;
-	t_event			event;
+	t_event			*event;
 }					t_game;
 
 int		ft_check_arg(int argc, char **argv);
-int		ft_check_ext(char *str);
+int		ft_check_arg_ext(char *str);
+int		ft_check_xpm_ext(char *str);
 int		ft_check_char(t_data *data, char *line);
 int		ft_check_char_first_line(t_data *data, char *line);
 int		ft_get_res(t_data *data, char *line);
@@ -218,5 +242,6 @@ int		ft_press_key(int key, t_game *game);
 int		ft_release_key(int key, t_game *game);
 int		ft_exit(t_game *game);
 int		ft_key_events(t_game *game);
+//int		ft_init_rays(t_data *data, t_player *player, t_ray *ray);
 int		ft_init_raycasting(t_game *game);
 #endif

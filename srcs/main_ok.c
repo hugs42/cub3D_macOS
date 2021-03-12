@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/12 11:43:09 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/08 15:41:39 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,6 @@ int		ft_init_data_1(t_data *data)
 	data->east = 0;
 	data->west = 0;
 	data->ceiling = 0;
-	data->path = NULL;
-	data->path_no = NULL;
-	data->path_so = NULL;
-	data->path_ea = NULL;
-	data->path_we = NULL;
-	data->path_sp = NULL;
 	return (0);
 }
 
@@ -165,6 +159,7 @@ void	ft_get_player(t_data *data, int x, int y)
 		data->player_dir = WEST;
 	data->player_pos_x = x;
 	data->player_pos_y = y;
+//	printf("\nplayer: x=%d y=%d\n\n", data->player_pos_x, data->player_pos_y);
 }
 
 int		ft_check_player(t_data *data)
@@ -416,105 +411,31 @@ int		ft_parse_map(t_data *data, char *line)
 	return (SUCCESS);
 }
 
-int		ft_get_path(t_data *data, char *line, int i)
-{
-	int len;
-	int j;
-
-	j = 0;
-	len = ft_strlen(line);
-	i += 2;
-	while (ft_isspace(line[i]))
-		i++;
-	while (ft_isspace(line[len]))
-		len--;
-	if (!(data->path = (char*)malloc(sizeof(char) * len - i + 1)))
-		return (ERROR);
-	if (line[i] == '.' && line [i + 1] == '/')
-	{
-		while (i < len)
-		{
-			data->path[j] = line[i];
-			i++;
-			j++;
-		}
-		data->path[j] = '\0';
-	}
-	i = 0;
-	if (ft_strlen(data->path) == 0)
-		return (ERROR);
-	while (data->path[i] !=  '\0')
-	{
-		if (ft_isspace(data->path[i]))
-			return (ERROR);
-		i++;
-	}
-	if (ft_check_xpm_ext(data->path) == ERROR)
-		return (ft_error(XPM_ERR));
-	return (0);
-}
-
-int		ft_texture(t_data *data, char *line, int i)
-{
-	if (ft_get_path(data, line, i) == ERROR)
-		return (ERROR);
-	if (data->north == 2)
-		data->path_no = ft_strdup(data->path);
-	else if (data->south == 2)
-		data->path_so = ft_strdup(data->path);
-	else if (data->east == 2)
-		data->path_ea = ft_strdup(data->path);
-	else if (data->west == 2)
-		data->path_we = ft_strdup(data->path);
-	else if (data->sprite == 2)
-		data->path_sp = ft_strdup(data->path);
-	free(data->path);
-	return (0);
-}
-
 int		ft_parse_config(t_data *data,  char *line, int i)
 {
+//	printf("ok ");
 	static int x = 0;
 	x++;
-	while (ft_isspace(line[i]))
-		i++;
+//	printf("line= %d %s\n", x, line);
+//	printf("start_map= %d \n", data->start_map);
+
+//	while (ft_isspace(line[i]))
+//		i++;
 	if (line[i] == 'R' && line[i + 1] == ' ')
 		ft_get_res(data, line);
 	else if (line[i] == 'N' && line[i + 1] == 'O')
 	{
-		data->north += 2;
-		if (ft_texture(data, line, i) == ERROR)
-			return (ft_error(PATH_ERR));
-		data->north -= 1;
+		data->north += 1;
+//		ft_textures(data, line);
 	}
 	else if (line[i] == 'S' && line[i + 1] == 'O')
-	{
-		data->south += 2;
-		if (ft_texture(data, line, i) == ERROR)
-			return (ft_error(PATH_ERR));
-		data->south -= 1;
-	}
+		data->south += 1;
 	else if (line[i] == 'W' && line[i + 1] == 'E')
-	{
-		data->west += 2;
-		if (ft_texture(data, line, i) == ERROR)
-			return (ft_error(PATH_ERR));
-		data->west -= 1;
-	}
+		data->west += 1;
 	else if (line[i] == 'E' && line[i + 1] == 'A')
-	{
-		data->east += 2;
-		if (ft_texture(data, line, i) == ERROR)
-			return (ft_error(PATH_ERR));
-		data->east -= 1;
-	}
+		data->east += 1;
 	else if (line[i] == 'S' && line[i + 1] == ' ')
-	{
-		data->sprite += 2;
-		if (ft_texture(data, line, i) == ERROR)
-			return (ft_error(PATH_ERR));
-		data->sprite -= 1;
-	}
+		data->sprite += 1;
 	else if (line[i] == 'F' && line[i + 1] == ' ')
 		data->ground += 1;
 	else if (line[i] == 'C' && line[i + 1] == ' ')
@@ -597,57 +518,51 @@ int		ft_parser(int argc, char **argv, t_data *data)
 	return (SUCCESS);
 }
 
-void	ft_pos_west_east(t_player *player, t_data *data)
+int		ft_init_player_pos(t_game *game)
 {
-	player->dir_x = 0;
-	player->plan_y = 0;
-	player->pos_x += 0.5;
-	if (data->player_dir == WEST)
+//	printf("posx%d poxy %d\n", game->data.player_pos_x, game->data.player_pos_y);
+	game->player->pos_x = game->data.player_pos_x;
+	game->player->pos_y = game->data.player_pos_y;
+/*	if (game->data.player_dir == NORTH || game->data.player_dir == SOUTH)
 	{
-	player->dir_y = -1;
-	player->plan_x = 0.66;
+		game->ray.dir_x = -1;
+		if (game->data.player_dir == NORTH)
+		{
+			game->ray.dir_y = 0;
+			game->ray.plan_x = 0;
+			game->ray.plan_y = 0.66;
+		}
+//		else if  (game->data.player_dir == SOUTH)
+//			game->ray.dir_y = 1;
 	}
-	else
+	else if (game->data.player_dir == EAST || game->data.player_dir == WEST)
 	{
-		player->dir_y = 1;
-		player->plan_x = -0.66;
-	}
+
+	}*/
+	return (0);
 }
 
-void	ft_pos_north_south(t_player *player, t_data *data)
+void	ft_mlx_pixel_put(t_img *img, int x, int y, int color)
 {
-	player->dir_y = 0;
-	player->plan_x = 0;
-	player->pos_y += 0.5;
-	if (data->player_dir == NORTH)
-	{
-		player->dir_x = -1;
-		player->plan_y = -0.66;
-	}
-	else
-	{
-		player->dir_x = 1;
-		player->plan_y = 0.66;
-	}
+	char	*dst;
+
+	dst = img->addr + (y * img->size_l + x * (img->bpp / 8));
+	*(unsigned int*)dst = color;
 }
 
-int		ft_setup_player(t_player *player, t_data *data, t_ray *ray)
+int		ft_deal_key(int key, t_game *game)
 {
-	player->pos_x = data->player_pos_x;
-	player->pos_y = data->player_pos_y;
-	player->move_speed = 0.3;
-	player->rot_speed = 0.05;
-	if (data->player_dir == WEST || data->player_dir == EAST)
-		ft_pos_west_east(player, data);
-	else if (data->player_dir == NORTH || data->player_dir ==  SOUTH)
-		ft_pos_north_south(player, data);
+//	if (key == 
+//	ft_putnbr_fd(key, 1);
+//	ft_mlx_pixel_put(game->img, 5, 5, 0x00FFF000);
+//	mlx_pixel_put(game->mlx->mlx_ptr, game->mlx->win, 5, 5, 0x00FFF000);
 	return (0);
 }
 
 int		ft_game_init(t_game *game, t_data *data)
 {
-	ft_setup_player(game->player, &game->data, &game->ray);
-	ft_init_raycasting(game);
+	ft_init_player_pos(game);
+	ft_init_ray(game);
 	game->mlx->mlx_ptr = mlx_init();
 	game->mlx->win = (mlx_new_window(game->mlx->mlx_ptr, data->screen_w, 
 	data->screen_h, "cub3D"));
@@ -658,31 +573,43 @@ int		ft_game_init(t_game *game, t_data *data)
 	return (0);
 }
 
+/*void	ft_draw(t_game *game, int x)
+{
+	int i;
+
+	i = 0;
+	while (i < game->ray.draw_start)
+	{
+		*(game->img->addr + (i * game->data.screen_w) + x) =  0x0000FF;;
+		i++;
+	}
+	while (i < game->ray.draw_end)
+	{
+		en->tex.y = (int)en->tex.pos &
+		(en->mlx.texture[en->tex.num].height - 1);
+		en->tex.pos += en->tex.step;
+		en->color = en->mlx.texture[en->tex.num].data[en->mlx.texture
+		[en->tex.num].height * en->tex.y + en->tex.x];
+		*(en->mlx.img.data + (i * g_config.r.x) + x) = en->color;
+		i++;
+	}
+	while (i < g_config.r.y - 1)
+	{
+		*(en->mlx.img.data + (i * g_config.r.x) + x) = g_config.f.rgb_int;
+		i++;
+	}
+}*/
+
 void	ft_vert_line(t_game *game, int x, int y1, int y2, int color)
 {
 	int	y;
-	int	z;
 
 	y = y1;
-	z = 0;
-	// walls
 	while (y <= y2)
 	{
+//		printf("OK ");
 		mlx_pixel_put(game->mlx->mlx_ptr, game->mlx->win, x, y, color);
 		y++;
-	}
-	// ceiling
-	while (z < game->ray.draw_start)
-	{
-		mlx_pixel_put(game->mlx->mlx_ptr, game->mlx->win, x, z, 0x0000FF *2);
-		z++;
-	}
-	// floor
-	z = game->ray.draw_end + 1;
-	while (z < game->data.screen_h)
-	{
-		mlx_pixel_put(game->mlx->mlx_ptr, game->mlx->win, x, z, 0xFFFFF0 / 6);
-		z++;
 	}
 }
 
@@ -691,32 +618,81 @@ int		ft_color(t_game *game, int x)
 	int color;
 
 	color = 0;
-	if (game->data.map[game->ray.map_x][game->ray.map_y] == '1')
+//	printf("OK");
+	if (game->data.map[game->ray.map_x][game->ray.map_y] == 1)
+		color = 0xFF0000;
+	else if (game->data.map[game->ray.map_x][game->ray.map_y] == 2)
 	{
-		color = 0xFFFF00;
-	}
-	else if (game->data.map[game->ray.map_x][game->ray.map_y] == '2')
 		color = 0x00FFF0;
+	}
+	else if (game->data.map[game->ray.map_x][game->ray.map_y] == 3)
+		color = 0x0000FF;
+	else if (game->data.map[game->ray.map_x][game->ray.map_y] == 4)
+		color = 0xFFFFFF;
 	else
-		color = 0xFFFFF0;
+		color = 0xFFFF00;
 	if (game->ray.side == 1)
-		color = color / 2;
-	else if (game->ray.side == 2)
-		color = color / 3;
-	else if (game->ray.side == 3)
-		color = color / 4;
+			color = color / 2;
 	ft_vert_line(game, x, game->ray.draw_start, game->ray.draw_end, color);
-//	ft_color_floor_ceil(game);
 	return (0);
 }
 
-int		ft_draw_start_end(t_game *game)
+/*static void		ft_set_wall(t_game *game)
 {
-	game->ray.draw_start = -game->ray.line_height / 2 + game->data.screen_h / 2;
+	int		text_x;
+	t_image	*texture;
 
+	texture = game->we_texture;
+	if (ray->side == 1)
+		texture = game->ea_texture;
+	else if (ray->side == 2)
+		texture = game->no_texture;
+	else if (ray->side == 3)
+		texture = game->so_texture;
+	text_x = (int)(ray->wall_x * (double)texture->width);
+	if ((ray->side == 0 || ray->side == 1) && ray->ray_dir_x > 0)
+		text_x = texture->width - text_x - 1;
+	if ((ray->side == 2 || ray->side == 3) && ray->ray_dir_y < 0)
+		text_x = texture->width - text_x - 1;
+	ray->text_x = text_x;
+	set_texture_on_image(game, texture, ray);
+
+
+void		ftt_pixel_put(t_img *img, int x, int y, int color)
+	{
+		unsigned char *src;
+		unsigned char r;
+		unsigned char g;
+		unsigned char b;
+
+		src = (unsigned char *)&color;
+		r = src[0];
+		g = src[1];
+		b = src[2];
+		img->addr[y * img->size_l + x * img->bpp / 8] = r;
+		img->addr[y * img->size_l + x * img->bpp / 8 + 1] = g;
+		img->addr[y * img->size_l + x * img->bpp / 8 + 2] = b;
+	}
+
+void		set_color_on_image(t_game *game)
+{
+	int	y;
+
+	y = 0;
+	while (y < game->ray.draw_start)
+		ftt_pixel_put(game->img, game->ray.x, y++, 184,113,39);
+	y = ray->draw_end + 1;
+	while (y < game->window->height)
+		ftt_pixel_put(game->image, game->ray-.x, y++, 54,198,227);
+}*/
+
+
+void		draw_col(t_game *game)
+{
+	game->ray.draw_start = game->ray.line_height / 2 + game->data.screen_h / 2;
+	game->ray.draw_end = game->ray.line_height / 2 + game->data.screen_h / 2;
 	if (game->ray.draw_start < 0)
 		game->ray.draw_start = 0;
-	game->ray.draw_end = game->ray.line_height / 2 + game->data.screen_h / 2;
 	if (game->ray.draw_end >= game->data.screen_h)
 		game->ray.draw_end = game->data.screen_h - 1;
 	if (game->ray.side == 0 || game->ray.side == 1)
@@ -726,94 +702,161 @@ int		ft_draw_start_end(t_game *game)
 		game->ray.wall_x = game->player->pos_x +
 			game->ray.perp_wall_dist * game->ray.ray_dir_x;
 	game->ray.wall_x -= floor(game->ray.wall_x);
+//	set_wall(game, ray);
+//	set_color_on_image(game);
+}
+
+/*static void	ft_draw_start_end(t_game *game)
+{
+	game->ray.draw_start = -game->ray.line_height / 2 + game->data.screen_h / 2;
+	if (game->ray.draw_start < 0)
+		game->ray.draw_start = 0;
+	game->ray.draw_end = game->ray.line_height / 2 + game->data.screen_h / 2;
+	if (game->ray.draw_end >= game->data.screen_h || game->ray.draw_end <= 0)
+		game->ray.draw_end = game->data.screen_h - 1;
+}*/
+
+int		ft_draw_start_end(t_game *game)
+{
+	game->ray.line_height = (int)(game->data.screen_h / game->ray.perp_wall_dist);
+	game->ray.draw_start = -game->ray.line_height / 2 + game->data.screen_h / 2;
+
+	if (game->ray.draw_start < 0)
+		game->ray.draw_start = 0;
+	game->ray.draw_end = game->ray.line_height / 2 + game->data.screen_h / 2;
+	if (game->ray.draw_end >= game->data.screen_h)
+		game->ray.draw_end = game->data.screen_h - 1;
 	return (0);
 }
 
-int		ft_dda(t_ray *ray, t_data *data)
+
+/*int		ft_dda(t_game *game)
 {
-	ray->hit = 0;
-	while (ray->hit == 0)
+	game->ray.hit = 0;
+	while (game->ray.hit == 0)
 	{
-		// avance jusqu'a la prochaine case 
-		if (ray->side_dist_x < ray->side_dist_y)
+		if (game->ray.side_dist_x < game->ray.side_dist_y)
 		{
-			ray->side_dist_x += ray->delta_dist_x;
-			ray->map_x += ray->step_x;
-			if (ray->step_x == -1)
-				ray->side = 0;
+			game->ray.side_dist_x += game->ray.delta_dist_x;
+			game->ray.map_x += game->ray.step_x;
+			if (game->ray.step_x == -1)
+				game->ray.side = 0;
 			else
-				ray->side = 1;
+				game->ray.side = 1;
 		}
 		else
 		{
-			ray->side_dist_y += ray->delta_dist_y;
-			ray->map_y += ray->step_y;
-			if (ray->step_y == -1)
-				ray->side = 2;
+			game->ray.side_dist_y += game->ray.delta_dist_y;
+			game->ray.map_y += game->ray.step_y;
+			if (game->ray.step_y == -1)
+				game->ray.side = 2;
 			else
-				ray->side = 3;
+				(game->ray.side = 3);
 		}
-		// Check si le rayon a touche un mur
-		if (data->map[ray->map_x][ray->map_y] == '1')
-			ray->hit = 1;
-	}
+		if (game->data.map[game->ray.map_x][game->ray.map_y] >= 1 &&
+		game->data.map[game->ray.map_x][game->ray.map_y] != 2)
+			game->ray.hit = 1;
+		}
+	if (game->ray.side == 0)
+		game->ray.perp_wall_dist = (game->ray.map_x - game->ray.pos_x + (1 - game->ray.step_x) / 2) / game->ray.ray_dir_x;
+	else
+		game->ray.perp_wall_dist = (game->ray.map_y - game->ray.pos_y + (1 - game->ray.step_y) / 2) / game->ray.ray_dir_y;
 	return (0);
-}
+}*/
 
-void	ft_calc_perp_height(t_data *data, t_player *player, t_ray *ray)
+int		ft_dda(t_game *game)
 {
-	// Calcul la distance projetee dans la direction de la camera
-	if (ray->side == 0 || ray->side == 1)
-		ray->perp_wall_dist = (ray->map_x - player->pos_x + (1 - ray->step_x)
-		/ 2) / ray->ray_dir_x;
-	else if (ray->side == 2 || ray->side == 3)
-		ray->perp_wall_dist = (ray->map_y - player->pos_y + (1 - ray->step_y)
-		/ 2) / ray->ray_dir_y;
-	// Calcul la hauteur de la ligne a dessiner
-	ray->line_height = (int)(data->screen_h / ray->perp_wall_dist);
-	ray->z_buffer[ray->x] = ray->perp_wall_dist;
-}
-
-int		ft_step_side_dist(t_player *player, t_ray *ray)
-{
-	if (ray->ray_dir_x < 0)
+	game->ray.hit = 0;
+	while (game->ray.hit == 0)
 	{
-		ray->step_x = -1;
-		ray->side_dist_x = (player->pos_x - ray->map_x) * ray->delta_dist_x;
-	}
+		if (game->ray.side_dist_x < game->ray.side_dist_y)
+		{
+			game->ray.side_dist_x += game->ray.delta_dist_x;
+			game->ray.map_x += game->ray.step_x;
+			game->ray.side = 0;
+		}
+		else
+		{
+			game->ray.side_dist_y += game->ray.delta_dist_y;
+			game->ray.map_y += game->ray.step_y;
+			game->ray.side = 1;
+		}
+		if (game->data.map[game->ray.map_x][game->ray.map_y] == '1')
+			game->ray.hit = 1;
+		}
+	if (game->ray.side == 0)
+		game->ray.perp_wall_dist = (game->ray.map_x - game->ray.pos_x + (1 - game->ray.step_x) / 2) / game->ray.ray_dir_x;
 	else
-	{
-		ray->step_x = 1;
-		ray->side_dist_x = (ray->map_x - player->pos_x + 1.0) *
-		ray->delta_dist_x;
-	}
-	if (ray->ray_dir_y < 0)
-	{
-		ray->step_y = -1;
-		ray->side_dist_y = (player->pos_y - ray->map_y) * ray->delta_dist_y;
-	}
-	else
-	{
-		ray->step_y = 1;
-		ray->side_dist_y = (ray->map_y - player->pos_y + 1.0) *
-		ray->delta_dist_y;
-	}
+		game->ray.perp_wall_dist = (game->ray.map_y - game->ray.pos_y + (1 - game->ray.step_y) / 2) / game->ray.ray_dir_y;
+	game->ray.line_height = (int)(game->data.screen_h / game->ray.perp_wall_dist);
 	return (0);
 }
 
 
-
-void	ft_init_rays(t_data *data, t_player *player, t_ray *ray, int x)
+static void	ft_get_delta_dist(t_game *game)
 {
-	ray->cam_x = 2 * x / (double)data->screen_w - 1;
-	ray->ray_dir_x = player->dir_x + player->plan_x * ray->cam_x;
-	ray->ray_dir_y = player->dir_y + player->plan_y * ray->cam_x;
-	ray->map_x = (int)player->pos_x;
-	ray->map_y = (int)player->pos_y;
-	ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
-	ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
-	ray->line_height = 0;
-	ray->y = 0;
+/*	if (game->ray.ray_dir_y == 0)
+		game->ray.delta_dist_x = 0;
+	else if (game->ray.ray_dir_x == 0)
+		game->ray.delta_dist_x = 1;
+	else
+		game->ray.delta_dist_x = fabs(1 / game->ray.ray_dir_x);
+	if (game->ray.ray_dir_x == 0)
+		game->ray.delta_dist_y = 0;
+	else if (game->ray.ray_dir_y == 0)
+		game->ray.delta_dist_y = 1;
+	else
+		game->ray.delta_dist_y = fabs(1 / game->ray.ray_dir_y);*/
+}
+
+static void	ft_get_perp_and_height(t_game *game)
+{
+	if (game->ray.side == 0 || game->ray.side == 1)
+		game->ray.perp_wall_dist = (game->ray.map_x - game->player->pos_x + (1 - game->ray.step_x)
+		/ 2) / game->ray.ray_dir_x;
+	else if (game->ray.side == 2 || game->ray.side == 3)
+		game->ray.perp_wall_dist = (game->ray.map_y - game->player->pos_y + (1 - game->ray.step_y)
+		/ 2) / game->ray.ray_dir_y;
+	game->ray.line_height = (int)(game->data.screen_h / game->ray.perp_wall_dist);
+	game->ray.z_buffer[game->ray.x] = game->ray.perp_wall_dist;
+}
+
+int		ft_step_side_dist(t_game *game)
+{
+//	game->ray.delta_dist_x = fabs(1 / game->ray.ray_dir_x);
+//	game->ray.delta_dist_y = fabs(1 / game->ray.ray_dir_y);
+	if (game->ray.ray_dir_x < 0)
+	{
+		game->ray.step_x = -1;
+		game->ray.side_dist_x = (game->player->pos_x - game->ray.map_x) * game->ray.delta_dist_x; 
+	}
+	else
+	{
+		game->ray.step_x = 1;
+		game->ray.side_dist_x = ( game->ray.map_x -  game->player->pos_x + 1.0) * game->ray.delta_dist_x; 
+	}
+	if (game->ray.ray_dir_y < 0)
+	{
+		game->ray.step_y = -1;
+		game->ray.side_dist_y = (game->player->pos_y - game->ray.map_y) * game->ray.delta_dist_y; 
+	}
+	else
+	{
+		game->ray.step_y = 1;
+		game->ray.side_dist_y = (game->ray.map_y -  game->player->pos_y + 1.0) * game->ray.delta_dist_y; 
+	}
+	return (0);
+}
+
+int		ft_setup(t_game *game)
+{
+//	game->ray.pos_x = 12;
+//	game->ray.pos_y = 5;
+	game->ray.dir_x = -1;
+	game->ray.dir_y = 0;
+	game->ray.plan_x = 0;
+ 	game->ray.plan_y = 0.66;
+	return (0);
 }
 
 int		ft_raycasting(t_game *game)
@@ -821,27 +864,49 @@ int		ft_raycasting(t_game *game)
 	int x;
 
 	x = 0;
+//	printf("%d \n", game->data.screen_w);
+//	printf("posx%d poxy %d\n", game->player->pos_x, game->player->pos_x);
+	ft_setup(game);
 	if (!(game->ray.z_buffer = (double *)malloc(sizeof(double) * game->data.screen_w)))
 		return (MALLOC_ERR);
 	ft_bzero(game->ray.z_buffer, sizeof(double) * game->data.screen_h);
 	while (x < game->data.screen_w)
 	{
-		ft_init_rays(&game->data, game->player, &game->ray, x);
-		ft_step_side_dist(game->player, &game->ray);
-		ft_dda(&game->ray, &game->data);
-		ft_calc_perp_height(&game->data, game->player, &game->ray);
+//		ft_init_raycasting(game);
+		game->ray.cam_x = 2 * x / (double)game->data.screen_w - 1;
+		game->ray.ray_dir_x = game->player->dir_x + game->player->plan_x * game->ray.cam_x;
+		game->ray.ray_dir_y = game->player->dir_y + game->player->plan_y * game->ray.cam_x;
+//		ft_get_delta_dist(game);
+		game->ray.map_x = (int)game->player->pos_x;
+		game->ray.map_y = (int)game->player->pos_y;
+		game->ray.delta_dist_x = fabs(1 / game->ray.ray_dir_x);
+		game->ray.delta_dist_y = fabs(1 / game->ray.ray_dir_y);
+//		game->ray.line_height = 0;
+		game->ray.y = 0;
+		ft_step_side_dist(game);
+		ft_dda(game);
+		ft_get_perp_and_height(game);
 		game->ray.z_buffer[x] = game->ray.perp_wall_dist;
 		ft_draw_start_end(game);
 		ft_color(game, x);
+//		game->ray.ray_x++;
 		x++;
 	}
-	free(game->ray.z_buffer);
 	return (0);
 }
+
+/*int		ft_destroy_create_image(t_game *game)
+{
+	mlx_destroy_image(game->mlx->mlx_ptr, game->mlx->img);
+	en->mlx.img.ptr = mlx_new_image(en->mlx.ptr, g_config.r.x, g_config.r.y);
+	en->mlx.img.data = (int*)mlx_get_data_addr(en->mlx.img.ptr,
+	&en->mlx.img.bpp, &en->mlx.img.endian, &en->mlx.img.size_line);
+}*/
 
 int		ft_game_loop(t_game *game, t_data *data)
 {
 	ft_key_events(game);
+//	mlx_clear_window(game->mlx->win, game->mlx->mlx_ptr);
 	ft_raycasting(game);
 	return (0);
 }
@@ -850,10 +915,11 @@ int		ft_game_loop(t_game *game, t_data *data)
 int		ft_game(t_game *game, t_data *data)
 {
 	ft_game_init(game, data);
-//	mlx_hook(game->mlx->win, 17, 1L << 17, ft_exit, game);
-	mlx_loop_hook(game->mlx->mlx_ptr, &ft_game_loop, game);
+	mlx_key_hook(game->mlx->win, ft_deal_key, game);
 	mlx_hook(game->mlx->win, KEY_PRESS, 1L << 0, ft_press_key, game);
 	mlx_hook(game->mlx->win, KEY_RELEASE, 1l << 1, ft_release_key, game);
+//	mlx_hook(game->mlx->win, 17, 1L << 17, ft_exit, game);
+	mlx_loop_hook(game->mlx->mlx_ptr, &ft_game_loop, game);
 	mlx_loop(game->mlx->mlx_ptr);
 	return (0);
 }
