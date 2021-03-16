@@ -17,7 +17,7 @@ int		ft_press_key(int key, t_game *game)
 {
 	if (key == KEY_FORWARD)
 	{
-		ft_putstr_fd("z ", 1);
+//		ft_putstr_fd("z ", 1);
 		game->event->forward = 1;
 	}
 	else if (key == KEY_BACK)

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/12 11:42:17 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/16 11:34:34 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@
 # define MISSING_MAP -16
 # define PATH_ERR -17
 # define XPM_ERR -18
-
+# define RES_ERR -19
+# define COLOR_ERR -20
 # define NORTH 33
 # define EAST 34
 # define SOUTH 35
@@ -110,7 +111,6 @@ typedef struct		s_data
 	int				east;
 	int				curr_east;
 	int				sprite;
-	int				ceiling;
 	int				config_done;
 	int				config_double;
 	int				len;
@@ -134,8 +134,14 @@ typedef struct		s_data
 	char			*path_ea;
 	char			*path_we;
 	char			*path_sp;
-	int				ground;
+	int				floor;
+	unsigned int	floor_col;
+	unsigned int	ceiling_col;
+	int				ceiling;
 	int				is_space;
+	int				r;
+	int				g;
+	int				b;
 }					t_data;
 /*
 typedef struct		s_sprite

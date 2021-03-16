@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:26:11 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/12 10:01:33 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/12 16:33:16 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ int		ft_config_error(int error)
 		ft_putstr_fd("Wrong path file for texture or sprite ...\n", 1);
 	else if (error == XPM_ERR)
 		ft_putstr_fd("Texture or sprite is not a .xpm extension ...\n", 1);
-
+	else if (error == RES_ERR)
+		ft_putstr_fd("Wrong window's resolution ...\n", 1);
+	else if (error == COLOR_ERR)
+		ft_putstr_fd("Wrong color's configuration ...\n", 1);
 	return (0);
 }
 

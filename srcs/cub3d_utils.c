@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 09:49:03 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/12 09:52:22 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/12 15:10:22 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,16 @@ int			ft_get_nb(int i, char *line,t_data *data)
 	else
 		 data->screen_h = ft_atoi(tmp);
 	free(tmp);
+
+	if (data->screen_w == 0)// || data->screen_h == 0)
+		return (ft_error(RES_ERR));
+	if (data->res == 1)
+		if (data->screen_h == 0)// || data->screen_h == 0)
+			return (ft_error(RES_ERR));
+	if (data->screen_w > 2560)
+		data->screen_w = 2560;
+	if (data->screen_h > 1440)
+		(data->screen_h = 1440);
 	return (j);
 }
 
@@ -70,7 +80,9 @@ int				ft_get_res(t_data *data, char *line)
 	{
 		if (ft_isspace(line[i]))
 			i++;
-		if (ft_isdigit(line[i]))// || (ft_isspace(line[i])))
+		if (line[i] == '-')
+			return (ERROR);
+		if (ft_isdigit(line[i]))
 		{
 			i += ft_get_nb(i, line, data);
 			data->is_width = 1;

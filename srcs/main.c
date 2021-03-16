@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/12 11:43:09 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/16 11:44:25 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int		ft_init_data_1(t_data *data)
 	data->y = 0;
 	data->start_map = 0;
 	data->res = 0;
-	data->ground = 0;
+	data->floor = 0;
 	data->north = 0;
 	data->south = 0;
 	data->east = 0;
@@ -39,6 +39,11 @@ int		ft_init_data_1(t_data *data)
 	data->path_ea = NULL;
 	data->path_we = NULL;
 	data->path_sp = NULL;
+	data->r = 0;
+	data->g = 0;
+	data->b = 0;
+	data->floor_col = 0;
+	data->ceiling_col = 0;
 	return (0);
 }
 
@@ -96,8 +101,8 @@ int		ft_init_player(t_game *game)
 	game->player->pos_y = 0;
 	game->player->dir_x = 0;
 	game->player->dir_y = 0;
-	game->player->move_speed = 0.05;
-	game->player->rot_speed = 0.05;
+	game->player->move_speed = 0;
+	game->player->rot_speed = 0;
 	return (0);
 }
 
@@ -412,7 +417,6 @@ int		ft_parse_map(t_data *data, char *line)
 		printf(" %s -%d\n", data->map[i], i);
 		i++;
 	}
-//	free(data->map);
 	return (SUCCESS);
 }
 
@@ -472,14 +476,84 @@ int		ft_texture(t_data *data, char *line, int i)
 	return (0);
 }
 
+int		ft_check_char_color(char *line, int i, int len)
+{
+	int count;
+
+	count = 0;
+	while (i < len)
+	{
+		if (ft_isdigit(line[i]) || line[i] == ',' || ft_isspace(line[i]))
+		{
+			if (line[i] == ',')
+				count++;
+			i++;
+		}
+		else
+			return (ERROR);
+	}
+	if (count != 2)
+		return (ERROR);
+	return (SUCCESS);
+}
+int		ft_get_nb_color(t_data *data,char *line, int i)
+{
+	char	**tmp;
+
+	tmp = ft_split(line + i, ',');
+	data->r = ft_atoi(*tmp);
+	tmp = NULL;
+	while (line[i] != ',')
+		i++;
+	i++;
+	tmp = ft_split(line + i, ',');
+	data->g = ft_atoi(*tmp);
+	tmp = NULL;
+	while (line[i] != ',')
+		i++;
+	i++;
+	tmp = ft_split(line + i, ',');
+	data->b = ft_atoi(*tmp);
+	if (data->r > 255 || data->g > 255 || data->b > 255)
+		return (ERROR);
+	return (SUCCESS);
+}
+
+int		ft_get_color(t_data *data, char *line, int i)
+{
+	int		len;
+	int		color;
+
+	len = ft_strlen(line);
+	color = 0;
+	i++;
+	while (ft_isspace(line[i]))
+		i++;
+	while (ft_isspace(line[len]))
+		len--;
+	if (ft_check_char_color(line, i, len) == ERROR)
+		return (ERROR);
+	if (ft_get_nb_color(data, line, i) == ERROR)
+		return (ERROR);
+	color = (data->r * 256 * 256 + data->g * 256 + data->b);
+	if (data->floor == 2)
+		data->floor_col = color;
+	else if (data->ceiling == 2)
+		data->ceiling_col = color;
+//	printf("%d floor\n", data->floor_col);
+//	printf("%d ciel\n", data->ceiling_col);
+	return (SUCCESS);
+}
+
 int		ft_parse_config(t_data *data,  char *line, int i)
 {
-	static int x = 0;
-	x++;
 	while (ft_isspace(line[i]))
 		i++;
 	if (line[i] == 'R' && line[i + 1] == ' ')
-		ft_get_res(data, line);
+	{
+		if (ft_get_res(data, line) == ERROR)
+			return (ft_error(RES_ERR));
+	}
 	else if (line[i] == 'N' && line[i + 1] == 'O')
 	{
 		data->north += 2;
@@ -516,15 +590,19 @@ int		ft_parse_config(t_data *data,  char *line, int i)
 		data->sprite -= 1;
 	}
 	else if (line[i] == 'F' && line[i + 1] == ' ')
-		data->ground += 1;
+	{
+		data->floor += 2;
+		if (ft_get_color(data, line, i) == ERROR)
+			return (ft_error(COLOR_ERR));
+		data->floor -= 1;
+	}
 	else if (line[i] == 'C' && line[i + 1] == ' ')
-		data->ceiling += 1;
-/*	else if (line[i] == '1' && line[i + 1] == '1' && line[i + 1] == '1')
-	
-//		data->start_map2 = 1;
-		if ((data->config_done == 0) && (line[i] != ' '))
-			return ft_error(ERR_ARG_SAVE);
-	}*/
+	{
+		data->ceiling += 2;
+		if (ft_get_color(data, line, i) == ERROR)
+			return (ft_error(COLOR_ERR));
+		data->ceiling -= 1;
+	}
 	ft_check_config_double(data);
 	if (data->config_double != 0)
 		return (ft_error(CONFIG_DOUBLE));
@@ -665,6 +743,8 @@ void	ft_vert_line(t_game *game, int x, int y1, int y2, int color)
 
 	y = y1;
 	z = 0;
+	game->data.ceiling_col = mlx_get_color_value(game->mlx->mlx_ptr, game->data.ceiling_col);
+	game->data.floor_col = mlx_get_color_value(game->mlx->mlx_ptr, game->data.floor_col);
 	// walls
 	while (y <= y2)
 	{
@@ -674,19 +754,19 @@ void	ft_vert_line(t_game *game, int x, int y1, int y2, int color)
 	// ceiling
 	while (z < game->ray.draw_start)
 	{
-		mlx_pixel_put(game->mlx->mlx_ptr, game->mlx->win, x, z, 0x0000FF *2);
+		mlx_pixel_put(game->mlx->mlx_ptr, game->mlx->win, x, z,  game->data.ceiling_col);
 		z++;
 	}
 	// floor
 	z = game->ray.draw_end + 1;
 	while (z < game->data.screen_h)
 	{
-		mlx_pixel_put(game->mlx->mlx_ptr, game->mlx->win, x, z, 0xFFFFF0 / 6);
+		mlx_pixel_put(game->mlx->mlx_ptr, game->mlx->win, x, z, game->data.floor_col);
 		z++;
 	}
 }
 
-int		ft_color(t_game *game, int x)
+int		ft_color_tmp(t_game *game, int x)
 {
 	int color;
 
@@ -832,7 +912,7 @@ int		ft_raycasting(t_game *game)
 		ft_calc_perp_height(&game->data, game->player, &game->ray);
 		game->ray.z_buffer[x] = game->ray.perp_wall_dist;
 		ft_draw_start_end(game);
-		ft_color(game, x);
+		ft_color_tmp(game, x);
 		x++;
 	}
 	free(game->ray.z_buffer);
