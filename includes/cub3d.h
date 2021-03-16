@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/16 11:34:34 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/16 12:00:37 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,4 +250,7 @@ int		ft_exit(t_game *game);
 int		ft_key_events(t_game *game);
 //int		ft_init_rays(t_data *data, t_player *player, t_ray *ray);
 int		ft_init_raycasting(t_game *game);
+int		ft_check_char_color(char *line, int i, int len);
+int		ft_get_nb_color(t_data *data, char *line, int i);
+int		ft_get_color(t_data *data, char *line, int i);
 #endif
