@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:26:11 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/12 16:33:16 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/18 13:18:32 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ int		ft_config_error(int error)
 		ft_putstr_fd("One or more elements are duplicated in map config ...\n", 1);
 	else if (error == PATH_ERR)
 		ft_putstr_fd("Wrong path file for texture or sprite ...\n", 1);
+	else if (error == TEX_ERR)
+		ft_putstr_fd("Invalid texture file ...\n", 1);
 	else if (error == XPM_ERR)
 		ft_putstr_fd("Texture or sprite is not a .xpm extension ...\n", 1);
 	else if (error == RES_ERR)

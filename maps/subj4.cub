@@ -1,19 +1,19 @@
 R 300 300
-NO ./textures/brick.xpm
-SO ./textures/blue.xpm
+NO ./textures/redbrick.xpm
+SO ./textures/bluestone.xpm
 
-WE ./textures/wood.xpm
-EA ./textures/grey.xpm
+WE ./textures/eagle.xpm
+EA ./textures/greystone.xpm
 
-S ./textures/wolf/guard.xpm
-
-
+S ./textures/pillar.xpm
 
 
 
-F 22,12,114
 
-C 25,15,20
+
+F 21,90,114
+
+C 215,125,32
 
         111
         101

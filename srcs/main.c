@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/16 12:08:19 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/18 14:25:09 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,18 @@ int		ft_init_data_1(t_data *data)
 	data->east = 0;
 	data->west = 0;
 	data->ceiling = 0;
+	return (0);
+}
+
+int		ft_init_data_2(t_data *data)
+{
+	data->sprite = 0;
+	data->config_done = 0;
+	data->config_double = 0;
+	data->is_player = 0;
+	data->player_dir = 0;
+	data->first_space_x = 0;
+	data->is_space = 0;
 	data->path = NULL;
 	data->path_no = NULL;
 	data->path_so = NULL;
@@ -47,18 +59,6 @@ int		ft_init_data_1(t_data *data)
 	return (0);
 }
 
-int		ft_init_data_2(t_data *data)
-{
-	data->sprite = 0;
-	data->config_done = 0;
-	data->config_double = 0;
-	data->is_player = 0;
-	data->player_dir = 0;
-	data->first_space_x = 0;
-	data->is_space = 0;
-	return (0);
-}
-
 int		ft_init_img(t_game *game)
 {
 	if (!(game->img = (t_img *)malloc(sizeof(t_img))))
@@ -68,6 +68,8 @@ int		ft_init_img(t_game *game)
 	game->img->size_l = 0;
 	game->img->bpp = 0;
 	game->img->endian = 0;
+	game->img->width = 0;
+	game->img->height = 0;
 	return (SUCCESS);
 }
 
@@ -653,19 +655,8 @@ int		ft_setup_player(t_player *player, t_data *data, t_ray *ray)
 	return (0);
 }
 
-int		ft_game_init(t_game *game, t_data *data)
-{
-	ft_setup_player(game->player, &game->data, &game->ray);
-	ft_init_raycasting(game);
-	game->mlx->mlx_ptr = mlx_init();
-	game->mlx->win = (mlx_new_window(game->mlx->mlx_ptr, data->screen_w, 
-	data->screen_h, "cub3D"));
-	game->img->img_ptr = mlx_new_image(game->mlx->mlx_ptr, data->screen_w,
-	data->screen_h);
-	game->img->addr = mlx_get_data_addr(game->img->img_ptr, &game->img->bpp,
-	&game->img->size_l, &game->img->endian);
-	return (0);
-}
+
+
 
 void	ft_vert_line(t_game *game, int x, int y1, int y2, int color)
 {
@@ -721,6 +712,17 @@ int		ft_color_tmp(t_game *game, int x)
 	return (0);
 }
 
+int		ft_set_walls(t_game *game)
+{
+	t_tex *texture;
+
+	if (game->ray.side == 1)
+	{
+//		texture = game->tex[0];
+	}
+	return (SUCCESS);
+}
+
 int		ft_draw_start_end(t_game *game)
 {
 	game->ray.draw_start = -game->ray.line_height / 2 + game->data.screen_h / 2;
@@ -737,6 +739,7 @@ int		ft_draw_start_end(t_game *game)
 		game->ray.wall_x = game->player->pos_x +
 			game->ray.perp_wall_dist * game->ray.ray_dir_x;
 	game->ray.wall_x -= floor(game->ray.wall_x);
+	ft_set_walls(game);
 	return (0);
 }
 
@@ -827,6 +830,7 @@ void	ft_init_rays(t_data *data, t_player *player, t_ray *ray, int x)
 	ray->y = 0;
 }
 
+
 int		ft_raycasting(t_game *game)
 {
 	int x;
@@ -857,16 +861,83 @@ int		ft_game_loop(t_game *game, t_data *data)
 	return (0);
 }
 
+void	ft_copy_addr_content(int *addr, int *tmp_addr, int width, int height)
+{
+	int		x;
+	int		y;
+
+	y = 0;
+	while (y < height)
+	{
+		x = 0;
+		while (x < width)
+		{
+			addr[width * y + x] = tmp_addr[width * y + x];
+			x++;
+		}
+		y++;
+	}
+}
+
+int		ft_load_texture(char *path, t_mlx *mlx, t_tex *tex)
+{
+	void	*img_tmp_ptr;
+	int		*addr_tmp;
+	int		tmp;
+
+	if (!(img_tmp_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, path, &tex->width,
+	&tex->height)))
+		return (ERROR);
+	addr_tmp = (int *)mlx_get_data_addr(img_tmp_ptr, &tmp, &tmp, &tmp);
+	tex->addr = (int *)malloc(sizeof(int) * tex->width * tex->height);
+	ft_copy_addr_content(tex->addr, addr_tmp, tex->width, tex->height);
+	mlx_destroy_image(mlx->mlx_ptr, img_tmp_ptr);
+	return (SUCCESS);
+}
+
+int		ft_setup_textures(t_game *game, t_data *data, t_mlx *mlx)
+{
+	t_img	*tex;
+
+	if (ft_load_texture(data->path_no, game->mlx, &game->tex[0]) == ERROR)
+		return (ft_error(TEX_ERR));
+	if (ft_load_texture(data->path_so, game->mlx, &game->tex[1]) == ERROR)
+		return (ft_error(TEX_ERR));
+	if (ft_load_texture(data->path_ea, game->mlx, &game->tex[2]) == ERROR)
+		return (ft_error(TEX_ERR));
+	if (ft_load_texture(data->path_we, game->mlx, &game->tex[3]) == ERROR)
+		return (ft_error(TEX_ERR));
+	return (SUCCESS);
+}
+
+int		ft_game_init(t_game *game, t_data *data)
+{
+	ft_setup_player(game->player, &game->data, &game->ray);
+	ft_init_raycasting(game);
+	game->mlx->mlx_ptr = mlx_init();
+	ft_setup_textures(game, data, game->mlx);
+	game->mlx->win = (mlx_new_window(game->mlx->mlx_ptr, data->screen_w, 
+	data->screen_h, "cub3D"));
+	game->img->img_ptr = mlx_new_image(game->mlx->mlx_ptr, data->screen_w,
+	data->screen_h);
+	game->img->addr = (int*)mlx_get_data_addr(game->img->img_ptr, &game->img->bpp,
+	&game->img->size_l, &game->img->endian);
+	return (SUCCESS);
+}
 
 int		ft_game(t_game *game, t_data *data)
 {
-	ft_game_init(game, data);
+//	printf("OK\n");
+	if (ft_game_init(game, data) == ERROR)
+		return (ERROR);
+//	game->mlx->texture = ft_init_texture(game, data, game->mlx);
+//	ft_load_texture(game, data, game->mlx, &game->tex[0]);
 //	mlx_hook(game->mlx->win, 17, 1L << 17, ft_exit, game);
 	mlx_loop_hook(game->mlx->mlx_ptr, &ft_game_loop, game);
 	mlx_hook(game->mlx->win, KEY_PRESS, 1L << 0, ft_press_key, game);
 	mlx_hook(game->mlx->win, KEY_RELEASE, 1l << 1, ft_release_key, game);
 	mlx_loop(game->mlx->mlx_ptr);
-	return (0);
+	return (SUCCESS);
 }
 
 int		main(int argc, char **argv)
@@ -878,6 +949,7 @@ int		main(int argc, char **argv)
 	ft_init_game(&game);
 	if (ft_parser(argc, argv, &game.data) != SUCCESS)
 		return (ERROR);
-	ft_game(&game, &game.data);
+	if (ft_game(&game, &game.data) != SUCCESS)
+		return (ERROR);
 	return (0);
 }

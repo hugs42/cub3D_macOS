@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/16 12:00:37 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/18 13:18:24 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@
 # define XPM_ERR -18
 # define RES_ERR -19
 # define COLOR_ERR -20
+# define TEX_ERR -21
 # define NORTH 33
 # define EAST 34
 # define SOUTH 35
@@ -73,10 +74,12 @@
 typedef struct		s_img
 {
 	void			*img_ptr;
-	char			*addr;
+	int				*addr;
 	int				size_l;
 	int				bpp;
 	int				endian;
+	int				width;
+	int				height;
 }					t_img;
 
 /*typedef struct		s_path
@@ -213,8 +216,16 @@ typedef struct		s_mlx
 {
 	void			*mlx_ptr;
 	void			*win;
+	t_img			*sprite;
+	t_img			*texture;
 }					t_mlx;
 
+typedef struct		s_tex
+{
+	int				width;
+	int				height;
+	int				*addr;
+}					t_tex;
 
 typedef struct		s_game
 {
@@ -224,6 +235,8 @@ typedef struct		s_game
 	t_player		*player;
 	t_ray			ray;
 	t_event			*event;
+	t_img			*tex_no;
+	t_tex			tex[5];
 }					t_game;
 
 int		ft_check_arg(int argc, char **argv);
