@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/03/16 12:01:13 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/03/25 09:56:49 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,12 +14,16 @@ NAME = Cub3D
 
 SRCS = ./srcs/main.c \
 	./srcs/get_next_line.c \
+	./srcs/init.c \
+	./srcs/init_2.c \
 	./srcs/check.c \
 	./srcs/cub3d_utils.c \
 	./srcs/key_events.c \
 	./srcs/textures.c \
 	./srcs/init_raycasting.c \
 	./srcs/color_parser.c \
+	./srcs/player.c \
+	./srcs/render.c \
 	./srcs/error.c
 
 INC = -I./inc

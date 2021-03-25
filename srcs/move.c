@@ -6,14 +6,10 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/03 09:08:34 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/03 09:31:13 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:33:59 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
 
-int		ft_move_forward(t_player *player, t_layout *layout)
-{
-	
-	return (0);
-}
+

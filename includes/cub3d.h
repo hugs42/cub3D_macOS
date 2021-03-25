@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/18 13:18:24 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:32:31 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ typedef struct		s_mlx
 	void			*mlx_ptr;
 	void			*win;
 	t_img			*sprite;
-	t_img			*texture;
+//	t_img			*texture;
 }					t_mlx;
 
 typedef struct		s_tex
@@ -225,6 +225,11 @@ typedef struct		s_tex
 	int				width;
 	int				height;
 	int				*addr;
+	int				tex_x;
+	int				tex_y;
+	int				tex_num;
+	double			tex_pos;
+	double			step;
 }					t_tex;
 
 typedef struct		s_game
@@ -235,10 +240,16 @@ typedef struct		s_game
 	t_player		*player;
 	t_ray			ray;
 	t_event			*event;
-	t_img			*tex_no;
 	t_tex			tex[5];
 }					t_game;
 
+int		ft_init_game(t_game *game);
+int		ft_init_data_1(t_data *data);
+int		ft_init_data_2(t_data *data);
+int		ft_init_player(t_game *game);
+int		ft_init_img(t_game *game);
+int		ft_init_event(t_game *game);
+int		ft_init_mlx(t_game *game);
 int		ft_check_arg(int argc, char **argv);
 int		ft_check_arg_ext(char *str);
 int		ft_check_xpm_ext(char *str);
@@ -266,4 +277,12 @@ int		ft_init_raycasting(t_game *game);
 int		ft_check_char_color(char *line, int i, int len);
 int		ft_get_nb_color(t_data *data, char *line, int i);
 int		ft_get_color(t_data *data, char *line, int i);
+void	ft_pos_north_south(t_player *player, t_data *data);
+void	ft_pos_west_east(t_player *player, t_data *data);
+int		ft_setup_player(t_player *player, t_data *data);
+int		ft_setup_textures(t_game *game, t_data *data, t_mlx *mlx);
+int		ft_load_textures(char *path, t_mlx *mlx, t_tex *tex);
+int		ft_select_textures(t_game *game);
+int		ft_render_walls(int x, t_game *game, t_data *data, t_tex *tex);
+void	ft_render_colors(int x, t_game *game, t_data *data, t_mlx *mlx);
 #endif

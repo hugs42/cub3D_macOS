@@ -6,118 +6,11 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/18 14:25:09 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/25 10:23:32 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
-
-int		ft_init_data_1(t_data *data)
-{
-	data->screen_w = 0;
-	data->screen_h = 0;
-	data->is_width = 0;
-	data->tmp = 0;
-	data->len = 0;
-	data->max_len = 0;
-	data->nb_lines = 0;
-	data->nb_total_lines = 0;
-	data->map = NULL;
-	data->x = 0;
-	data->y = 0;
-	data->start_map = 0;
-	data->res = 0;
-	data->floor = 0;
-	data->north = 0;
-	data->south = 0;
-	data->east = 0;
-	data->west = 0;
-	data->ceiling = 0;
-	return (0);
-}
-
-int		ft_init_data_2(t_data *data)
-{
-	data->sprite = 0;
-	data->config_done = 0;
-	data->config_double = 0;
-	data->is_player = 0;
-	data->player_dir = 0;
-	data->first_space_x = 0;
-	data->is_space = 0;
-	data->path = NULL;
-	data->path_no = NULL;
-	data->path_so = NULL;
-	data->path_ea = NULL;
-	data->path_we = NULL;
-	data->path_sp = NULL;
-	data->r = 0;
-	data->g = 0;
-	data->b = 0;
-	data->floor_col = 0;
-	data->ceiling_col = 0;
-	return (0);
-}
-
-int		ft_init_img(t_game *game)
-{
-	if (!(game->img = (t_img *)malloc(sizeof(t_img))))
-		return (ERROR);
-	game->img->img_ptr = NULL;
-	game->img->addr = NULL;
-	game->img->size_l = 0;
-	game->img->bpp = 0;
-	game->img->endian = 0;
-	game->img->width = 0;
-	game->img->height = 0;
-	return (SUCCESS);
-}
-
-int		ft_init_mlx(t_game *game)
-{
-	if (!(game->mlx = (t_mlx *)malloc(sizeof(t_mlx))))
-		return (ERROR);
-	game->mlx->mlx_ptr = NULL;
-	game->mlx->win = NULL;
-	return (0);
-}
-
-int		ft_init_event(t_game *game)
-{
-	if (!(game->event = (t_event *)malloc(sizeof(t_event))))
-		return (ERROR);
-	game->event->forward = 0;
-	game->event->back = 0;
-	game->event->right = 0;
-	game->event->left = 0;
-	game->event->right_rot = 0;
-	game->event->left_rot = 0;
-	return (0);
-}
-
-int		ft_init_player(t_game *game)
-{
-	if (!(game->player = (t_player *)malloc(sizeof(t_player))))
-		return (ERROR);
-	game->player->pos_x = 0;
-	game->player->pos_y = 0;
-	game->player->dir_x = 0;
-	game->player->dir_y = 0;
-	game->player->move_speed = 0;
-	game->player->rot_speed = 0;
-	return (0);
-}
-
-int		ft_init_game(t_game *game)
-{
-	ft_init_data_1(&game->data);
-	ft_init_data_2(&game->data);
-	ft_init_img(game);
-	ft_init_mlx(game);
-	ft_init_event(game);
-	ft_init_player(game);
-	return (SUCCESS);
-}
 
 int		ft_is_player(char c)
 {
@@ -608,138 +501,21 @@ int		ft_parser(int argc, char **argv, t_data *data)
 	return (SUCCESS);
 }
 
-void	ft_pos_west_east(t_player *player, t_data *data)
+int		ft_draw_start_end(t_game *game, t_data *data, t_ray *ray)
 {
-	player->dir_x = 0;
-	player->plan_y = 0;
-	player->pos_x += 0.5;
-	if (data->player_dir == WEST)
-	{
-	player->dir_y = -1;
-	player->plan_x = 0.66;
-	}
+	ray->draw_start = -ray->line_height / 2 + data->screen_h / 2;
+	if (ray->draw_start < 0)
+		ray->draw_start = 0;
+	ray->draw_end = ray->line_height / 2 + data->screen_h / 2;
+	if (ray->draw_end >= data->screen_h)
+		ray->draw_end = data->screen_h - 1;
+	if (ray->side == 0 || ray->side == 1)
+		ray->wall_x = game->player->pos_y +
+			ray->perp_wall_dist * ray->ray_dir_y;
 	else
-	{
-		player->dir_y = 1;
-		player->plan_x = -0.66;
-	}
-}
-
-void	ft_pos_north_south(t_player *player, t_data *data)
-{
-	player->dir_y = 0;
-	player->plan_x = 0;
-	player->pos_y += 0.5;
-	if (data->player_dir == NORTH)
-	{
-		player->dir_x = -1;
-		player->plan_y = -0.66;
-	}
-	else
-	{
-		player->dir_x = 1;
-		player->plan_y = 0.66;
-	}
-}
-
-int		ft_setup_player(t_player *player, t_data *data, t_ray *ray)
-{
-	player->pos_x = data->player_pos_x;
-	player->pos_y = data->player_pos_y;
-	player->move_speed = 0.3;
-	player->rot_speed = 0.05;
-	if (data->player_dir == WEST || data->player_dir == EAST)
-		ft_pos_west_east(player, data);
-	else if (data->player_dir == NORTH || data->player_dir ==  SOUTH)
-		ft_pos_north_south(player, data);
-	return (0);
-}
-
-
-
-
-void	ft_vert_line(t_game *game, int x, int y1, int y2, int color)
-{
-	int	y;
-	int	z;
-
-	y = y1;
-	z = 0;
-	game->data.ceiling_col = mlx_get_color_value(game->mlx->mlx_ptr, game->data.ceiling_col);
-	game->data.floor_col = mlx_get_color_value(game->mlx->mlx_ptr, game->data.floor_col);
-	// walls
-	while (y <= y2)
-	{
-		mlx_pixel_put(game->mlx->mlx_ptr, game->mlx->win, x, y, color);
-		y++;
-	}
-	// ceiling
-	while (z < game->ray.draw_start)
-	{
-		mlx_pixel_put(game->mlx->mlx_ptr, game->mlx->win, x, z,  game->data.ceiling_col);
-		z++;
-	}
-	// floor
-	z = game->ray.draw_end + 1;
-	while (z < game->data.screen_h)
-	{
-		mlx_pixel_put(game->mlx->mlx_ptr, game->mlx->win, x, z, game->data.floor_col);
-		z++;
-	}
-}
-
-int		ft_color_tmp(t_game *game, int x)
-{
-	int color;
-
-	color = 0;
-	if (game->data.map[game->ray.map_x][game->ray.map_y] == '1')
-	{
-		color = 0xFFFF00;
-	}
-	else if (game->data.map[game->ray.map_x][game->ray.map_y] == '2')
-		color = 0x00FFF0;
-	else
-		color = 0xFFFFF0;
-	if (game->ray.side == 1)
-		color = color / 2;
-	else if (game->ray.side == 2)
-		color = color / 3;
-	else if (game->ray.side == 3)
-		color = color / 4;
-	ft_vert_line(game, x, game->ray.draw_start, game->ray.draw_end, color);
-//	ft_color_floor_ceil(game);
-	return (0);
-}
-
-int		ft_set_walls(t_game *game)
-{
-	t_tex *texture;
-
-	if (game->ray.side == 1)
-	{
-//		texture = game->tex[0];
-	}
-	return (SUCCESS);
-}
-
-int		ft_draw_start_end(t_game *game)
-{
-	game->ray.draw_start = -game->ray.line_height / 2 + game->data.screen_h / 2;
-
-	if (game->ray.draw_start < 0)
-		game->ray.draw_start = 0;
-	game->ray.draw_end = game->ray.line_height / 2 + game->data.screen_h / 2;
-	if (game->ray.draw_end >= game->data.screen_h)
-		game->ray.draw_end = game->data.screen_h - 1;
-	if (game->ray.side == 0 || game->ray.side == 1)
-		game->ray.wall_x = game->player->pos_y +
-			game->ray.perp_wall_dist * game->ray.ray_dir_y;
-	else
-		game->ray.wall_x = game->player->pos_x +
-			game->ray.perp_wall_dist * game->ray.ray_dir_x;
-	game->ray.wall_x -= floor(game->ray.wall_x);
-	ft_set_walls(game);
+		ray->wall_x = game->player->pos_x +
+			ray->perp_wall_dist * ray->ray_dir_x;
+	ray->wall_x -= floor(ray->wall_x);
 	return (0);
 }
 
@@ -748,7 +524,7 @@ int		ft_dda(t_ray *ray, t_data *data)
 	ray->hit = 0;
 	while (ray->hit == 0)
 	{
-		// avance jusqu'a la prochaine case 
+		// avance jusqu'a la prochaine case
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
 			ray->side_dist_x += ray->delta_dist_x;
@@ -815,8 +591,6 @@ int		ft_step_side_dist(t_player *player, t_ray *ray)
 	return (0);
 }
 
-
-
 void	ft_init_rays(t_data *data, t_player *player, t_ray *ray, int x)
 {
 	ray->cam_x = 2 * x / (double)data->screen_w - 1;
@@ -845,12 +619,13 @@ int		ft_raycasting(t_game *game)
 		ft_step_side_dist(game->player, &game->ray);
 		ft_dda(&game->ray, &game->data);
 		ft_calc_perp_height(&game->data, game->player, &game->ray);
-		game->ray.z_buffer[x] = game->ray.perp_wall_dist;
-		ft_draw_start_end(game);
-		ft_color_tmp(game, x);
+//		game->ray.z_buffer[x] = game->ray.perp_wall_dist;
+		ft_draw_start_end(game, &game->data, &game->ray);
+		ft_render_walls(x, game, &game->data, game->tex);
 		x++;
 	}
-	free(game->ray.z_buffer);
+	mlx_put_image_to_window(game->mlx->mlx_ptr, game->mlx->win, game->img->img_ptr, 0,0);
+//	free(game->ray.z_buffer);
 	return (0);
 }
 
@@ -861,58 +636,9 @@ int		ft_game_loop(t_game *game, t_data *data)
 	return (0);
 }
 
-void	ft_copy_addr_content(int *addr, int *tmp_addr, int width, int height)
-{
-	int		x;
-	int		y;
-
-	y = 0;
-	while (y < height)
-	{
-		x = 0;
-		while (x < width)
-		{
-			addr[width * y + x] = tmp_addr[width * y + x];
-			x++;
-		}
-		y++;
-	}
-}
-
-int		ft_load_texture(char *path, t_mlx *mlx, t_tex *tex)
-{
-	void	*img_tmp_ptr;
-	int		*addr_tmp;
-	int		tmp;
-
-	if (!(img_tmp_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, path, &tex->width,
-	&tex->height)))
-		return (ERROR);
-	addr_tmp = (int *)mlx_get_data_addr(img_tmp_ptr, &tmp, &tmp, &tmp);
-	tex->addr = (int *)malloc(sizeof(int) * tex->width * tex->height);
-	ft_copy_addr_content(tex->addr, addr_tmp, tex->width, tex->height);
-	mlx_destroy_image(mlx->mlx_ptr, img_tmp_ptr);
-	return (SUCCESS);
-}
-
-int		ft_setup_textures(t_game *game, t_data *data, t_mlx *mlx)
-{
-	t_img	*tex;
-
-	if (ft_load_texture(data->path_no, game->mlx, &game->tex[0]) == ERROR)
-		return (ft_error(TEX_ERR));
-	if (ft_load_texture(data->path_so, game->mlx, &game->tex[1]) == ERROR)
-		return (ft_error(TEX_ERR));
-	if (ft_load_texture(data->path_ea, game->mlx, &game->tex[2]) == ERROR)
-		return (ft_error(TEX_ERR));
-	if (ft_load_texture(data->path_we, game->mlx, &game->tex[3]) == ERROR)
-		return (ft_error(TEX_ERR));
-	return (SUCCESS);
-}
-
 int		ft_game_init(t_game *game, t_data *data)
 {
-	ft_setup_player(game->player, &game->data, &game->ray);
+	ft_setup_player(game->player, &game->data);
 	ft_init_raycasting(game);
 	game->mlx->mlx_ptr = mlx_init();
 	ft_setup_textures(game, data, game->mlx);
@@ -927,12 +653,9 @@ int		ft_game_init(t_game *game, t_data *data)
 
 int		ft_game(t_game *game, t_data *data)
 {
-//	printf("OK\n");
 	if (ft_game_init(game, data) == ERROR)
 		return (ERROR);
-//	game->mlx->texture = ft_init_texture(game, data, game->mlx);
-//	ft_load_texture(game, data, game->mlx, &game->tex[0]);
-//	mlx_hook(game->mlx->win, 17, 1L << 17, ft_exit, game);
+	mlx_hook(game->mlx->win, 17, 1L << 17, ft_exit, game);
 	mlx_loop_hook(game->mlx->mlx_ptr, &ft_game_loop, game);
 	mlx_hook(game->mlx->win, KEY_PRESS, 1L << 0, ft_press_key, game);
 	mlx_hook(game->mlx->win, KEY_RELEASE, 1l << 1, ft_release_key, game);

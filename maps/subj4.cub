@@ -1,8 +1,8 @@
-R 300 300
-NO ./textures/redbrick.xpm
-SO ./textures/bluestone.xpm
+R 1000 600
+NO ./textures/wood.xpm
+SO ./textures/eagle.xpm
 
-WE ./textures/eagle.xpm
+WE ./textures/redbrick.xpm
 EA ./textures/greystone.xpm
 
 S ./textures/pillar.xpm
@@ -13,7 +13,7 @@ S ./textures/pillar.xpm
 
 F 21,90,114
 
-C 215,125,32
+C 114,65,22
 
         111
         101
