@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/03/25 09:56:49 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/03/25 20:38:18 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,10 @@ SRCS = ./srcs/main.c \
 	./srcs/get_next_line.c \
 	./srcs/init.c \
 	./srcs/init_2.c \
+	./srcs/parser.c \
+	./srcs/parser_utils.c \
+	./srcs/map_parser.c \
+	./srcs/map_parser_2.c \
 	./srcs/check.c \
 	./srcs/cub3d_utils.c \
 	./srcs/key_events.c \
@@ -24,6 +28,7 @@ SRCS = ./srcs/main.c \
 	./srcs/color_parser.c \
 	./srcs/player.c \
 	./srcs/render.c \
+	./srcs/config_parser.c \
 	./srcs/error.c
 
 INC = -I./inc

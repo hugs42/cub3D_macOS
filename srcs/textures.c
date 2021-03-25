@@ -6,11 +6,29 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 12:46:53 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/25 10:30:54 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/25 18:44:16 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
+
+int		ft_tex_path(t_data *data, char *line, int i)
+{
+	if (ft_get_path(data, line, i) == ERROR)
+		return (ERROR);
+	if (data->north == 2)
+		data->path_no = ft_strdup(data->path);
+	else if (data->south == 2)
+		data->path_so = ft_strdup(data->path);
+	else if (data->east == 2)
+		data->path_ea = ft_strdup(data->path);
+	else if (data->west == 2)
+		data->path_we = ft_strdup(data->path);
+	else if (data->sprite == 2)
+		data->path_sp = ft_strdup(data->path);
+	free(data->path);
+	return (0);
+}
 
 int		ft_select_textures(t_game *game)
 {

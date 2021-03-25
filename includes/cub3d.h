@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/25 10:32:31 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/25 20:34:53 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,6 @@ typedef struct		s_mlx
 	void			*mlx_ptr;
 	void			*win;
 	t_img			*sprite;
-//	t_img			*texture;
 }					t_mlx;
 
 typedef struct		s_tex
@@ -250,29 +249,45 @@ int		ft_init_player(t_game *game);
 int		ft_init_img(t_game *game);
 int		ft_init_event(t_game *game);
 int		ft_init_mlx(t_game *game);
+int		ft_parser(int argc, char **argv, t_data *data);
+int		ft_parse_line(t_data *data, char *line);
+int		ft_parse_info_map(t_data *data, char *line);
+int		ft_parse_config(t_data *data, char *line, int i);
+int		ft_parse_map(t_data *data, char *line);
 int		ft_check_arg(int argc, char **argv);
 int		ft_check_arg_ext(char *str);
 int		ft_check_xpm_ext(char *str);
 int		ft_check_char(t_data *data, char *line);
 int		ft_check_char_first_line(t_data *data, char *line);
+int		ft_is_player(char c);
+void	ft_get_player(t_data *data, int x, int y);
 int		ft_get_res(t_data *data, char *line);
 int		ft_get_nb(int i, char *line, t_data *data);
 int		ft_check_empty_line(t_data *data, char *line);
 int		ft_start_map(t_data *data, char *line);
+int		ft_get_map(t_data *data, char *line);
+int		ft_copy_map(t_data *data, char *line);
+int		ft_check_wall(t_data *data);
+int		ft_check_player(t_data *data);
+void	ft_fill_spaces(t_data *data);
+int		ft_check_map_size(t_data *data);
+int		ft_check_border(t_data *data);
+int		ft_check_neighborhood(t_data *data, int x, int y);
+int		ft_check_neighborhood_2(t_data *data, int x, int y);
 int		ft_check_config_done(t_data *data);
 int		ft_check_config_double(t_data *data);
 int		ft_check_config(t_data *data);
 int		ft_error(int error);
 int		ft_is_not_wall(char c);
+int		ft_get_path(t_data *data, char *line, int i);
 int		ft_check_map_size(t_data *data);
-int		ft_textures(t_data *data, char *line);
+int		ft_tex_path(t_data *data, char *line, int i);
 int		ft_skip_spaces(char *str, int i);
 int		ft_skip_spaces2(t_data *data, int x, int y);
 int		ft_press_key(int key, t_game *game);
 int		ft_release_key(int key, t_game *game);
 int		ft_exit(t_game *game);
 int		ft_key_events(t_game *game);
-//int		ft_init_rays(t_data *data, t_player *player, t_ray *ray);
 int		ft_init_raycasting(t_game *game);
 int		ft_check_char_color(char *line, int i, int len);
 int		ft_get_nb_color(t_data *data, char *line, int i);

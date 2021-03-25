@@ -6,11 +6,32 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:19:26 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/24 23:39:09 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/25 19:51:31 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
+
+int		ft_is_player(char c)
+{
+	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
+		return (1);
+	return (0);
+}
+
+void	ft_get_player(t_data *data, int x, int y)
+{
+	if (data->map[x][y] == 'N')
+		data->player_dir = NORTH;
+	else if (data->map[x][y] == 'S')
+		data->player_dir = SOUTH;
+	else if (data->map[x][y] == 'E')
+		data->player_dir = EAST;
+	else if (data->map[x][y] == 'W')
+		data->player_dir = WEST;
+	data->player_pos_x = x;
+	data->player_pos_y = y;
+}
 
 void	ft_pos_north_south(t_player *player, t_data *data)
 {

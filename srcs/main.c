@@ -6,18 +6,11 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/25 10:23:32 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/25 20:39:55 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
-
-int		ft_is_player(char c)
-{
-	if (c == 'N' || c == 'S' || c == 'E' || c == 'W')
-		return (1);
-	return (0);
-}
 
 void	ft_fill_spaces(t_data *data)
 {
@@ -53,20 +46,6 @@ void	ft_fill_spaces(t_data *data)
 	}
 }
 
-void	ft_get_player(t_data *data, int x, int y)
-{
-	if (data->map[x][y] == 'N')
-		data->player_dir = NORTH;
-	else if (data->map[x][y] == 'S')
-		data->player_dir = SOUTH;
-	else if (data->map[x][y] == 'E')
-		data->player_dir = EAST;
-	else if (data->map[x][y] == 'W')
-		data->player_dir = WEST;
-	data->player_pos_x = x;
-	data->player_pos_y = y;
-}
-
 int		ft_check_player(t_data *data)
 {
 	static		int x;
@@ -90,27 +69,6 @@ int		ft_check_player(t_data *data)
 	}
 	if (data->is_player == 0 || data->is_player > 1)
 		return (ft_error(ERR_PLAYER));
-	return (SUCCESS);
-}
-
-int		ft_check_neighborhood(t_data *data, int x, int y)
-{
-	if ((data->map[x][y - 1] != '1') && (!(ft_is_not_wall(data->map[x][y - 1]))))
-		return (ERROR);
-	if ((data->map[x][y + 1] != '1') && (!(ft_is_not_wall(data->map[x][y + 1]))))
-		return (ERROR);
-	if ((data->map[x - 1][y] != '1') && (!(ft_is_not_wall(data->map[x - 1][y]))))
-		return (ERROR);
-	if ((data->map[x + 1][y] != '1') && (!(ft_is_not_wall(data->map[x + 1][y]))))
-		return (ERROR);
-	if ((data->map[x - 1][y - 1] != '1') && (!(ft_is_not_wall(data->map[x - 1][y - 1]))))
-		return (ERROR);
-	if ((data->map[x - 1][y + 1] != '1') && (!(ft_is_not_wall(data->map[x - 1][y + 1]))))
-		return (ERROR);
-	if ((data->map[x + 1][y - 1] != '1') && (!(ft_is_not_wall(data->map[x + 1][y - 1]))))
-		return (ERROR);
-	if ((data->map[x + 1][y + 1] != '1') && (!(ft_is_not_wall(data->map[x + 1][y + 1]))))
-		return (ERROR);
 	return (SUCCESS);
 }
 
@@ -158,8 +116,6 @@ int		ft_check_border_left(t_data *data, int x, int y, int len)
 {
 	while (y <= len)
 	{
-//		while (ft_isspace(data->map[x][y]))
-//			y++;
 		y = ft_skip_spaces2(data, x, y);
 		if (ft_is_not_wall(data->map[x][y]))
 		{
@@ -229,25 +185,6 @@ int		ft_check_border(t_data *data)
 	return (SUCCESS);
 }
 
-int		ft_get_map(t_data *data, char *line)
-{
-	static int x = 0;
-	int y;
-
-	y = 0;
-	data->map[x] = NULL;
-	if (!(data->map[x] = (char*)malloc(sizeof(char) * data->max_len + 1)))
-		return (ERROR);
-	while (line[y] != '\0')
-	{
-		data->map[x][y] = line[y];
-		y++;
-	}
-	data->map[x][y] = '\0';
-	x++;
-	return (SUCCESS);
-}
-
 int		ft_check_space(t_data *data, char *line)
 {
 	int i;
@@ -269,235 +206,6 @@ int		ft_parse_info_map(t_data *data, char *line)
 	ft_check_space(data, line);
 	if (data->len > data->max_len)
 		data->max_len = data->len;
-	return (SUCCESS);
-}
-
-int		ft_parse_map(t_data *data, char *line)
-{
-	int		fd;
-	int		ret;
-	char	*str;
-	int i = 0;
-
-	ret = 1;
-	fd = open(line, O_RDONLY);
-	if (!(data->map = (char**)malloc(sizeof(char*) * data->nb_lines + 1)))
-		return (ft_error(MALLOC_ERR));
-	data->nb_total_lines = 0;
-	while ((ret = get_next_line(fd, &line)) > 0)
-	{
-		data->nb_total_lines++;
-		if (data->nb_total_lines >= data->start_map)
-		{
-			if (ft_check_empty_line(data, line) == ERROR)
-				return (ft_error(EMPTY_LINE));
-			i = ft_skip_spaces(line, i);
-			if (ft_get_map(data, line) != SUCCESS)
-				return (ft_error(MALLOC_ERR));
-		}
-	}
-	if (ft_check_map_size(data) != SUCCESS)
-		return (ERROR);
-	if (ft_check_border(data) != SUCCESS)
-		return (ERROR);
-	if (ft_check_wall(data) != SUCCESS)
-		return (ERROR);
-	if (ft_check_player(data) != SUCCESS)
-		return (ERROR);
-	ft_fill_spaces(data);
-	close(fd);
-	i = 0;
-	while (i <= data->nb_lines)
-	{
-		printf(" %s -%d\n", data->map[i], i);
-		i++;
-	}
-	return (SUCCESS);
-}
-
-int		ft_get_path(t_data *data, char *line, int i)
-{
-	int len;
-	int j;
-
-	j = 0;
-	len = ft_strlen(line);
-	i += 2;
-	while (ft_isspace(line[i]))
-		i++;
-	while (ft_isspace(line[len]))
-		len--;
-	if (!(data->path = (char*)malloc(sizeof(char) * len - i + 1)))
-		return (ERROR);
-	if (line[i] == '.' && line [i + 1] == '/')
-	{
-		while (i < len)
-		{
-			data->path[j] = line[i];
-			i++;
-			j++;
-		}
-		data->path[j] = '\0';
-	}
-	i = 0;
-	if (ft_strlen(data->path) == 0)
-		return (ERROR);
-	while (data->path[i] !=  '\0')
-	{
-		if (ft_isspace(data->path[i]))
-			return (ERROR);
-		i++;
-	}
-	if (ft_check_xpm_ext(data->path) == ERROR)
-		return (ft_error(XPM_ERR));
-	return (0);
-}
-
-int		ft_texture(t_data *data, char *line, int i)
-{
-	if (ft_get_path(data, line, i) == ERROR)
-		return (ERROR);
-	if (data->north == 2)
-		data->path_no = ft_strdup(data->path);
-	else if (data->south == 2)
-		data->path_so = ft_strdup(data->path);
-	else if (data->east == 2)
-		data->path_ea = ft_strdup(data->path);
-	else if (data->west == 2)
-		data->path_we = ft_strdup(data->path);
-	else if (data->sprite == 2)
-		data->path_sp = ft_strdup(data->path);
-	free(data->path);
-	return (0);
-}
-
-int		ft_parse_config(t_data *data,  char *line, int i)
-{
-	while (ft_isspace(line[i]))
-		i++;
-	if (line[i] == 'R' && line[i + 1] == ' ')
-	{
-		if (ft_get_res(data, line) == ERROR)
-			return (ft_error(RES_ERR));
-	}
-	else if (line[i] == 'N' && line[i + 1] == 'O')
-	{
-		data->north += 2;
-		if (ft_texture(data, line, i) == ERROR)
-			return (ft_error(PATH_ERR));
-		data->north -= 1;
-	}
-	else if (line[i] == 'S' && line[i + 1] == 'O')
-	{
-		data->south += 2;
-		if (ft_texture(data, line, i) == ERROR)
-			return (ft_error(PATH_ERR));
-		data->south -= 1;
-	}
-	else if (line[i] == 'W' && line[i + 1] == 'E')
-	{
-		data->west += 2;
-		if (ft_texture(data, line, i) == ERROR)
-			return (ft_error(PATH_ERR));
-		data->west -= 1;
-	}
-	else if (line[i] == 'E' && line[i + 1] == 'A')
-	{
-		data->east += 2;
-		if (ft_texture(data, line, i) == ERROR)
-			return (ft_error(PATH_ERR));
-		data->east -= 1;
-	}
-	else if (line[i] == 'S' && line[i + 1] == ' ')
-	{
-		data->sprite += 2;
-		if (ft_texture(data, line, i) == ERROR)
-			return (ft_error(PATH_ERR));
-		data->sprite -= 1;
-	}
-	else if (line[i] == 'F' && line[i + 1] == ' ')
-	{
-		data->floor += 2;
-		if (ft_get_color(data, line, i) == ERROR)
-			return (ft_error(COLOR_ERR));
-		data->floor -= 1;
-	}
-	else if (line[i] == 'C' && line[i + 1] == ' ')
-	{
-		data->ceiling += 2;
-		if (ft_get_color(data, line, i) == ERROR)
-			return (ft_error(COLOR_ERR));
-		data->ceiling -= 1;
-	}
-	ft_check_config_double(data);
-	if (data->config_double != 0)
-		return (ft_error(CONFIG_DOUBLE));
-	return (SUCCESS);
-}
-
-int		ft_parse_line(t_data *data, char *line)
-{
-	int		len;
-	int		i;
-	static int		x = 0;
-
-	len = 0;
-	i = 0;
-//	printf("start_map= %d \n", data->start_map);
-	len = ft_strlen(line);
-	data->nb_total_lines += 1;
-	ft_check_config_done(data);
-	i = ft_skip_spaces(line, i);
-	if (line[i] == '\n' || line[i] == '\0' || len == 0)
-		return (SUCCESS);
-	else if (ft_parse_config(data, line, i) != SUCCESS)
-		return (ERROR);
-	if (data->start_map == 0 && data->config_done == 1)
-	{
-		if (ft_check_char_first_line(data, line) == ERROR)
-			return (ERROR);
-		if (ft_start_map(data, line) == ERROR)
-			return (ERROR);
-	}
-	else if (data->start_map != 0 && data->nb_total_lines >= data->start_map)
-	{
-		i = ft_skip_spaces(line, i);
-		if (!(ft_isspace(line[i])))
-		{
-			if (ft_parse_info_map(data, line) != SUCCESS)
-				return (ERROR);
-		}
-	}
-	return (SUCCESS);
-}
-
-int		ft_parser(int argc, char **argv, t_data *data)
-{
-	int			ret;
-	char		*line;
-
-	ret = 1;
-	if ((data->fd = open(argv[1], O_DIRECTORY) != -1))
-		return (ft_error(DIRECTORY));
-	if ((data->fd = open(argv[1], O_RDONLY)) < 0)
-		return (ft_error(WRONG_FILE));
-	while ((ret = get_next_line(data->fd, &line)) > 0)
-	{
-		if (ft_parse_line(data, line) != SUCCESS)
-			return (ERROR);
-		free(line);
-	}
-	if (data->start_map == 0)
-		return (ft_error(MISSING_MAP));
-	if (data->config_done == 0)
-		return (ft_error(WRONG_CONFIG));
-	if (data->is_space == 0)
-		return (ft_error(ERR_PLAYER));
-	if (data->config_double != 0)
-		return (ft_error(CONFIG_DOUBLE));
-	close(data->fd);
-	if (ft_parse_map(data, argv[1]) != SUCCESS)
-		return (ERROR);
 	return (SUCCESS);
 }
 
