@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:26:12 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/26 10:04:49 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/26 10:54:09 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,11 @@ int		ft_parser(int argc, char **argv, t_data *data)
 	close(data->fd);
 	if (ft_parse_map(data, argv[1]) != SUCCESS)
 		return (ERROR);
+	int i = 0;
+	while (i <= data->nb_lines)
+	{
+		printf(" %s -%d\n", data->map[i], i);
+		i++;
+	}
 	return (SUCCESS);
 }

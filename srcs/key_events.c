@@ -119,14 +119,14 @@ void	ft_rot_right(t_player *player)
 
 	old_dir_x = player->dir_x;
 	old_plan_x = player->plan_x;
-	player->dir_x = player->dir_x * cos(player->rot_speed) - player->dir_y *
-	sin(player->rot_speed);
-	player->dir_y = old_dir_x * sin(player->rot_speed) + player->dir_y *
-	cos(player->rot_speed);
+	player->dir_x = player->dir_x * cos(-player->rot_speed) - player->dir_y *
+	sin(-player->rot_speed);
+	player->dir_y = old_dir_x * sin(-player->rot_speed) + player->dir_y *
+	cos(-player->rot_speed);
 	player->plan_x = player->plan_x * cos(player->rot_speed) - player->plan_y *
-	sin(player->rot_speed);
-	player->plan_y = old_plan_x * sin(player->rot_speed) + player->plan_y *
-	cos(player->rot_speed);
+	sin(-player->rot_speed);
+	player->plan_y = old_plan_x * sin(-player->rot_speed) + player->plan_y *
+	cos(-player->rot_speed);
 }
 
 void	ft_rot_left(t_player *player)
@@ -136,14 +136,14 @@ void	ft_rot_left(t_player *player)
 
 	old_dir_x = player->dir_x;
 	old_plan_x = player->plan_x;
-	player->dir_x = player->dir_x * cos(-player->rot_speed) - player->dir_y *
-	sin(-player->rot_speed);
-	player->dir_y = old_dir_x * sin(-player->rot_speed) + player->dir_y *
-	cos(-player->rot_speed);
-	player->plan_x = player->plan_x * cos(-player->rot_speed) - player->plan_y *
-	sin(-player->rot_speed);
-	player->plan_y = old_plan_x * sin(-player->rot_speed) + player->plan_y *
-	cos(-player->rot_speed);
+	player->dir_x = player->dir_x * cos(player->rot_speed) - player->dir_y *
+	sin(player->rot_speed);
+	player->dir_y = old_dir_x * sin(player->rot_speed) + player->dir_y *
+	cos(player->rot_speed);
+	player->plan_x = player->plan_x * cos(player->rot_speed) - player->plan_y *
+	sin(player->rot_speed);
+	player->plan_y = old_plan_x * sin(player->rot_speed) + player->plan_y *
+	cos(player->rot_speed);
 }
 
 int		ft_key_events(t_game *game)

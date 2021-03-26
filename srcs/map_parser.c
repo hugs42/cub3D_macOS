@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 19:06:49 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/26 10:11:03 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/26 11:44:52 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,32 @@ int		ft_copy_map(t_data *data, char *line)
 	x++;
 	return (SUCCESS);
 }
+
+/*int		ft_copy_map(t_data *data, char *line)
+{
+	static int	x = 0;
+	int			y;
+	int			y1;
+
+	y = 0;
+	y1 = ft_strlen(line);;
+	data->map[x] = NULL;
+	if (!(data->map[x] = (char*)malloc(sizeof(char) * data->max_len + 1)))
+		return (ERROR);
+	while (line[y1] >= line[0])
+	{
+		if (line[y1] == ' ')
+			while (line[y1] == ' ')
+				y1--;
+		data->map[x][y] = line[y1];
+		y++;
+		y1--;
+	}
+	data->map[x][y] = '\0';
+	x++;
+	return (SUCCESS);
+}*/
+
 
 int		ft_get_map(t_data *data, char *line)
 {
@@ -67,9 +93,6 @@ int		ft_get_map(t_data *data, char *line)
 
 int		ft_parse_map(t_data *data, char *line)
 {
-	int i;
-
-	i = 0;
 	if (ft_get_map(data, line) != SUCCESS)
 		return (ERROR);
 	if (ft_check_map_size(data) != SUCCESS)
@@ -81,10 +104,5 @@ int		ft_parse_map(t_data *data, char *line)
 	if (ft_check_player(data) != SUCCESS)
 		return (ERROR);
 	ft_replace_spaces(data);
-	while (i <= data->nb_lines)
-	{
-		printf(" %s -%d\n", data->map[i], i);
-		i++;
-	}
 	return (SUCCESS);
 }
