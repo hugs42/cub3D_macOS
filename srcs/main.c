@@ -6,13 +6,13 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/25 20:39:55 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/26 10:10:36 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
 
-void	ft_fill_spaces(t_data *data)
+void	ft_replace_spaces(t_data *data)
 {
 	int x;
 	int y;
@@ -185,25 +185,11 @@ int		ft_check_border(t_data *data)
 	return (SUCCESS);
 }
 
-int		ft_check_space(t_data *data, char *line)
-{
-	int i;
-
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if (ft_is_not_wall(line[i]))
-			data->is_space = 1;
-		i++;
-	}
-	return (0);
-}
-
 int		ft_parse_info_map(t_data *data, char *line)
 {
 	if (ft_check_char(data, line) == ERROR)
 		return (ft_error(WRONG_CHAR));
-	ft_check_space(data, line);
+//	ft_check_space(data, line);
 	if (data->len > data->max_len)
 		data->max_len = data->len;
 	return (SUCCESS);

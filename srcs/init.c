@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:33:54 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/23 10:48:01 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/26 10:14:48 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int		ft_init_data_2(t_data *data)
 	data->is_player = 0;
 	data->player_dir = 0;
 	data->first_space_x = 0;
-	data->is_space = 0;
 	data->path = NULL;
 	data->path_no = NULL;
 	data->path_so = NULL;

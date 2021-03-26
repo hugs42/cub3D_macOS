@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/25 20:34:53 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/26 10:10:34 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ typedef struct		s_data
 	unsigned int	floor_col;
 	unsigned int	ceiling_col;
 	int				ceiling;
-	int				is_space;
 	int				r;
 	int				g;
 	int				b;
@@ -269,7 +268,7 @@ int		ft_get_map(t_data *data, char *line);
 int		ft_copy_map(t_data *data, char *line);
 int		ft_check_wall(t_data *data);
 int		ft_check_player(t_data *data);
-void	ft_fill_spaces(t_data *data);
+void	ft_replace_spaces(t_data *data);
 int		ft_check_map_size(t_data *data);
 int		ft_check_border(t_data *data);
 int		ft_check_neighborhood(t_data *data, int x, int y);

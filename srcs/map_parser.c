@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 19:06:49 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/25 19:23:22 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/26 10:11:03 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,23 @@
 
 int		ft_copy_map(t_data *data, char *line)
 {
-	static int x = 0;
-	int y;
+	static int	x = 0;
+	int			y;
+	int			y1;
 
 	y = 0;
+	y1 = 0;
 	data->map[x] = NULL;
 	if (!(data->map[x] = (char*)malloc(sizeof(char) * data->max_len + 1)))
 		return (ERROR);
-	while (line[y] != '\0')
+	while (line[y1] != '\0')
 	{
-		data->map[x][y] = line[y];
+		if (line[y1] == ' ')
+			while (line[y1] == ' ')
+				y1++;
+		data->map[x][y] = line[y1];
 		y++;
+		y1++;
 	}
 	data->map[x][y] = '\0';
 	x++;
@@ -74,7 +80,7 @@ int		ft_parse_map(t_data *data, char *line)
 		return (ERROR);
 	if (ft_check_player(data) != SUCCESS)
 		return (ERROR);
-	ft_fill_spaces(data);
+	ft_replace_spaces(data);
 	while (i <= data->nb_lines)
 	{
 		printf(" %s -%d\n", data->map[i], i);

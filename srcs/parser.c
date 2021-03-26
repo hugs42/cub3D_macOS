@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:26:12 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/25 15:02:29 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/26 10:04:49 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ int		ft_parser(int argc, char **argv, t_data *data)
 		return (ft_error(MISSING_MAP));
 	if (data->config_done == 0)
 		return (ft_error(WRONG_CONFIG));
-	if (data->is_space == 0)
-		return (ft_error(ERR_PLAYER));
 	if (data->config_double != 0)
 		return (ft_error(CONFIG_DOUBLE));
 	close(data->fd);
