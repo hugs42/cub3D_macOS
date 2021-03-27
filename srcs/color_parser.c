@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 11:50:39 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/16 12:07:25 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/27 12:36:21 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,22 @@ int		ft_check_char_color(char *line, int i, int len)
 	return (SUCCESS);
 }
 
+int		ft_check_digit(char *line, int i)
+{
+	int d;
+
+	d = 0;
+	while (line[i] != '\0')
+	{
+		if (ft_isdigit(line[i]))
+			d++;
+		i++;
+	}
+	if (d == 0)
+		return (ERROR);
+	return (SUCCESS);
+}
+
 int		ft_get_nb_color(t_data *data, char *line, int i)
 {
 	char	**tmp;
@@ -50,6 +66,8 @@ int		ft_get_nb_color(t_data *data, char *line, int i)
 		i++;
 	i++;
 	tmp = ft_split(line + i, ',');
+	if (ft_check_digit(line, i) == ERROR)
+		return (ERROR);
 	data->b = ft_atoi(*tmp);
 	if (data->r > 255 || data->g > 255 || data->b > 255 || data->r < 0 ||
 	data->g < 0 || data->b < 0)

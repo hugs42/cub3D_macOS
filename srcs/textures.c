@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 12:46:53 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/27 11:44:34 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/27 12:14:18 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,37 @@ void	ft_copy_addr_content(int *addr, int *tmp_addr, int width, int height)
 	}
 }
 
+int		ft_tex_format(char *path)
+{
+	int		i;
+	int		len;
+	char	*tmp;
+
+	i = 0;
+	len = ft_strlen(path);
+	tmp = ft_substr(path, len - 4, len);
+	if (ft_strncmp(tmp, ".xpm", 4) == 0)
+		i = 1;
+	else if (ft_strncmp(tmp, ".png", 4) == 0)
+		i = 2;
+	return (i);
+}
+
 int		ft_load_texture(char *path, t_mlx *mlx, t_tex *tex)
 {
 	void	*img_tmp_ptr;
 	int		*addr_tmp;
 	int		tmp;
+	int		format;
 
-	if (!(img_tmp_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, path, &tex->width,
-	&tex->height)))
-		if (!(img_tmp_ptr = mlx_png_file_to_image(mlx->mlx_ptr, path, &tex->width,
-		&tex->height)))
+	format = ft_tex_format(path);
+	if (format == 1)
+		if (!(img_tmp_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, path,
+		&tex->width, &tex->height)))
+			return (ERROR);
+	if (format == 2)
+		if (!(img_tmp_ptr = mlx_png_file_to_image(mlx->mlx_ptr, path,
+		&tex->width, &tex->height)))
 			return (ERROR);
 	addr_tmp = (int *)mlx_get_data_addr(img_tmp_ptr, &tmp, &tmp, &tmp);
 	tex->addr = (int *)malloc(sizeof(int) * tex->width * tex->height);
