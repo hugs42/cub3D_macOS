@@ -6,11 +6,11 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/03/25 20:38:18 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/03/27 11:49:22 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = Cub3D
+NAME = cub3D
 
 SRCS = ./srcs/main.c \
 	./srcs/get_next_line.c \

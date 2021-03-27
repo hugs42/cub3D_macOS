@@ -2,7 +2,7 @@ R 1000  700
 
 NO ./textures/wood.xpm
 
-SO         ./textures/eagle.xpm
+SO         ./textures/eagle.png
 
 WE ./textures/greystone.xpm
 

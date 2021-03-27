@@ -6,11 +6,25 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 19:06:49 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/26 11:44:52 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/27 11:33:13 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
+
+int		ft_check_space(char *line, int y1)
+{
+	int y;
+
+	y = y1;
+	while (line[y1] != '\0')
+	{
+		if (line[y1] == '0')
+			
+		y1++;
+	}
+	return (SUCCESS);
+}
 
 int		ft_copy_map(t_data *data, char *line)
 {
@@ -25,9 +39,12 @@ int		ft_copy_map(t_data *data, char *line)
 		return (ERROR);
 	while (line[y1] != '\0')
 	{
-		if (line[y1] == ' ')
-			while (line[y1] == ' ')
-				y1++;
+	if (line[y1] == ' ')
+	{
+//		ft_check_space(line, y1);
+//			while (line[y1] == ' ')
+//				y1++;
+	}
 		data->map[x][y] = line[y1];
 		y++;
 		y1++;
@@ -103,6 +120,7 @@ int		ft_parse_map(t_data *data, char *line)
 		return (ERROR);
 	if (ft_check_player(data) != SUCCESS)
 		return (ERROR);
+//	ft_check_spaces(data);
 	ft_replace_spaces(data);
 	return (SUCCESS);
 }

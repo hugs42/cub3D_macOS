@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 12:46:53 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/25 18:44:16 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/27 11:44:34 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,9 @@ int		ft_load_texture(char *path, t_mlx *mlx, t_tex *tex)
 
 	if (!(img_tmp_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, path, &tex->width,
 	&tex->height)))
-		return (ERROR);
+		if (!(img_tmp_ptr = mlx_png_file_to_image(mlx->mlx_ptr, path, &tex->width,
+		&tex->height)))
+			return (ERROR);
 	addr_tmp = (int *)mlx_get_data_addr(img_tmp_ptr, &tmp, &tmp, &tmp);
 	tex->addr = (int *)malloc(sizeof(int) * tex->width * tex->height);
 	ft_copy_addr_content(tex->addr, addr_tmp, tex->width, tex->height);

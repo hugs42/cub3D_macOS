@@ -1,9 +1,9 @@
 R 1000 600
 NO ./textures/wood.xpm
-SO ./textures/eagle.xpm
+SO ./textures/eagle.png
 
 WE ./textures/redbrick.xpm
-EA ./textures/greystone.xpm
+EA ./textures/greystone.png
 
 S ./textures/pillar.xpm
 
@@ -13,7 +13,7 @@ S ./textures/pillar.xpm
 
 F 21,90,114
 
-C 114,65,22
+C 51,98,122
 
         111
         101

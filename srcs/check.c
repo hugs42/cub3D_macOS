@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 18:18:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/16 11:13:03 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/27 11:35:24 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,7 @@ int		ft_check_xpm_ext(char *str)
 	len = 0;
 	len = ft_strlen(str);
 	tmp = ft_substr(str, len - 4, len);
-	if (ft_strncmp(tmp, ".xpm", 4) != 0)
+	if ((ft_strncmp(tmp, ".xpm", 4) != 0) && (ft_strncmp(tmp, ".png", 4) != 0)) 
 		return (ERROR);
 	free(tmp);
 	return (SUCCESS);
