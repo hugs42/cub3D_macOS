@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:19:26 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/26 11:38:36 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 14:38:08 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,40 +32,6 @@ void	ft_get_player(t_data *data, int x, int y)
 	data->player_pos_x = x;
 	data->player_pos_y = y;
 }
-
-/*void	ft_pos_north_south(t_player *player, t_data *data)
-{
-	player->dir_y = 0;
-	player->plan_x = 0;
-	player->pos_y += 0.5;
-	if (data->player_dir == NORTH)
-	{
-		player->dir_x = -1;
-		player->plan_y = -0.66;
-	}
-	else
-	{
-		player->dir_x = 1;
-		player->plan_y = 0.66;
-	}
-}
-
-void	ft_pos_west_east(t_player *player, t_data *data)
-{
-	player->dir_x = 0;
-	player->plan_y = 0;
-	player->pos_x += 0.5;
-	if (data->player_dir == WEST)
-	{
-		player->dir_y = -1;
-		player->plan_x = 0.66;
-	}
-	else
-	{
-		player->dir_y = 1;
-		player->plan_x = -0.66;
-	}
-}*/
 
 void	ft_pos_north_south(t_player *player, t_data *data)
 {
@@ -100,7 +66,6 @@ void	ft_pos_east_west(t_player *player, t_data *data)
 		player->plan_x = 0.66;
 	}
 }
-
 
 int		ft_setup_player(t_player *player, t_data *data)
 {

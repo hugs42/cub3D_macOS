@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 14:01:28 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 15:01:44 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,16 +131,15 @@ typedef struct		s_data
 	unsigned int	sprite_nb;
 }					t_data;
 
-typedef struct		s_sprite
+typedef struct		s_s
 {
 	double			x;
 	double			y;
-	int				tex;
-}					t_sprite;
+}					t_s;
 
-typedef struct		s_sprites
+typedef struct		s_spr
 {
-	t_sprite			*sprite;
+	t_s					*s;
 	double				sprite_x;
 	double				sprite_y;
 	double				invdet;
@@ -155,7 +154,7 @@ typedef struct		s_sprites
 	int					draw_end_y;
 	double				*distance;
 	int					*order;
-}					t_sprites;
+}					t_spr;
 
 typedef struct		s_player
 {
@@ -241,7 +240,7 @@ typedef struct		s_game
 	t_ray			ray;
 	t_event			*event;
 	t_tex			*tex;
-	t_sprites		*sprites;
+	t_spr			*spr;
 	double			*z_buffer;
 }					t_game;
 
@@ -252,7 +251,7 @@ int		ft_init_player(t_game *game);
 int		ft_init_img(t_game *game);
 int		ft_init_event(t_game *game);
 int		ft_init_mlx(t_game *game);
-int		ft_init_sprites(t_sprites *sprites);
+int		ft_init_sprites(t_spr *spr);
 int		ft_parser(int argc, char **argv, t_data *data);
 int		ft_parse_line(t_data *data, char *line);
 int		ft_parse_info_map(t_data *data, char *line);
@@ -293,6 +292,9 @@ int		ft_release_key(int key, t_game *game);
 int		ft_exit(t_game *game);
 int		ft_key_events(t_game *game);
 int		ft_init_raycasting(t_game *game);
+int		ft_raycasting(t_game *game);
+int		ft_draw_start_end(t_game *game, t_data *data, t_ray *ray);
+int		ft_dda(t_ray *ray, t_data *data);
 int		ft_check_char_color(char *line, int i, int len);
 int		ft_get_nb_color(t_data *data, char *line, int i);
 int		ft_get_color(t_data *data, char *line, int i);
@@ -304,6 +306,7 @@ int		ft_load_textures(char *path, t_mlx *mlx, t_tex *tex);
 int		ft_select_textures(t_game *game);
 int		ft_render_walls(int x, t_game *game, t_data *data, t_tex *tex);
 void	ft_render_colors(int x, t_game *game, t_data *data, t_mlx *mlx);
-int		ft_sprite(t_game *game, t_sprites *sprites, t_sprite *sprite);
-int		ft_draw_sprite(t_game *game, t_sprites *sprites);
+int		ft_sprite(t_game *game, t_spr *spr, t_s *s);
+int		ft_setup_sprites(t_game *game, t_data *data);
+int		ft_draw_sprite(t_game *game, t_spr *spr);
 #endif

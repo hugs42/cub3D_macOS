@@ -6,11 +6,23 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:26:12 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/28 13:07:43 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 14:42:19 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
+
+int		ft_parse_info_map(t_data *data, char *line)
+{
+	static int i = 0;
+
+	i++;
+	if (ft_check_char(data, line) == ERROR)
+		return (ft_error(WRONG_CHAR));
+	if (data->len > data->max_len)
+		data->max_len = data->len;
+	return (SUCCESS);
+}
 
 int		ft_parse_line(t_data *data, char *line)
 {
@@ -78,7 +90,5 @@ int		ft_parser(int argc, char **argv, t_data *data)
 		printf(" %s -%d\n", data->map[i], i);
 		i++;
 	}
-//	printf("\nres %d %d\n", data->screen_w, data->screen_h);
-//	while (1);
 	return (SUCCESS);
 }

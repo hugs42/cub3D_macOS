@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/04/02 13:49:29 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/02 15:00:46 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,11 +25,14 @@ SRCS = ./srcs/main.c \
 	./srcs/key_events.c \
 	./srcs/textures.c \
 	./srcs/init_raycasting.c \
+	./srcs/raycasting.c \
+	./srcs/raycasting_2.c \
 	./srcs/color_parser.c \
 	./srcs/player.c \
 	./srcs/render.c \
 	./srcs/config_parser.c \
 	./srcs/sprites.c \
+	./srcs/sprites_2.c \
 	./srcs/error.c
 
 INC = -I./inc

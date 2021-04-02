@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 19:06:49 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 12:29:35 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 14:39:23 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_copy_map(t_data *data, char *line)
 	y = 0;
 	y1 = 0;
 	data->map[x] = NULL;
-	data->map[x] = ft_calloc(data->max_len + 1,sizeof(char));
+	data->map[x] = ft_calloc(data->max_len + 1, sizeof(char));
 	while (line[y1] != '\0')
 	{
 		if (line[y1] == '2')
