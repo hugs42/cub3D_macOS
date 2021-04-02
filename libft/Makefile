@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/01 12:18:47 by hugsbord          #+#    #+#              #
-#    Updated: 2020/02/17 12:39:42 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/02 12:59:23 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ SRC =	ft_memset.c			\
 		ft_isascii.c		\
 		ft_isprint.c		\
 		ft_toupper.c		\
-		ft_itoa.c			\
 		ft_tolower.c		\
 		ft_strchr.c			\
 		ft_strrchr.c		\
