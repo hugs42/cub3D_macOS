@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 18:18:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/27 11:35:24 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/27 15:11:21 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,11 @@ int		ft_check_char(t_data *data, char *line)
 	int len;
 
 	len = 0;
+	static int i = 0;
+//	printf("*%i*",i);
+	i++;
+//	data->nb_lines = 1;
+	data->nb_lines++;
 	while (line[len] != '\0')
 	{
 		if (line[len] == '0' || line[len] == '1' || line[len] == ' ' ||
@@ -154,12 +159,12 @@ int		ft_check_char(t_data *data, char *line)
 		else
 			return (ERROR);
 	}
-	data->nb_lines++;
+//	data->nb_lines++;
 	data->len = len;
 	return (SUCCESS);
 }
 
-int		ft_check_xpm_ext(char *str)
+int		ft_check_tex_ext(char *str)
 {
 	int		len;
 	char	*tmp;

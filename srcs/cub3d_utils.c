@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 09:49:03 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/12 15:10:22 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/28 13:16:25 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,11 @@ int			ft_get_nb(int i, char *line,t_data *data)
 
 	j = 0;
 	k = i;
+	tmp = NULL;
 	while (ft_isdigit(line[k]))
 		k++;
+	if (data->is_width == 1 && data->screen_h != 0)
+		return (0);
 	if (!(tmp = malloc(sizeof(char) * (k - i + 1))))
 		return (-1);
 	while (ft_isdigit(line[i]))
@@ -58,11 +61,10 @@ int			ft_get_nb(int i, char *line,t_data *data)
 	else
 		 data->screen_h = ft_atoi(tmp);
 	free(tmp);
-
-	if (data->screen_w == 0)// || data->screen_h == 0)
+	if (data->screen_w == 0)
 		return (ft_error(RES_ERR));
 	if (data->res == 1)
-		if (data->screen_h == 0)// || data->screen_h == 0)
+		if (data->screen_h == 0)
 			return (ft_error(RES_ERR));
 	if (data->screen_w > 2560)
 		data->screen_w = 2560;

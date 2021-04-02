@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:33:54 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/26 10:14:48 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/28 19:15:41 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int		ft_init_data_2(t_data *data)
 	data->b = 0;
 	data->floor_col = 0;
 	data->ceiling_col = 0;
+	data->sprite_nb = 0;
 	return (0);
 }
 

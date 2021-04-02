@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 18:46:38 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/25 19:04:01 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/27 12:40:09 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int		ft_get_path(t_data *data, char *line, int i)
 			return (ERROR);
 		i++;
 	}
-	if (ft_check_xpm_ext(data->path) == ERROR)
+	if (ft_check_tex_ext(data->path) == ERROR)
 		return (ft_error(XPM_ERR));
 	return (0);
 }

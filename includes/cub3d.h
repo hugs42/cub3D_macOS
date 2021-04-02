@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/26 10:10:34 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/01 12:04:22 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,16 +144,41 @@ typedef struct		s_data
 	int				r;
 	int				g;
 	int				b;
+	unsigned int	sprite_nb;
 }					t_data;
-/*
+
 typedef struct		s_sprite
 {
-	t_pos			pos_x;
-	t_pos			dir;
-	t_pos			x_dir;
-	t_pos			planel;
+	double			x;
+	double			y;
+	int				tex;
 }					t_sprite;
-*/
+
+typedef struct		s_sprites
+{
+	t_sprite			*sprite;
+	double				sprite_x;
+	double				sprite_y;
+	double				invdet;
+	double				transform_x;
+	double				transform_y;
+	int					sprite_screen_x;
+	int					sprite_height;
+	int					sprite_width;
+	int					draw_start_x;
+	int					draw_start_y;
+	int					draw_end_x;
+	int					draw_end_y;
+	int					v_move_screen;
+	int					pos_x;
+	int					dir;
+	int					x_dir;
+	int					planel;
+	double				*distance;
+	int					*order;
+	int					i;
+}					t_sprites;
+
 typedef struct		s_player
 {
 	char			dir;
@@ -188,7 +213,7 @@ typedef struct		s_ray
 	double			step_y;
 	double			side_dist_x;
 	double			side_dist_y;
-	double			*z_buffer;
+//	double			*z_buffer;
 	int				hit;
 	double			side;
 	double			perp_wall_dist;
@@ -230,15 +255,24 @@ typedef struct		s_tex
 	double			step;
 }					t_tex;
 
+typedef struct		s_pair
+{
+	double	first;
+	int		second;
+}					t_pair;
+
 typedef struct		s_game
 {
 	t_img			*img;
+	t_img			*img2;
 	t_mlx			*mlx;
 	t_data			data;
 	t_player		*player;
 	t_ray			ray;
 	t_event			*event;
 	t_tex			tex[5];
+	t_sprites		*sprites;
+	double			*z_buffer;
 }					t_game;
 
 int		ft_init_game(t_game *game);
@@ -255,7 +289,7 @@ int		ft_parse_config(t_data *data, char *line, int i);
 int		ft_parse_map(t_data *data, char *line);
 int		ft_check_arg(int argc, char **argv);
 int		ft_check_arg_ext(char *str);
-int		ft_check_xpm_ext(char *str);
+int		ft_check_tex_ext(char *str);
 int		ft_check_char(t_data *data, char *line);
 int		ft_check_char_first_line(t_data *data, char *line);
 int		ft_is_player(char c);

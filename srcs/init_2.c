@@ -6,11 +6,26 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:48:42 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/23 10:55:38 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/01 12:09:40 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
+
+int		ft_init_img2(t_game *game)
+{
+	if (!(game->img2 = (t_img *)malloc(sizeof(t_img))))
+		return (ERROR);
+	game->img2->img_ptr = NULL;
+	game->img2->addr = NULL;
+	game->img2->size_l = 0;
+	game->img2->bpp = 0;
+	game->img2->endian = 0;
+	game->img2->width = 0;
+	game->img2->height = 0;
+	return (SUCCESS);
+}
+
 
 int		ft_init_img(t_game *game)
 {
@@ -23,6 +38,7 @@ int		ft_init_img(t_game *game)
 	game->img->endian = 0;
 	game->img->width = 0;
 	game->img->height = 0;
+	ft_init_img2(game);
 	return (SUCCESS);
 }
 

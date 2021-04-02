@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:26:12 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/26 10:54:09 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/28 13:07:43 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int		ft_parse_line(t_data *data, char *line)
 
 	len = 0;
 	i = 0;
-//	printf("start_map= %d \n", data->start_map);
 	len = ft_strlen(line);
 	data->nb_total_lines += 1;
 	ft_check_config_done(data);
@@ -79,5 +78,7 @@ int		ft_parser(int argc, char **argv, t_data *data)
 		printf(" %s -%d\n", data->map[i], i);
 		i++;
 	}
+//	printf("\nres %d %d\n", data->screen_w, data->screen_h);
+//	while (1);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 19:06:49 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/27 11:33:13 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/03/28 19:18:54 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,15 @@ int		ft_copy_map(t_data *data, char *line)
 		return (ERROR);
 	while (line[y1] != '\0')
 	{
-	if (line[y1] == ' ')
-	{
+		if (line[y1] == '2')
+			data->sprite_nb++;
+
+//	if (line[y1] == ' ')
+//	{
 //		ft_check_space(line, y1);
 //			while (line[y1] == ' ')
 //				y1++;
-	}
+//	}
 		data->map[x][y] = line[y1];
 		y++;
 		y1++;
@@ -53,32 +56,6 @@ int		ft_copy_map(t_data *data, char *line)
 	x++;
 	return (SUCCESS);
 }
-
-/*int		ft_copy_map(t_data *data, char *line)
-{
-	static int	x = 0;
-	int			y;
-	int			y1;
-
-	y = 0;
-	y1 = ft_strlen(line);;
-	data->map[x] = NULL;
-	if (!(data->map[x] = (char*)malloc(sizeof(char) * data->max_len + 1)))
-		return (ERROR);
-	while (line[y1] >= line[0])
-	{
-		if (line[y1] == ' ')
-			while (line[y1] == ' ')
-				y1--;
-		data->map[x][y] = line[y1];
-		y++;
-		y1--;
-	}
-	data->map[x][y] = '\0';
-	x++;
-	return (SUCCESS);
-}*/
-
 
 int		ft_get_map(t_data *data, char *line)
 {
