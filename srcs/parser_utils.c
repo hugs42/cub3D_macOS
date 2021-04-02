@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 18:46:38 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/27 12:40:09 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 12:21:40 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,7 @@ int		ft_copy_path(t_data *data, char *line, int i, int j)
 	len = ft_strlen(line);
 	while (ft_isspace(line[len]))
 		len--;
-	if (!(data->path = (char*)malloc(sizeof(char) * len - i + 1)))
-		return (ERROR);
+	data->path = ft_calloc(len - i + 1, sizeof(char));
 	if (line[i] == '.' && line[i + 1] == '/')
 	{
 		while (i < len)

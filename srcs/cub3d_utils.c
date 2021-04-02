@@ -6,11 +6,39 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 09:49:03 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/28 13:16:25 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 12:37:23 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
+
+/*int			ft_atoi(const char *str)
+{
+	int		i;
+	int		sign;
+	int		res;
+
+	i = 0;
+	res = 0;
+	sign = 1;
+	while ((str[i] == 32) || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '+' || str[i] == '-')
+	{
+		if (str[i] == '-')
+			sign = -1;
+		i++;
+	}
+	while (ft_isdigit(str[i]))
+	{
+		res = res * 10 + str[i] - 48;
+		i++;
+	}
+	res *= sign;
+	return (res);
+}*/
+
+
 
 int			ft_skip_spaces2(t_data  *data, int x, int y)
 {
@@ -47,8 +75,7 @@ int			ft_get_nb(int i, char *line,t_data *data)
 		k++;
 	if (data->is_width == 1 && data->screen_h != 0)
 		return (0);
-	if (!(tmp = malloc(sizeof(char) * (k - i + 1))))
-		return (-1);
+	tmp = ft_calloc(k - i + 1, sizeof(char));
 	while (ft_isdigit(line[i]))
 	{
 		tmp[j] = line[i];

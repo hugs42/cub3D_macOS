@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/03/27 18:27:51 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/02 12:04:21 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ INC = -I./inc
 
 FLAGS = -Wall -Wextra -Werror # -fsanitize=address
 
-LIBS=$(LIBS_LINUX)
+LIBS=$(LIBS_MAC)
 MLX_D = ./minilibx-linux
 
 LIBS_MAC =-L ./libft -lft -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit

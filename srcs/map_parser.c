@@ -6,25 +6,11 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 19:06:49 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/28 19:18:54 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 12:29:35 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
-
-int		ft_check_space(char *line, int y1)
-{
-	int y;
-
-	y = y1;
-	while (line[y1] != '\0')
-	{
-		if (line[y1] == '0')
-			
-		y1++;
-	}
-	return (SUCCESS);
-}
 
 int		ft_copy_map(t_data *data, char *line)
 {
@@ -35,19 +21,11 @@ int		ft_copy_map(t_data *data, char *line)
 	y = 0;
 	y1 = 0;
 	data->map[x] = NULL;
-	if (!(data->map[x] = (char*)malloc(sizeof(char) * data->max_len + 1)))
-		return (ERROR);
+	data->map[x] = ft_calloc(data->max_len + 1,sizeof(char));
 	while (line[y1] != '\0')
 	{
 		if (line[y1] == '2')
 			data->sprite_nb++;
-
-//	if (line[y1] == ' ')
-//	{
-//		ft_check_space(line, y1);
-//			while (line[y1] == ' ')
-//				y1++;
-//	}
 		data->map[x][y] = line[y1];
 		y++;
 		y1++;
@@ -66,8 +44,7 @@ int		ft_get_map(t_data *data, char *line)
 	i = 0;
 	ret = 1;
 	fd = open(line, O_RDONLY);
-	if (!(data->map = (char**)malloc(sizeof(char*) * data->nb_lines + 1)))
-		return (ft_error(MALLOC_ERR));
+	data->map = ft_calloc(data->nb_lines + 1, sizeof(char*));
 	data->nb_total_lines = 0;
 	while ((ret = get_next_line(fd, &line)) > 0)
 	{
@@ -77,8 +54,7 @@ int		ft_get_map(t_data *data, char *line)
 			if (ft_check_empty_line(data, line) == ERROR)
 				return (ft_error(EMPTY_LINE));
 			i = ft_skip_spaces(line, i);
-			if (ft_copy_map(data, line) != SUCCESS)
-				return (ft_error(MALLOC_ERR));
+			ft_copy_map(data, line);
 		}
 	}
 	close(fd);
@@ -97,7 +73,6 @@ int		ft_parse_map(t_data *data, char *line)
 		return (ERROR);
 	if (ft_check_player(data) != SUCCESS)
 		return (ERROR);
-//	ft_check_spaces(data);
 	ft_replace_spaces(data);
 	return (SUCCESS);
 }

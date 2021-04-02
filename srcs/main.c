@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 11:07:13 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 12:32:26 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -360,18 +360,14 @@ int		ft_sort_sprites(t_game *game, t_data *data, t_sprites *sprites, t_sprite *s
 	int i;
 
 	i = 0;
-	if (!(sprites->order = (int *)malloc(sizeof(int) * game->data.sprite_nb +1)))
-		return (ERROR);
-	if (!(sprites->distance = (double *)malloc(sizeof(double) * game->data.sprite_nb+1)))
-		return (ERROR);
-
+	sprites->order = ft_calloc(game->data.sprite_nb + 1, sizeof(int));
+	sprites->distance = ft_calloc(game->data.sprite_nb + 1, sizeof(double));
 	while (i <= data->sprite_nb)
 	{
 		sprites->order[i] = i;
 		sprites->distance[i] = ((game->player->pos_x - sprite[i].x) * (game->player->pos_x - sprite[i].x) + (game->player->pos_y - sprite[i].y) * (game->player->pos_y - sprite[i].y));
 		i++;
 	}
-//	sortSprites(sprites->order, sprites->distance, game->data.sprite_nb);
 	ft_order_sprite(game, data, sprites);
 	return (SUCCESS);
 }
@@ -499,10 +495,8 @@ int		ft_setup_sprites(t_game *game, t_data *data)//, t_sprites *sprites)
 	y = 0;
 	i = 0;
 //	printf("OK\n");
-	if (!(game->sprites = (t_sprites *)malloc(sizeof(t_sprites))))
-		return (ERROR);
-	if (!(game->sprites->sprite = (t_sprite *)malloc(sizeof(t_sprite) * game->data.sprite_nb)))
-		return (ERROR);
+	game->sprites = ft_calloc(1, sizeof(t_sprites));
+	game->sprites->sprite = ft_calloc(game->data.sprite_nb, sizeof(t_sprite));
 	ft_init_sprites(game->sprites);
 	while (x <= data->nb_lines)
 	{
@@ -540,10 +534,7 @@ int		ft_raycasting(t_game *game)
 	int x;
 
 	x = 0;
-	if (!(game->z_buffer = (double *)malloc(sizeof(double) * game->data.screen_w)))
-		return (MALLOC_ERR);
-//	if (game->data.sprite_nb > 0)
-//		ft_sprite(game, game->sprites, game->sprites->sprite);
+	game->z_buffer = ft_calloc(game->data.screen_w, sizeof(double));
 	while (x < game->data.screen_w)
 	{
 		ft_init_rays(&game->data, game->player, &game->ray, x);
@@ -558,9 +549,6 @@ int		ft_raycasting(t_game *game)
 	if (game->data.sprite_nb > 0)
 		ft_sprite(game, game->sprites, game->sprites->sprite);
 	mlx_put_image_to_window(game->mlx->mlx_ptr, game->mlx->win, game->img->img_ptr, 0,0);
-
-//mlx_put_image_to_window(game->mlx->mlx_ptr, game->mlx->win, game->img2->img_ptr, game->tex[4].width,game->tex[4].height);
-
 	return (0);
 }
 
@@ -583,12 +571,8 @@ int		ft_game_init(t_game *game, t_data *data)
 	data->screen_h, "cub3D"));
 	game->img->img_ptr = mlx_new_image(game->mlx->mlx_ptr, data->screen_w,
 	data->screen_h);
-	game->img2->img_ptr = mlx_new_image(game->mlx->mlx_ptr, data->screen_w,
-	data->screen_h);
 	game->img->addr = (int*)mlx_get_data_addr(game->img->img_ptr, &game->img->bpp,
 	&game->img->size_l, &game->img->endian);
-	game->img2->addr = (int*)mlx_get_data_addr(game->img2->img_ptr, &game->img2->bpp,
-	&game->img2->size_l, &game->img2->endian);
 	return (SUCCESS);
 }
 
