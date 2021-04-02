@@ -69,7 +69,8 @@ char			*ft_itoa(int n)
 		str[--len] = n_tmp % 10 + 48;
 	if (n < 0)
 		*(str + 0) = '-';
-	len_tmp = n < 0 ? ++len_tmp : len_tmp;
+	if (n < 0)
+		++len_tmp;
 	str[len_tmp] = '\0';
 	return (str);
 }

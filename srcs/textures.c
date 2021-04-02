@@ -93,10 +93,10 @@ int		ft_load_texture(char *path, t_mlx *mlx, t_tex *tex)
 		if (!(img_tmp_ptr = mlx_xpm_file_to_image(mlx->mlx_ptr, path,
 		&tex->width, &tex->height)))
 			return (ERROR);
-	if (format == 2)
-		if (!(img_tmp_ptr = mlx_png_file_to_image(mlx->mlx_ptr, path,
-		&tex->width, &tex->height)))
-			return (ERROR);
+//	if (format == 2)
+//		if (!(img_tmp_ptr = mlx_png_file_to_image(mlx->mlx_ptr, path,
+//		&tex->width, &tex->height)))
+//			return (ERROR);
 	addr_tmp = (int *)mlx_get_data_addr(img_tmp_ptr, &tmp, &tmp, &tmp);
 	tex->addr = (int *)malloc(sizeof(int) * tex->width * tex->height);
 	ft_copy_addr_content(tex->addr, addr_tmp, tex->width, tex->height);

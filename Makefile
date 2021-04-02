@@ -1,4 +1,4 @@
-# **************************************************************************** #
+#**************************************************************************** #
 #                                                                              #
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
@@ -35,11 +35,12 @@ INC = -I./inc
 
 FLAGS = -Wall -Wextra -Werror # -fsanitize=address
 
-LIBS=$(LIBS_MAC)
+LIBS=$(LIBS_LINUX)
+MLX_D = ./minilibx-linux
 
 LIBS_MAC =-L ./libft -lft -I /usr/local/include -L /usr/local/lib -lmlx -framework OpenGL -framework AppKit
 
-LIBS_LINUX =-L ./libft -lft -I /usr/local/include -L /usr/local/lib -lmlx -L/usr/include -lm -lbsd -lX11 -lX$
+LIBS_LINUX =-L ./libft -L $(MLX_D) -lft -lmlx -lm -lbsd -lX11 -lXext
 
 OBJ=$(SRCS:.c=.o)
 

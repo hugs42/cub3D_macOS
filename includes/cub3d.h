@@ -21,12 +21,12 @@
 # define BLOCK_SIZE 64
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
-# define KEY_FORWARD 13
-# define KEY_BACK 1
-# define KEY_LEFT 0
+# define KEY_FORWARD 119 //13
+# define KEY_BACK 115//1
+# define KEY_LEFT 97//0
 # define KEY_RIGHT 2
-# define KEY_LEFT_ROT 123
-# define KEY_RIGHT_ROT 124
+# define KEY_LEFT_ROT 65361//123
+# define KEY_RIGHT_ROT 65363//124
 # define KEY_EXIT 53
 # define FOC 60
 # define ESC 53

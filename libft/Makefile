@@ -30,6 +30,7 @@ SRC =	ft_memset.c			\
 		ft_isascii.c		\
 		ft_isprint.c		\
 		ft_toupper.c		\
+		ft_itoa.c			\
 		ft_tolower.c		\
 		ft_strchr.c			\
 		ft_strrchr.c		\
@@ -44,7 +45,6 @@ SRC =	ft_memset.c			\
 		ft_strjoin.c		\
 		ft_strtrim.c		\
 		ft_split.c			\
-		ft_itoa.c			\
 		ft_strmapi.c		\
 		ft_putchar_fd.c		\
 		ft_putstr_fd.c		\
