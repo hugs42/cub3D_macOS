@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/04/02 12:58:21 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/02 13:49:29 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS = ./srcs/main.c \
 	./srcs/player.c \
 	./srcs/render.c \
 	./srcs/config_parser.c \
+	./srcs/sprites.c \
 	./srcs/error.c
 
 INC = -I./inc
@@ -54,11 +55,11 @@ $(NAME): $(OBJ)
 	clang $(INC) -o $(NAME) $(OBJ) $(LIBS)
 
 clean: $(OBJ)
-	make $@ -C libft
+	@make $@ -C libft
 	rm -f $(OBJ)
 
 fclean: clean
-	make $@ -C libft
+	@make $@ -C libft
 	rm -f $(NAME)
 
 re:

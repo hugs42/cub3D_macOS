@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:33:54 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/28 19:15:41 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 13:11:23 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,12 @@ int		ft_init_data_2(t_data *data)
 	return (0);
 }
 
+int		ft_init_tex(t_game *game)
+{
+	game->tex = ft_calloc(5, sizeof(t_tex));
+	return (0);
+}
+
 int		ft_init_game(t_game *game)
 {
 	ft_init_data_1(&game->data);
@@ -67,5 +73,6 @@ int		ft_init_game(t_game *game)
 	ft_init_mlx(game);
 	ft_init_event(game);
 	ft_init_player(game);
+	ft_init_tex(game);
 	return (SUCCESS);
 }

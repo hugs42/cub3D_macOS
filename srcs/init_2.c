@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:48:42 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 12:35:40 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 13:37:33 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,4 +55,25 @@ int		ft_init_player(t_game *game)
 	game->player->move_speed = 0;
 	game->player->rot_speed = 0;
 	return (0);
+}
+
+int		ft_init_sprites(t_sprites *sprites)
+{
+	sprites->sprite_x = 0;
+	sprites->sprite_y = 0;
+	sprites->invdet = 0;
+	sprites->transform_x = 0;
+	sprites->transform_y = 0;
+	sprites->sprite_screen_x = 0;
+	sprites->sprite_height = 0;
+	sprites->sprite_width = 0;
+	sprites->draw_start_x = 0;
+	sprites->draw_start_y = 0;
+	sprites->draw_end_x = 0;
+	sprites->draw_end_y = 0;
+	sprites->distance = NULL;
+	sprites->order = NULL;
+	sprites->sprite->x = 0;
+	sprites->sprite->y = 0;
+	return (SUCCESS);
 }

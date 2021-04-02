@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 12:32:26 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 14:01:04 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,58 +103,11 @@ int		ft_check_border_bottom(t_data *data)
 	x = data->nb_lines;
 	y = 0;
 	y = ft_skip_spaces2(data, x, y);
-	printf("%d - %s\n", data->nb_lines, data->map[x]);
 	while (data->map[x][y] != '\0')
 	{
 		if (ft_is_not_wall(data->map[x][y]))
-		{
-//			printf("TOPPPPPPPP\n");
 			return (ft_error(MISSING_WALL));
-		}
 		y++;
-	}
-	return (SUCCESS);
-}
-
-int		ft_check_border_left(t_data *data, int x, int y, int len)
-{
-	while (y <= len)
-	{
-		y = ft_skip_spaces2(data, x, y);
-		if (ft_is_not_wall(data->map[x][y]))
-		{
-			if (data->map[x][y - 2] == '1')
-				break;
-			if (data->map[x][y - 1] != '1')
-				return (ft_error(MISSING_WALL));
-			if (data->map[x - 1][y - 1] != '1')
-				return (ft_error(MISSING_WALL));
-			else
-				break;
-		}
-		y++;
-	}
-	return (SUCCESS);
-}
-
-int		ft_check_border_right(t_data *data, int x, int y)
-{
-	while (y >= 0)
-	{
-		while (ft_isspace(data->map[x][y]))
-			y--;
-		if (ft_is_not_wall(data->map[x][y]))
-		{
-			if (data->map[x][y + 2] == '1')
-				break;
-			if (data->map[x][y + 1] != '1')
-				return (ft_error(MISSING_WALL));
-			if (data->map[x - 1][y + 1] != '1')
-				return (ft_error(MISSING_WALL));
-			else
-				break;
-		}
-		y--;
 	}
 	return (SUCCESS);
 }
@@ -172,16 +125,12 @@ int		ft_check_border(t_data *data)
 	{
 		y = 0;
 		len = ft_strlen(data->map[x]);
-//		if ((ft_check_border_left(data, x, y, len) == ERROR))
-//			return (ERROR);
 		x++;
 	}
 	x = 0;
 	while (x <= data->nb_lines)
 	{
 		y = ft_strlen(data->map[x]);
-//		if ((ft_check_border_right(data, x, y) == ERROR))
-//			return (ERROR);
 		x++;
 	}
 	if (ft_check_border_bottom(data) != SUCCESS)
@@ -192,11 +141,10 @@ int		ft_check_border(t_data *data)
 int		ft_parse_info_map(t_data *data, char *line)
 {
 	static int i = 0;
-//	printf("%i*", i);
+
 	i++;
 	if (ft_check_char(data, line) == ERROR)
 		return (ft_error(WRONG_CHAR));
-//	ft_check_space(data, line);
 	if (data->len > data->max_len)
 		data->max_len = data->len;
 	return (SUCCESS);
@@ -225,7 +173,6 @@ int		ft_dda(t_ray *ray, t_data *data)
 	ray->hit = 0;
 	while (ray->hit == 0)
 	{
-		// avance jusqu'a la prochaine case
 		if (ray->side_dist_x < ray->side_dist_y)
 		{
 			ray->side_dist_x += ray->delta_dist_x;
@@ -244,7 +191,6 @@ int		ft_dda(t_ray *ray, t_data *data)
 			else
 				ray->side = 3;
 		}
-		// Check si le rayon a touche un mur
 		if (data->map[ray->map_x][ray->map_y] == '1')
 			ray->hit = 1;
 	}
@@ -253,14 +199,12 @@ int		ft_dda(t_ray *ray, t_data *data)
 
 void	ft_calc_perp_height(t_data *data, t_player *player, t_ray *ray)
 {
-	// Calcul la distance projetee dans la direction de la camera
 	if (ray->side == 0 || ray->side == 1)
 		ray->perp_wall_dist = (ray->map_x - player->pos_x + (1 - ray->step_x)
 		/ 2) / ray->ray_dir_x;
 	else if (ray->side == 2 || ray->side == 3)
 		ray->perp_wall_dist = (ray->map_y - player->pos_y + (1 - ray->step_y)
 		/ 2) / ray->ray_dir_y;
-	// Calcul la hauteur de la ligne a dessiner
 	ray->line_height = (int)(data->screen_h / ray->perp_wall_dist);
 }
 
@@ -304,74 +248,6 @@ void	ft_init_rays(t_data *data, t_player *player, t_ray *ray, int x)
 	ray->y = 0;
 }
 
-void	sort_order(t_pair *orders, int amount)
-{
-	t_pair	tmp;
-
-	for (int i = 0; i < amount; i++)
-	{
-		for (int j = 0; j < amount - 1; j++)
-		{
-			if (orders[j].first > orders[j + 1].first)
-			{
-				tmp.first = orders[j].first;
-				tmp.second = orders[j].second;
-				orders[j].first = orders[j + 1].first;
-				orders[j].second = orders[j + 1].second;
-				orders[j + 1].first = tmp.first;
-				orders[j + 1].second = tmp.second;
-			}
-		}
-	}
-}
-
-int		ft_order_sprite(t_game *game, t_data *data, t_sprites *sprites)
-{
-	int			i;
-	int			j;
-	double		tmp;
-
-	i = 0;
-	j = 0;
-	while (i < data->sprite_nb)
-	{
-		j  = 0;
-		while (j < data->sprite_nb - 1)
-		{
-			if (sprites->distance[j] < sprites->distance[j + 1])
-			{
-				tmp = sprites->distance[j];
-				sprites->distance[j] = sprites->distance[j + 1];
-				sprites->distance[j + 1] = tmp;
-				tmp = sprites->order[j];
-				sprites->order[j] = sprites->order[j + 1];
-				sprites->order[j + 1] = (int)tmp;
-			}
-			j++;
-		}
-		i++;
-
-	}
-	return (SUCCESS);
-}
-
-int		ft_sort_sprites(t_game *game, t_data *data, t_sprites *sprites, t_sprite *sprite)
-{
-	int i;
-
-	i = 0;
-	sprites->order = ft_calloc(game->data.sprite_nb + 1, sizeof(int));
-	sprites->distance = ft_calloc(game->data.sprite_nb + 1, sizeof(double));
-	while (i <= data->sprite_nb)
-	{
-		sprites->order[i] = i;
-		sprites->distance[i] = ((game->player->pos_x - sprite[i].x) * (game->player->pos_x - sprite[i].x) + (game->player->pos_y - sprite[i].y) * (game->player->pos_y - sprite[i].y));
-		i++;
-	}
-	ft_order_sprite(game, data, sprites);
-	return (SUCCESS);
-}
-
 int		ft_draw_sprite(t_game *game, t_sprites *sprites)
 {
 	int		i;
@@ -400,86 +276,14 @@ int		ft_draw_sprite(t_game *game, t_sprites *sprites)
 			{
 				d = (i) * 256 - game->data.screen_h * 128 + sprites->sprite_height * 128;
 				tex_y = ((d * game->tex[4].height) / sprites->sprite_height) / 256;
-//				color = game->tex[4].addr[game->tex[4].width * tex_y + tex_x];
 				color = game->tex[4].addr[game->tex[4].width * tex_y + tex_x];
-//				if (game->tex[4].addr[tex_y * game->img->size_l / 4 +
-//					tex_x] != -16777216)
-//					{
-						if ((color & 0x00FFFFFF) != 0)
-						{
-							game->img->addr[i * game->img->size_l / 4 + stripe] = color;
-//							game->img2->addr[i *game->img2->size_l / 4 - stripe] =  0x00FFFFFF;
-						}
-//				}
+				if ((color & 0x00FFFFFF) != 0)
+					game->img->addr[i * game->img->size_l / 4 + stripe] = color;
 				i++;
 			}
 		}
 		stripe++;
 	}
-	return (SUCCESS);
-}
-int		ft_sprite(t_game *game, t_sprites *sprites, t_sprite *sprite)
-{
-	int i;
-
-	i = 0;
-
-	ft_sort_sprites(game, &game->data, sprites, game->sprites->sprite);
-	while (i < game->data.sprite_nb)
-	{
-		sprites->sprite_x = sprite[sprites->order[i]].x - game->player->pos_x;
-		sprites->sprite_y = sprite[sprites->order[i]].y - game->player->pos_y;
-
-		sprites->invdet = 1.0 / (game->player->plan_x * game->player->dir_y - game->player->dir_x * game->player->plan_y);
-
-		sprites->transform_x = sprites->invdet * (game->player->dir_y * sprites->sprite_x - game->player->dir_x * sprites->sprite_y);
-		sprites->transform_y = sprites->invdet * (-game->player->plan_y * sprites->sprite_x + game->player->plan_x * sprites->sprite_y);
-
-		sprites->sprite_screen_x = (int)(game->data.screen_w / 2) * (1 + sprites->transform_x / sprites->transform_y);
-//		#define uDiv 1
-//		#define vDiv 1
-		#define vMove 0.0
-		sprites->v_move_screen = (int)(vMove / sprites->transform_y);
-		sprites->sprite_height = abs((int)(game->data.screen_h / sprites->transform_y));
-		sprites->draw_start_y = -sprites->sprite_height / 2 + game->data.screen_h / 2 + sprites->v_move_screen;
-		if (sprites->draw_start_y < 0)
-			sprites->draw_start_y = 0;
-		sprites->draw_end_y = sprites->sprite_height / 2 + game->data.screen_h / 2 + sprites->v_move_screen;
-		if (sprites->draw_end_y >= game->data.screen_h)
-			sprites->draw_end_y = game->data.screen_h - 1;
-		sprites->sprite_width = abs((int)(game->data.screen_h / sprites->transform_y));
-		sprites->draw_start_x = -sprites->sprite_width / 2 + sprites->sprite_screen_x;
-		if (sprites->draw_start_x < 0)
-			sprites->draw_start_x = 0;
-		sprites->draw_end_x = sprites->sprite_width / 2 + sprites->sprite_screen_x;
-//		if (sprites->draw_end_x >= game->data.screen_w)
-//			sprites->draw_end_x = game->data.screen_w - 1;
-		ft_draw_sprite(game, sprites);
-		i++;
-	}
-	return (SUCCESS);
-}
-
-int		ft_init_sprites(t_sprites *sprites)
-{
-	sprites->sprite_x = 0;
-	sprites->sprite_y = 0;
-	sprites->invdet = 0;
-	sprites->transform_x = 0;
-	sprites->transform_y = 0;
-	sprites->sprite_screen_x = 0;
-	sprites->sprite_height = 0;
-	sprites->sprite_width = 0;
-	sprites->draw_start_x = 0;
-	sprites->draw_start_y = 0;
-	sprites->draw_end_x = 0;
-	sprites->draw_end_y = 0;
-	sprites->pos_x = 0;
-	sprites->distance = NULL;
-	sprites->order = NULL;
-	sprites->sprite->x = 0;
-	sprites->sprite->y = 0;
-	sprites->v_move_screen = 0;
 	return (SUCCESS);
 }
 
@@ -488,13 +292,10 @@ int		ft_setup_sprites(t_game *game, t_data *data)//, t_sprites *sprites)
 	int			x;
 	int			y;
 	int			i;
-//	t_sprites	*sprites;
-//	t_sprite	*sprite;
 
 	x = 0;
 	y = 0;
 	i = 0;
-//	printf("OK\n");
 	game->sprites = ft_calloc(1, sizeof(t_sprites));
 	game->sprites->sprite = ft_calloc(game->data.sprite_nb, sizeof(t_sprite));
 	ft_init_sprites(game->sprites);
@@ -515,19 +316,6 @@ int		ft_setup_sprites(t_game *game, t_data *data)//, t_sprites *sprites)
 	}
 	return (SUCCESS);
 }
-
-void	ft_swaps(t_game *game)
-{
-	void *tmp;
-
-	tmp = game->img;
-	game->img = game->img2;
-	game->img2 = tmp;
-	tmp = game->img->addr;
-	game->img->addr = game->img2->addr;
-	game->img2->addr = tmp;
-}
-
 
 int		ft_raycasting(t_game *game)
 {

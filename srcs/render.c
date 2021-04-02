@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 09:39:37 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/25 10:29:23 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/02 13:53:59 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		ft_render_walls(int x, t_game *game, t_data *data, t_tex *tex)
 		tex->tex_x = game->tex->width - tex->tex_x - 1;
 	tex->step = 1.0 * game->tex->height / game->ray.line_height;
 	tex->tex_pos = (game->ray.draw_start - data->screen_h / 2 +
-		game->ray.line_height / 2) * tex->step;
+	game->ray.line_height / 2) * tex->step;
 	while (y <= game->ray.draw_end)
 	{
 		tex->tex_y = (int)tex->tex_pos & (tex[tex->tex_num].height - 1);
