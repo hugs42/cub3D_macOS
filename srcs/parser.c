@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:26:12 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 14:42:19 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 15:38:24 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,8 @@ int		ft_parse_info_map(t_data *data, char *line)
 	return (SUCCESS);
 }
 
-int		ft_parse_line(t_data *data, char *line)
+int		ft_parse_line_2(t_data *data, char *line, int i)
 {
-	int		len;
-	int		i;
-	static int		x = 0;
-
-	len = 0;
-	i = 0;
-	len = ft_strlen(line);
-	data->nb_total_lines += 1;
-	ft_check_config_done(data);
-	i = ft_skip_spaces(line, i);
-	if (line[i] == '\n' || line[i] == '\0' || len == 0)
-		return (SUCCESS);
-	else if (ft_parse_config(data, line, i) != SUCCESS)
-		return (ERROR);
 	if (data->start_map == 0 && data->config_done == 1)
 	{
 		if (ft_check_char_first_line(data, line) == ERROR)
@@ -56,6 +42,38 @@ int		ft_parse_line(t_data *data, char *line)
 				return (ERROR);
 		}
 	}
+	return (SUCCESS);
+}
+
+int		ft_parse_line(t_data *data, char *line)
+{
+	int				len;
+	int				i;
+	static int		x = 0;
+
+	len = 0;
+	i = 0;
+	len = ft_strlen(line);
+	data->nb_total_lines += 1;
+	ft_check_config_done(data);
+	i = ft_skip_spaces(line, i);
+	if (line[i] == '\n' || line[i] == '\0' || len == 0)
+		return (SUCCESS);
+	else if (ft_parse_config(data, line, i) != SUCCESS)
+		return (ERROR);
+	if (ft_parse_line_2(data, line, i) != SUCCESS)
+		return (ERROR);
+	return (SUCCESS);
+}
+
+int		ft_parse_map(t_data *data, char *line)
+{
+	ft_get_map(data, line);
+	ft_check_map_size(data);
+	ft_check_border(data);
+	ft_check_wall(data);
+	ft_check_player(data);
+	ft_replace_spaces(data);
 	return (SUCCESS);
 }
 
@@ -82,13 +100,6 @@ int		ft_parser(int argc, char **argv, t_data *data)
 	if (data->config_double != 0)
 		return (ft_error(CONFIG_DOUBLE));
 	close(data->fd);
-	if (ft_parse_map(data, argv[1]) != SUCCESS)
-		return (ERROR);
-	int i = 0;
-	while (i <= data->nb_lines)
-	{
-		printf(" %s -%d\n", data->map[i], i);
-		i++;
-	}
+	ft_parse_map(data, argv[1]);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/04/03 13:52:11 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/03 15:38:06 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,11 +18,12 @@ SRCS = ./srcs/cub3d.c \
 	./srcs/init_2.c \
 	./srcs/parser.c \
 	./srcs/parser_utils.c \
-	./srcs/map_parser.c \
 	./srcs/get_map.c \
-	./srcs/check.c \
+	./srcs/check_arg.c \
+	./srcs/check_config.c \
 	./srcs/check_neighborhood.c \
 	./srcs/check_map.c \
+	./srcs/check_map_2.c \
 	./srcs/cub3d_utils.c \
 	./srcs/key_events.c \
 	./srcs/textures.c \

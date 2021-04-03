@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:19:26 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 14:38:08 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 14:58:16 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ int		ft_setup_player(t_player *player, t_data *data)
 {
 	player->pos_x = data->player_pos_x;
 	player->pos_y = data->player_pos_y;
-	player->move_speed = 0.1;
-	player->rot_speed = 0.05;
+	player->move_speed = 0.05;
+	player->rot_speed = 0.04;
 	if (data->player_dir == WEST || data->player_dir == EAST)
 		ft_pos_east_west(player, data);
 	else if (data->player_dir == NORTH || data->player_dir == SOUTH)

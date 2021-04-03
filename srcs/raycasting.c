@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 14:45:47 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 14:51:26 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 14:51:03 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	ft_init_rays(t_data *data, t_player *player, t_ray *ray, int x)
 	ray->delta_dist_x = fabs(1 / ray->ray_dir_x);
 	ray->delta_dist_y = fabs(1 / ray->ray_dir_y);
 	ray->line_height = 0;
-	ray->y = 0;
 }
 
 int		ft_raycasting(t_game *game)

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:48:42 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/03 12:45:43 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 14:19:44 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,12 +66,14 @@ int		ft_init_sprites(t_spr *spr)
 	spr->transform_x = 0;
 	spr->transform_y = 0;
 	spr->sprite_screen_x = 0;
-	spr->sprite_height = 0;
-	spr->sprite_width = 0;
+	spr->sprite_h = 0;
+	spr->sprite_w = 0;
 	spr->draw_start_x = 0;
 	spr->draw_start_y = 0;
 	spr->draw_end_x = 0;
 	spr->draw_end_y = 0;
+	spr->tex_x = 0;
+	spr->tex_y = 0;
 	spr->distance = NULL;
 	spr->order = NULL;
 	spr->s->x = 0;

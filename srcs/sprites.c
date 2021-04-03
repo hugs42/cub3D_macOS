@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 13:42:35 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/03 13:57:04 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 14:21:20 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,23 +71,23 @@ int		ft_calc_sprite(int i, t_game *game, t_spr *spr, t_s *s)
 	game->player->plan_x * spr->sprite_y);
 	spr->sprite_screen_x = (int)(game->data.screen_w / 2) *
 	(1 + spr->transform_x / spr->transform_y);
-	spr->sprite_height = abs((int)(game->data.screen_h / spr->transform_y));
+	spr->sprite_h = abs((int)(game->data.screen_h / spr->transform_y));
 	return (SUCCESS);
 }
 
 int		ft_calc_sprite_2(t_game *game, t_spr *spr, t_s *s)
 {
-	spr->draw_start_y = -spr->sprite_height / 2 + game->data.screen_h / 2;
-	spr->draw_end_y = spr->sprite_height / 2 + game->data.screen_h / 2;
+	spr->draw_start_y = -spr->sprite_h / 2 + game->data.screen_h / 2;
+	spr->draw_end_y = spr->sprite_h / 2 + game->data.screen_h / 2;
 	if (spr->draw_start_y < 0)
 		spr->draw_start_y = 0;
 	if (spr->draw_end_y >= game->data.screen_h)
 		spr->draw_end_y = game->data.screen_h - 1;
-	spr->sprite_width = abs((int)(game->data.screen_h / spr->transform_y));
-	spr->draw_start_x = -spr->sprite_width / 2 + spr->sprite_screen_x;
+	spr->sprite_w = abs((int)(game->data.screen_h / spr->transform_y));
+	spr->draw_start_x = -spr->sprite_w / 2 + spr->sprite_screen_x;
 	if (spr->draw_start_x < 0)
 		spr->draw_start_x = 0;
-	spr->draw_end_x = spr->sprite_width / 2 + spr->sprite_screen_x;
+	spr->draw_end_x = spr->sprite_w / 2 + spr->sprite_screen_x;
 	return (SUCCESS);
 }
 

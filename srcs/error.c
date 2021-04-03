@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:26:11 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 12:38:07 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 15:33:46 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,8 @@ int		ft_config_error(int error)
 	if (error == WRONG_CONFIG)
 		ft_putstr_fd("One or more elements are missing in map config ...\n", 1);
 	else if (error == CONFIG_DOUBLE)
-		ft_putstr_fd("One or more elements are duplicated in map config ...\n", 1);
+		ft_putstr_fd("One or more elements are duplicated in map config ...\n",
+		1);
 	else if (error == PATH_ERR)
 		ft_putstr_fd("Wrong path file for texture or sprite ...\n", 1);
 	else if (error == TEX_ERR)

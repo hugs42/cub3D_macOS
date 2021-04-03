@@ -6,11 +6,40 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 13:41:07 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/03 13:49:00 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 15:15:04 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/cub3d.h"
+
+int		ft_check_map_size(t_data *data)
+{
+	int count;
+
+	data->x = 0;
+	data->y = 0;
+	count = 0;
+	if (data->nb_lines < 2)
+		return (ft_error(SMALL_MAP));
+	ft_check_first_space(data);
+	data->x = data->first_space_x - 1;
+	data->z = data->first_space_x + 1;
+	while (data->x <= data->z)
+	{
+		data->y = 0;
+		count = 0;
+		while (data->map[data->x][data->y] != '\0')
+		{
+			if (!(ft_isspace(data->map[data->x][data->y])))
+				count++;
+			data->y++;
+		}
+		if (count < 3)
+			return (ft_error(SMALL_MAP));
+		data->x++;
+	}
+	return (SUCCESS);
+}
 
 int		ft_check_player(t_data *data)
 {
@@ -99,7 +128,6 @@ int		ft_check_border(t_data *data)
 		y = ft_strlen(data->map[x]);
 		x++;
 	}
-	if (ft_check_border_bottom(data) != SUCCESS)
-		return (ERROR);
+	ft_check_border_bottom(data);
 	return (SUCCESS);
 }

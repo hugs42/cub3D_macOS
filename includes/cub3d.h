@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/03 13:03:41 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 15:17:49 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,12 +146,14 @@ typedef struct		s_spr
 	double				transform_x;
 	double				transform_y;
 	int					sprite_screen_x;
-	int					sprite_height;
-	int					sprite_width;
+	int					sprite_h;
+	int					sprite_w;
 	int					draw_start_x;
 	int					draw_start_y;
 	int					draw_end_x;
 	int					draw_end_y;
+	int					tex_x;
+	int					tex_y;
 	double				*distance;
 	int					*order;
 }					t_spr;
@@ -171,12 +173,6 @@ typedef struct		s_player
 
 typedef struct		s_ray
 {
-	double			pos_x;
-	double			pos_y;
-	double			dir_x;
-	double			dir_y;
-	double			plan_x;
-	double			plan_y;
 	double			ray_x;
 	double			cam_x;
 	double			ray_dir_x;
@@ -195,11 +191,7 @@ typedef struct		s_ray
 	double			perp_wall_dist;
 	int				draw_start;
 	int				draw_end;
-	int				x;
-	int				y;
 	double			wall_x;
-	double			time;
-	double			old_time;
 }					t_ray;
 
 typedef struct		s_event
@@ -217,7 +209,6 @@ typedef struct		s_mlx
 {
 	void			*mlx_ptr;
 	void			*win;
-	t_img			*sprite;
 }					t_mlx;
 
 typedef struct		s_tex
@@ -263,6 +254,7 @@ int		ft_check_arg_ext(char *str);
 int		ft_check_tex_ext(char *str);
 int		ft_check_char(t_data *data, char *line);
 int		ft_check_char_first_line(t_data *data, char *line);
+int		ft_check_first_space(t_data *data);
 int		ft_is_player(char c);
 void	ft_get_player(t_data *data, int x, int y);
 int		ft_get_res(t_data *data, char *line);
