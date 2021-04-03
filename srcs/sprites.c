@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 13:42:35 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 14:33:13 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 13:57:04 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,9 @@ int		ft_order_sprite(t_game *game, t_data *data, t_spr *spr)
 	double		tmp;
 
 	i = 0;
-	j = 0;
 	while (i < data->sprite_nb)
 	{
-		j  = 0;
+		j = 0;
 		while (j < data->sprite_nb - 1)
 		{
 			if (spr->distance[j] < spr->distance[j + 1])
@@ -37,7 +36,6 @@ int		ft_order_sprite(t_game *game, t_data *data, t_spr *spr)
 			j++;
 		}
 		i++;
-
 	}
 	return (SUCCESS);
 }
@@ -92,7 +90,6 @@ int		ft_calc_sprite_2(t_game *game, t_spr *spr, t_s *s)
 	spr->draw_end_x = spr->sprite_width / 2 + spr->sprite_screen_x;
 	return (SUCCESS);
 }
-
 
 int		ft_sprite(t_game *game, t_spr *spr, t_s *s)
 {

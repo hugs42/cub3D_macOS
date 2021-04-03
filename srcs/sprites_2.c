@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 14:58:24 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 15:02:49 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 13:59:52 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ int		ft_setup_sprites(t_game *game, t_data *data)
 	int			i;
 
 	x = 0;
-	y = 0;
 	i = 0;
 	game->spr = ft_calloc(1, sizeof(t_spr));
 	game->spr->s = ft_calloc(game->data.sprite_nb, sizeof(t_s));

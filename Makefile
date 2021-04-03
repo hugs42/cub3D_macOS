@@ -6,27 +6,31 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/04/02 15:00:46 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/03 13:52:11 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = cub3D
 
-SRCS = ./srcs/main.c \
+SRCS = ./srcs/cub3d.c \
 	./srcs/get_next_line.c \
 	./srcs/init.c \
 	./srcs/init_2.c \
 	./srcs/parser.c \
 	./srcs/parser_utils.c \
 	./srcs/map_parser.c \
-	./srcs/map_parser_2.c \
+	./srcs/get_map.c \
 	./srcs/check.c \
+	./srcs/check_neighborhood.c \
+	./srcs/check_map.c \
 	./srcs/cub3d_utils.c \
 	./srcs/key_events.c \
 	./srcs/textures.c \
 	./srcs/init_raycasting.c \
 	./srcs/raycasting.c \
 	./srcs/raycasting_2.c \
+	./srcs/move.c \
+	./srcs/rot.c \
 	./srcs/color_parser.c \
 	./srcs/player.c \
 	./srcs/render.c \

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:48:42 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 14:17:14 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 12:45:43 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		ft_init_event(t_game *game)
 	game->event->left = 0;
 	game->event->right_rot = 0;
 	game->event->left_rot = 0;
+	game->event->exit = 0;
 	return (0);
 }
 

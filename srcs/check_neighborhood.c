@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_parser_2.c                                     :+:      :+:    :+:   */
+/*   check_neighborhood.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 20:28:37 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/03/25 20:35:50 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 13:58:49 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int		ft_check_neighborhood(t_data *data, int x, int y)
 	if ((data->map[x + 1][y] != '1') &&
 	(!(ft_is_not_wall(data->map[x + 1][y]))))
 		return (ERROR);
-	 ft_check_neighborhood_2(data, x, y);
+	ft_check_neighborhood_2(data, x, y);
 	return (SUCCESS);
 }
-
-

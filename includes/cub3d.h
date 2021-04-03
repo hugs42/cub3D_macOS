@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 15:01:44 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/03 13:03:41 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ typedef struct		s_event
 	int				left;
 	int				right_rot;
 	int				left_rot;
+	int				exit;
 }					t_event;
 
 typedef struct		s_mlx
@@ -291,6 +292,12 @@ int		ft_press_key(int key, t_game *game);
 int		ft_release_key(int key, t_game *game);
 int		ft_exit(t_game *game);
 int		ft_key_events(t_game *game);
+void	ft_rot_right(t_player *player);
+void	ft_rot_left(t_player *player);
+void	ft_move_forward(t_data *data, t_player *player);
+void	ft_move_backward(t_data *data, t_player *player);
+void	ft_move_right(t_data *data, t_player *player);
+void	ft_move_left(t_data *data, t_player *player);
 int		ft_init_raycasting(t_game *game);
 int		ft_raycasting(t_game *game);
 int		ft_draw_start_end(t_game *game, t_data *data, t_ray *ray);
@@ -309,4 +316,5 @@ void	ft_render_colors(int x, t_game *game, t_data *data, t_mlx *mlx);
 int		ft_sprite(t_game *game, t_spr *spr, t_s *s);
 int		ft_setup_sprites(t_game *game, t_data *data);
 int		ft_draw_sprite(t_game *game, t_spr *spr);
+void	ft_crosshair(t_game *game);
 #endif
