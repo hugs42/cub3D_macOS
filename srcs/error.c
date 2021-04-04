@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:26:11 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/03 15:33:46 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/04 13:58:11 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ int		ft_error(int error)
 	ft_arg_error(error);
 	ft_config_error(error);
 	ft_map_error(error);
+	if (error == BMP_ERR)
+		ft_putstr_fd("Error while creating BMP screenshot ...\n", 1);
 	ft_putstr_fd("Leaving program\n", 1);
 	exit(0);
 }

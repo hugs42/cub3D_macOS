@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/03 15:17:49 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/04 14:03:16 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@
 # define RES_ERR -19
 # define COLOR_ERR -20
 # define TEX_ERR -21
+# define BMP_ERR -22
 # define NORTH 33
 # define EAST 34
 # define SOUTH 35
@@ -234,6 +235,7 @@ typedef struct		s_game
 	t_tex			*tex;
 	t_spr			*spr;
 	double			*z_buffer;
+	int				save;
 }					t_game;
 
 int		ft_init_game(t_game *game);
@@ -309,4 +311,5 @@ int		ft_sprite(t_game *game, t_spr *spr, t_s *s);
 int		ft_setup_sprites(t_game *game, t_data *data);
 int		ft_draw_sprite(t_game *game, t_spr *spr);
 void	ft_crosshair(t_game *game);
+int		ft_bmp(t_game *game);
 #endif

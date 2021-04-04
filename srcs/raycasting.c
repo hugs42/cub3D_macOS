@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 14:45:47 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/03 14:51:03 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/04 14:05:36 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,11 @@ int		ft_raycasting(t_game *game)
 	}
 	if (game->data.sprite_nb > 0)
 		ft_sprite(game, game->spr, game->spr->s);
+	if (game->save == 1)
+	{
+		ft_bmp(game);
+		ft_exit(game);
+	}
 	mlx_put_image_to_window(game->mlx->mlx_ptr, game->mlx->win,
 	game->img->img_ptr, 0, 0);
 	return (0);

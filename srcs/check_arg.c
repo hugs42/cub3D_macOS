@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 18:18:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/03 15:32:21 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/04 12:23:09 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ int		ft_check_arg(int argc, char **argv)
 	{
 		if ((ft_strncmp(argv[2], "--save", 6) != 0 || ft_strlen(argv[2]) != 6))
 			return (ft_error(ERR_ARG_SAVE));
+		else
+			return (2);
 	}
 	if (argc > 3)
 		return (ft_error(TOO_MUCH_ARG));

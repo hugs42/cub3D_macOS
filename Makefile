@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/04/03 15:38:06 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/04 14:02:08 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,10 +34,11 @@ SRCS = ./srcs/cub3d.c \
 	./srcs/rot.c \
 	./srcs/color_parser.c \
 	./srcs/player.c \
-	./srcs/render.c \
+	./srcs/render_raycasting.c \
 	./srcs/config_parser.c \
 	./srcs/sprites.c \
 	./srcs/sprites_2.c \
+	./srcs/bmp_save.c \
 	./srcs/error.c
 
 INC = -I./inc

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:33:54 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 13:11:23 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/04 13:05:31 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,8 @@ int		ft_init_game(t_game *game)
 	ft_init_event(game);
 	ft_init_player(game);
 	ft_init_tex(game);
+	game->spr = NULL;
+	game->z_buffer = NULL;
+	game->save = 0;
 	return (SUCCESS);
 }
