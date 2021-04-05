@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 18:18:15 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/04 12:23:09 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/05 18:20:45 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int		ft_check_arg_ext(char *str)
 
 int		ft_check_arg(int argc, char **argv)
 {
-	char	*type;
-
 	if (argc < 2)
 		return (ft_error(TOO_FEW_ARG));
 	if (ft_check_arg_ext(argv[1]) == ERROR)

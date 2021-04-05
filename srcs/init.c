@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/23 10:33:54 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/04 13:05:31 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/05 14:06:45 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,30 @@ int		ft_init_data_2(t_data *data)
 int		ft_init_tex(t_game *game)
 {
 	game->tex = ft_calloc(5, sizeof(t_tex));
+	return (0);
+}
+
+int		ft_init_raycasting(t_game *game)
+{
+	game->ray = ft_calloc(1, sizeof(t_ray));
+	game->ray->cam_x = 0;
+	game->ray->ray_dir_x = 0;
+	game->ray->ray_dir_y = 0;
+	game->ray->map_x = 0;
+	game->ray->map_y = 0;
+	game->ray->line_height = 0;
+	game->ray->delta_dist_x = 0;
+	game->ray->delta_dist_y = 0;
+	game->ray->step_x = 0;
+	game->ray->step_y = 0;
+	game->ray->side_dist_x = 0;
+	game->ray->side_dist_y = 0;
+	game->ray->hit = 0;
+	game->ray->side = 0;
+	game->ray->perp_wall_dist = 0;
+	game->ray->draw_start = 0;
+	game->ray->draw_end = 0;
+	game->ray->wall_x = 0;
 	return (0);
 }
 

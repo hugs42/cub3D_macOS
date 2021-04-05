@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:26:12 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/03 15:38:24 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/05 17:51:20 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int		ft_parse_line(t_data *data, char *line)
 	data->nb_total_lines += 1;
 	ft_check_config_done(data);
 	i = ft_skip_spaces(line, i);
+	printf("%s\n", line);
 	if (line[i] == '\n' || line[i] == '\0' || len == 0)
 		return (SUCCESS);
 	else if (ft_parse_config(data, line, i) != SUCCESS)

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 12:46:53 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/02 14:35:40 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/05 18:17:15 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ int		ft_select_textures(t_game *game)
 {
 	int num;
 
-	if (game->data.map[game->ray.map_x][game->ray.map_y] == '1')
+	if (game->data.map[game->ray->map_x][game->ray->map_y] == '1')
 		num = 0;
-	else if (game->data.map[game->ray.map_x][game->ray.map_y] == '2')
+	else if (game->data.map[game->ray->map_x][game->ray->map_y] == '2')
 		num = 1;
-	if (game->ray.side == 1)
+	if (game->ray->side == 1)
 		num = 1;
-	else if (game->ray.side == 2)
+	else if (game->ray->side == 2)
 		num = 2;
-	else if (game->ray.side == 3)
+	else if (game->ray->side == 3)
 		num = 3;
 	return (num);
 }

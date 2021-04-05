@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/02 17:02:43 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/04 10:48:31 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/04 15:02:25 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,5 @@ int		ft_key_events(t_game *game)
 		ft_rot_left(game->player);
 	if (game->event->exit == 1)
 		ft_exit(game);
-	return (0);
-}
-
-int		ft_exit(t_game *game)
-{
-	exit(0);
 	return (0);
 }

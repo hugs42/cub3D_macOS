@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/04/04 14:02:08 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/05 17:44:48 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ SRCS = ./srcs/cub3d.c \
 	./srcs/cub3d_utils.c \
 	./srcs/key_events.c \
 	./srcs/textures.c \
-	./srcs/init_raycasting.c \
 	./srcs/raycasting.c \
 	./srcs/raycasting_2.c \
 	./srcs/move.c \
@@ -39,11 +38,12 @@ SRCS = ./srcs/cub3d.c \
 	./srcs/sprites.c \
 	./srcs/sprites_2.c \
 	./srcs/bmp_save.c \
-	./srcs/error.c
+	./srcs/error.c \
+	./srcs/exit.c
 
 INC = -I./inc
 
-FLAGS = -Wall -Wextra -Werror # -fsanitize=address
+FLAGS = -Wall -Wextra -Werror #-fsanitize=leak
 
 LIBS=$(LIBS_MAC)
 MLX_D = ./minilibx-linux
@@ -61,7 +61,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	make -C libft
-	clang $(INC) -o $(NAME) $(OBJ) $(LIBS)
+	clang $(FLAGS) $(INC) -o $(NAME) $(OBJ) $(LIBS)
 
 clean: $(OBJ)
 	@make $@ -C libft

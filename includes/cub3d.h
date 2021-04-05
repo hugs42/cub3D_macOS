@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/04 14:03:16 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/05 14:06:39 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,7 @@ typedef struct		s_game
 	t_mlx			*mlx;
 	t_data			data;
 	t_player		*player;
-	t_ray			ray;
+	t_ray			*ray;
 	t_event			*event;
 	t_tex			*tex;
 	t_spr			*spr;
@@ -310,6 +310,5 @@ void	ft_render_colors(int x, t_game *game, t_data *data, t_mlx *mlx);
 int		ft_sprite(t_game *game, t_spr *spr, t_s *s);
 int		ft_setup_sprites(t_game *game, t_data *data);
 int		ft_draw_sprite(t_game *game, t_spr *spr);
-void	ft_crosshair(t_game *game);
 int		ft_bmp(t_game *game);
 #endif

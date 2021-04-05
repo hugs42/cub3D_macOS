@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 14:45:47 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/04 14:05:36 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/05 13:49:31 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,22 +70,20 @@ int		ft_raycasting(t_game *game)
 	game->z_buffer = ft_calloc(game->data.screen_w, sizeof(double));
 	while (x < game->data.screen_w)
 	{
-		ft_init_rays(&game->data, game->player, &game->ray, x);
-		ft_step_side_dist(game->player, &game->ray);
-		ft_dda(&game->ray, &game->data);
-		ft_calc_perp_height(&game->data, game->player, &game->ray);
-		game->z_buffer[x] = game->ray.perp_wall_dist;
-		ft_draw_start_end(game, &game->data, &game->ray);
+		ft_init_rays(&game->data, game->player, game->ray, x);
+		ft_step_side_dist(game->player, game->ray);
+		ft_dda(game->ray, &game->data);
+		ft_calc_perp_height(&game->data, game->player, game->ray);
+		game->z_buffer[x] = game->ray->perp_wall_dist;
+		ft_draw_start_end(game, &game->data, game->ray);
 		ft_render_walls(x, game, &game->data, game->tex);
 		x++;
 	}
 	if (game->data.sprite_nb > 0)
 		ft_sprite(game, game->spr, game->spr->s);
+	free(game->z_buffer);
 	if (game->save == 1)
-	{
 		ft_bmp(game);
-		ft_exit(game);
-	}
 	mlx_put_image_to_window(game->mlx->mlx_ptr, game->mlx->win,
 	game->img->img_ptr, 0, 0);
 	return (0);

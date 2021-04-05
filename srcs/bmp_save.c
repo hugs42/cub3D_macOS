@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 13:16:16 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/04 14:44:07 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/05 13:20:41 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,6 @@ int		ft_bmp(t_game *game)
 	ft_file_header(game, fd);
 	ft_img_header(game, fd);
 	ft_screen_bmp(game, fd);
+	ft_exit(game);
 	return (SUCCESS);
 }
