@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:26:12 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/06 19:39:55 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:22:55 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int		ft_parser(int argc, char **argv, t_data *data)
 		return (ft_error(WRONG_CONFIG));
 	if (data->config_double != 0)
 		return (ft_error(CONFIG_DOUBLE));
-	ft_parse_map(data, argv[1]);
 	close(data->fd);
+	ft_parse_map(data, argv[1]);
 	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 15:00:50 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/07 09:07:37 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:10:43 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_free_sprites(t_game *game)
 	if (game->spr->s)
 	{
 		free(game->spr->s);
-		while (i <= game->data.sprite_nb)
+		while (i < game->data.sprite_nb)
 		{
 //			free(game->spr[i].s);
 			i++;
@@ -97,7 +97,7 @@ int		ft_exit(t_game *game)
 		ft_free_sprites(game);
 	if (game->data.map)
 		ft_free_map(game);
-//	while (1);
+	while (1);
 	exit(0);
 	return (0);
 }

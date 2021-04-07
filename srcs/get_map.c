@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 13:09:54 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/07 08:43:26 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:22:45 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,8 +96,8 @@ int		ft_get_map(t_data *data, char *line)
 				return (ft_error(EMPTY_LINE));
 			i = ft_skip_spaces(line, i);
 			ft_copy_map(data, line);
-			free(line);
 		}
+			free(line);
 	}
 	free(line);
 	close(data->fd);
