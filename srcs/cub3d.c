@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/07 09:27:33 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/07 12:52:38 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ int		main(int argc, char **argv)
 	save = ft_check_arg(argc, argv);
 	ft_init_game(&game);
 	ft_parser(argc, argv, &game.data);
-
 	if (save == 2)
 		game.save = 1;
 	ft_game(&game, &game.data);

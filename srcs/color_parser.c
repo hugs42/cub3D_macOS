@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 11:50:39 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/06 16:14:35 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/07 12:55:09 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,13 @@ int		ft_check_digit(char *line, int i)
 void	ft_free_tmp(char **tmp)
 {
 	int len;
+
 	len = 0;
 	while (tmp[len])
-		free(tmp[len++]);
+	{
+		free(tmp[len]);
+		len++;
+	}
 	free(tmp);
 }
 

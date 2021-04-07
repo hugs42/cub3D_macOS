@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 13:42:35 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/07 10:14:00 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/07 12:51:56 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,7 @@ int		ft_sprite(t_game *game, t_spr *spr, t_s *s)
 		ft_draw_sprite(game, spr);
 		i++;
 	}
+	free(spr->distance);
+	free(spr->order);
 	return (SUCCESS);
 }

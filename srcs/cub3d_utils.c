@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 09:49:03 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/05 17:56:54 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/07 12:51:26 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,7 @@ int			ft_get_nb(int i, char *line, t_data *data)
 		tmp[j++] = line[i++];
 	tmp[j] = '\0';
 	if (data->is_width == 0)
-	{
 		data->screen_w = ft_atoi(tmp);
-	}
 	else
 		data->screen_h = ft_atoi(tmp);
 	free(tmp);

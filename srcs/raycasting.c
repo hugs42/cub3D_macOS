@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 14:45:47 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/06 12:29:22 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/07 12:52:18 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ int		ft_raycasting(t_game *game)
 		game->z_buffer[x] = game->ray->perp_wall_dist;
 		ft_draw_start_end(game, &game->data, game->ray);
 		ft_render_walls(x, game, &game->data, game->tex);
-//		free(game->z_buffer);
 		x++;
 	}
 	if (game->data.sprite_nb > 0)
