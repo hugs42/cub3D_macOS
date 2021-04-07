@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 13:16:16 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/05 13:20:41 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/06 15:30:41 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_file_header(t_game *game, int fd)
 {
 	int size;
 	int zero;
-	int	p_data_offset;
+	int p_data_offset;
 
 	size = 0;
 	zero = 0;

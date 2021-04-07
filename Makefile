@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/04/05 17:44:48 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/06 20:36:16 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ SRCS = ./srcs/cub3d.c \
 
 INC = -I./inc
 
-FLAGS = -Wall -Wextra -Werror #-fsanitize=leak
+FLAGS = -Wall -Wextra -Werror# -fsanitize=address
 
 LIBS=$(LIBS_MAC)
 MLX_D = ./minilibx-linux

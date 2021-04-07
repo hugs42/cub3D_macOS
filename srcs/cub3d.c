@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:36:27 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/05 13:45:30 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/07 08:35:52 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,12 @@ int		main(int argc, char **argv)
 	save = 0;
 	save = ft_check_arg(argc, argv);
 	ft_init_game(&game);
-	if (ft_parser(argc, argv, &game.data) != SUCCESS)
-		return (ERROR);
+	ft_parser(argc, argv, &game.data);
+
 	if (save == 2)
 		game.save = 1;
 	ft_game(&game, &game.data);
+//	mlx_destroy_window(game.mlx->mlx_ptr, game.mlx->win);
+//	while (1);
 	return (0);
 }

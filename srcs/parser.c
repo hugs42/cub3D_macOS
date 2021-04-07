@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:26:12 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/05 21:11:51 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/06 19:39:55 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ int		ft_parse_line(t_data *data, char *line)
 	data->nb_total_lines += 1;
 	ft_check_config_done(data);
 	i = ft_skip_spaces(line, i);
-	printf("%s\n", line);
 	if (line[i] == '\n' || line[i] == '\0' || len == 0)
 		return (SUCCESS);
 	else if (ft_parse_config(data, line, i) != SUCCESS)
@@ -94,13 +93,14 @@ int		ft_parser(int argc, char **argv, t_data *data)
 			return (ERROR);
 		free(line);
 	}
+	free(line);
 	if (data->start_map == 0)
 		return (ft_error(MISSING_MAP));
 	if (data->config_done == 0)
 		return (ft_error(WRONG_CONFIG));
 	if (data->config_double != 0)
 		return (ft_error(CONFIG_DOUBLE));
-	close(data->fd);
 	ft_parse_map(data, argv[1]);
+	close(data->fd);
 	return (SUCCESS);
 }

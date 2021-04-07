@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 11:50:39 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/05 19:57:19 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/06 16:14:35 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,20 +49,29 @@ int		ft_check_digit(char *line, int i)
 	return (SUCCESS);
 }
 
+void	ft_free_tmp(char **tmp)
+{
+	int len;
+	len = 0;
+	while (tmp[len])
+		free(tmp[len++]);
+	free(tmp);
+}
+
 int		ft_get_nb_color(t_data *data, char *line, int i)
 {
 	char	**tmp;
 
 	tmp = ft_split(line + i, ',');
 	data->r = ft_atoi(*tmp);
-	free(*tmp);
+	ft_free_tmp(tmp);
 	tmp = NULL;
 	while (line[i] != ',')
 		i++;
 	i++;
 	tmp = ft_split(line + i, ',');
 	data->g = ft_atoi(*tmp);
-	free(*tmp);
+	ft_free_tmp(tmp);
 	tmp = NULL;
 	while (line[i] != ',')
 		i++;
@@ -71,11 +80,10 @@ int		ft_get_nb_color(t_data *data, char *line, int i)
 	if (ft_check_digit(line, i) == ERROR)
 		return (ERROR);
 	data->b = ft_atoi(*tmp);
-	free(*tmp);
+	ft_free_tmp(tmp);
 	if (data->r > 255 || data->g > 255 || data->b > 255 || data->r < 0 ||
 	data->g < 0 || data->b < 0)
 		return (ERROR);
-	free(tmp);
 	return (SUCCESS);
 }
 
