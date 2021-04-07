@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 15:00:50 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/07 09:10:43 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/07 09:47:18 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_free_sprites(t_game *game)
 	if (game->spr->s)
 	{
 		free(game->spr->s);
-		while (i < game->data.sprite_nb)
+		while (i < 2)//game->data.sprite_nb)
 		{
 //			free(game->spr[i].s);
 			i++;
@@ -59,13 +59,13 @@ void	ft_free_map(t_game *game)
 	i = 0;
 	if (game->data.map)
 	{
-		while (i < game->data.nb_lines)
+		while (i <= game->data.nb_lines)
 		{
 			free(game->data.map[i]);
 			i++;
 		}
+		free(game->data.map);
 	}
-//	free(game->data.path);
 	free(game->data.path_no);
 	free(game->data.path_so);
 	free(game->data.path_ea);
@@ -85,11 +85,12 @@ int		ft_exit(t_game *game)
 		ft_free_textures(game);
 	if (game->mlx)
 	{
-//		printf("%p\n", game->img->img_ptr);
-//		mlx_destroy_image(game->mlx->mlx_ptr, game->img->img_ptr);
-//		mlx_destroy_window(game->mlx->mlx_ptr, game->mlx->win);
-//		free(game->mlx->mlx_ptr);
-//		free(game->mlx);
+		if (game->img->img_ptr)
+			mlx_destroy_image(game->mlx->mlx_ptr, game->img->img_ptr);
+		if (game->mlx->win)
+			mlx_destroy_window(game->mlx->mlx_ptr, game->mlx->win);
+		free(game->mlx->mlx_ptr);
+		free(game->mlx);
 	}
 	if (game->img)
 		free(game->img);
