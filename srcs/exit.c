@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 15:00:50 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/07 09:47:18 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/07 11:00:05 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,9 @@ void	ft_free_textures(t_game *game)
 	int i;
 
 	i = 0;
-//	free(game->tex[0].addr);
-//	mlx_destroy_image(game->mlx->mlx_ptr, game->tex[0].addr);
 	while (i < 5)
 	{
-//		printf("OK");
-//		mlx_destroy_image(game->mlx->mlx_ptr, game->tex[i].addr);
 		free(game->tex[i].addr);
-//		free(game->tex);
 		i++;
 	}
 	free(game->tex);
@@ -85,20 +80,20 @@ int		ft_exit(t_game *game)
 		ft_free_textures(game);
 	if (game->mlx)
 	{
-		if (game->img->img_ptr)
-			mlx_destroy_image(game->mlx->mlx_ptr, game->img->img_ptr);
 		if (game->mlx->win)
 			mlx_destroy_window(game->mlx->mlx_ptr, game->mlx->win);
+		if (game->mlx->mlx_ptr)
+			mlx_destroy_image(game->mlx->mlx_ptr, game->mlx->mlx_ptr);
 		free(game->mlx->mlx_ptr);
 		free(game->mlx);
 	}
 	if (game->img)
 		free(game->img);
-	if (game->data.sprite_nb != 0)
+	if (game->spr)
 		ft_free_sprites(game);
 	if (game->data.map)
 		ft_free_map(game);
-	while (1);
+//	while (1);
 	exit(0);
 	return (0);
 }
