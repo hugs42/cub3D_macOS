@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 09:49:03 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/07 12:51:26 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/09 17:25:18 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,55 +33,20 @@ int			ft_is_not_wall(char c)
 	return (0);
 }
 
-int			ft_get_nb(int i, char *line, t_data *data)
+int			ft_check_wrong_line(t_data *data, char *line, int i)
 {
-	int		j;
-	int		k;
-	char	*tmp;
-
-	j = 0;
-	k = i;
-	while (ft_isdigit(line[k]))
-		k++;
-	if (data->is_width == 1 && data->screen_h != 0)
-		return (0);
-	tmp = ft_calloc(k - i + 1, sizeof(char));
-	while (ft_isdigit(line[i]))
-		tmp[j++] = line[i++];
-	tmp[j] = '\0';
-	if (data->is_width == 0)
-		data->screen_w = ft_atoi(tmp);
-	else
-		data->screen_h = ft_atoi(tmp);
-	free(tmp);
-	if (data->screen_w == 0)
-		return (ft_error(RES_ERR));
-	if (data->res == 1)
-		if (data->screen_h == 0)
-			return (ft_error(RES_ERR));
-	return (j);
-}
-
-int			ft_get_res(t_data *data, char *line)
-{
-	int		i;
-
-	i = 0;
-	while (line[i])
+	if ((line[i] != 'R' && line[i + 1] != ' ') && (line[i] != 'R' &&
+	line[i + 1] != ' ') && (line[i] != 'S' && line[i + 1] != 'O') &&
+	(line[i] != 'N' && line[i + 1] != 'O') && (line[i] != 'E'
+	&& line[i + 1] != 'A') && (line[i] != 'W' && line[i + 1] != 'E') &&
+	(line[i] != 'S' && line[i + 1] != ' ') && (line[i] != 'C' && line[i + 1]
+	!= ' ') && (line[i] != 'F' && line[i + 1] != ' '))
 	{
-		if (ft_isspace(line[i]))
-			i++;
-		if (line[i] == '-')
-			return (ERROR);
-		if (ft_isdigit(line[i]))
+		while (line[i] != '\0')
 		{
-			i += ft_get_nb(i, line, data);
-			data->is_width = 1;
+			if (line[i] != ' ')
+				return (ft_error(WRONG_LINE));
 		}
-		else if (ft_isdigit(line[i]) && data->is_width == 1)
-			i += ft_get_nb(i, line, data);
-		i++;
 	}
-	data->res = 1;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 11:50:39 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/07 12:55:09 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/08 11:28:46 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ int		ft_get_color(t_data *data, char *line, int i)
 	i++;
 	while (ft_isspace(line[i]))
 		i++;
+	if (line[i] == ',')
+		return (ERROR);
 	while (ft_isspace(line[len]))
 		len--;
 	if (ft_check_char_color(line, i, len) == ERROR)

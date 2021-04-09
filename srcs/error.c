@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/24 11:26:11 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/04 13:58:11 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/09 15:54:36 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int		ft_config_error(int error)
 		ft_putstr_fd("Wrong window's resolution ...\n", 1);
 	else if (error == COLOR_ERR)
 		ft_putstr_fd("Wrong color's configuration ...\n", 1);
+	else if (error == WRONG_LINE)
+		ft_putstr_fd("There is a wrong line in config header ...\n", 1);
 	return (0);
 }
 

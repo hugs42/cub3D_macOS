@@ -1,4 +1,4 @@
-
+R 300 850
 NO ./textures/redbrick.xpm
 SO ./textures/eagle.xpm
 
@@ -9,18 +9,6 @@ WE ./textures/wood.xpm
 EA ./textures/greystone.xpm
 
 S ./textures/pillar.xpm
-
-
-
-
-
-
-
-
-
-R  600 850
-
-
 
         1111111111111111111111111
         1000000000110000000000001

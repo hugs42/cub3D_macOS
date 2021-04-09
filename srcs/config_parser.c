@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 15:23:36 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/06 16:06:25 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/09 16:54:35 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int		ft_parse_res_sprite(t_data *data, char *line, int i)
 {
 	if (line[i] == 'R' && line[i + 1] == ' ')
 	{
+		if (data->res > 0)
+			return (ft_error(CONFIG_DOUBLE));
 		if (ft_get_res(data, line) == ERROR)
 			return (ft_error(RES_ERR));
 	}
@@ -90,6 +92,8 @@ int		ft_parse_config(t_data *data, char *line, int i)
 {
 	while (ft_isspace(line[i]))
 		i++;
+	if (data->config_done == 0)
+		ft_check_wrong_line(data, line, i);
 	ft_parse_north_south(data, line, i);
 	ft_parse_east_west(data, line, i);
 	ft_parse_colors(data, line, i);

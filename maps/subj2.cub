@@ -1,11 +1,11 @@
-R  918 468
-NO ./textures/brick.xpm
-SO ./textures/blue.xpm
+R 918 468
+NO ./textures/redbrick.xpm
+SO ./textures/bluestone.xpm
 
 WE ./textures/wood.xpm
-EA ./textures/grey.xpm
+EA ./textures/greystone.xpm
 
-S ./textures/wolf/guard.xpm
+S ./textures/barrel.xpm
 
 
 

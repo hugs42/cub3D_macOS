@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/06 10:29:40 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/09 16:54:23 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,6 @@
 
 # define SUCCESS 1
 # define ERROR -1
-# define PI 3.1415
-# define CASE_X 20
-# define CASE_Y 15
-# define BLOCK_SIZE 64
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
 # define KEY_FORWARD 13//119 //13
@@ -28,12 +24,6 @@
 # define KEY_LEFT_ROT 123//65361//123
 # define KEY_RIGHT_ROT 124//65363//124
 # define KEY_EXIT 53
-# define FOC 60
-# define ESC 53
-# define CAM_RIGHT 124
-# define CAM_LEFT 123
-# define CAM_DOWN 125
-# define CAM_UP 126
 # define EMPTY_LINE -2
 # define WRONG_CHAR -3
 # define MISSING_WALL -4
@@ -55,14 +45,12 @@
 # define COLOR_ERR -20
 # define TEX_ERR -21
 # define BMP_ERR -22
+# define WRONG_LINE -23
 # define NORTH 33
 # define EAST 34
 # define SOUTH 35
 # define WEST 36
-# define BUFFER_SIZE 4096
-
-# define WIN_W 1200
-# define WIN_H 800
+# define BUFFER_SIZE 8024
 
 # include "./../libft/libft.h"
 # include "./get_next_line.h"
@@ -88,6 +76,7 @@ typedef struct		s_data
 	unsigned int	screen_w;
 	unsigned int	screen_h;
 	int				is_width;
+	int				is_height;
 	int				tmp;
 	int				res;
 	int				north;
@@ -130,6 +119,8 @@ typedef struct		s_data
 	int				g;
 	int				b;
 	unsigned int	sprite_nb;
+	int				conf_symbol;
+	int				res_done;
 }					t_data;
 
 typedef struct		s_s
@@ -279,6 +270,7 @@ int		ft_error(int error);
 int		ft_is_not_wall(char c);
 int		ft_get_path(t_data *data, char *line, int i);
 int		ft_check_map_size(t_data *data);
+int		ft_check_wrong_line(t_data *data, char *line, int i);
 int		ft_tex_path(t_data *data, char *line, int i);
 int		ft_skip_spaces(char *str, int i);
 int		ft_skip_spaces2(t_data *data, int x, int y);

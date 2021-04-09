@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/04/06 20:36:16 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/09 17:09:20 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRCS = ./srcs/cub3d.c \
 	./srcs/raycasting_2.c \
 	./srcs/move.c \
 	./srcs/rot.c \
+	./srcs/res_parser.c \
 	./srcs/color_parser.c \
 	./srcs/player.c \
 	./srcs/render_raycasting.c \
