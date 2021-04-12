@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/25 15:26:12 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/09 16:59:12 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/12 15:32:47 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		ft_parse_info_map(t_data *data, char *line)
 
 	i++;
 	if (ft_check_char(data, line) == ERROR)
-		return (ft_error(WRONG_CHAR));
+		ft_error(WRONG_CHAR);
 	if (data->len > data->max_len)
 		data->max_len = data->len;
 	return (SUCCESS);
@@ -84,9 +84,9 @@ int		ft_parser(int argc, char **argv, t_data *data)
 
 	ret = 1;
 	if ((data->fd = open(argv[1], O_DIRECTORY) != -1))
-		return (ft_error(DIRECTORY));
+		ft_error(DIRECTORY);
 	if ((data->fd = open(argv[1], O_RDONLY)) < 0)
-		return (ft_error(WRONG_FILE));
+		ft_error(WRONG_FILE);
 	while ((ret = get_next_line(data->fd, &line)) > 0)
 	{
 		if (ft_parse_line(data, line) != SUCCESS)
@@ -95,11 +95,11 @@ int		ft_parser(int argc, char **argv, t_data *data)
 	}
 	free(line);
 	if (data->config_done == 0)
-		return (ft_error(WRONG_CONFIG));
+		ft_error(WRONG_CONFIG);
 	if (data->start_map == 0)
-		return (ft_error(MISSING_MAP));
+		ft_error(MISSING_MAP);
 	if (data->config_double != 0)
-		return (ft_error(CONFIG_DOUBLE));
+		ft_error(CONFIG_DOUBLE);
 	close(data->fd);
 	ft_parse_map(data, argv[1]);
 	return (SUCCESS);

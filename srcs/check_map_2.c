@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 15:16:35 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/09 16:52:45 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/12 15:36:25 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int		ft_start_map(t_data *data, char *line)
 		if (line[i] == '1' || ft_isspace(line[i]))
 			i++;
 		else if (line[i] == '0')
-			return (ft_error(MISSING_WALL));
+			ft_error(MISSING_WALL);
 		else
 			return (0);
 	}
@@ -86,9 +86,9 @@ int		ft_check_char_first_line(t_data *data, char *line)
 		line[len] == '\t')
 			len++;
 		else if (ft_is_not_wall(line[len]))
-			return (ft_error(MISSING_WALL));
+			ft_error(MISSING_WALL);
 		else
-			return (ft_error(WRONG_CHAR));
+			ft_error(WRONG_CHAR);
 	}
 	return (SUCCESS);
 }

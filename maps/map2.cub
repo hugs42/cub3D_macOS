@@ -1,16 +1,14 @@
-   R       800         900                 
+   SO         ./textures/wood.xpm    
+  R       4333333333333430         6434343400                 
 
-      NO  ./textures/wood.xpm
+      NO  ./textures/eagle.xpm
 
-SO         ./textures/eagle.xpm    
 
 WE          ./textures/greystone.xpm      
       
    EA                ./textures/redbrick.xpm
 
 S     ./textures/pillar.xpm      
-
-S2     ./textures/barrel.xpm   
 
 F 184,    113,   39     
 

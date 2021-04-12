@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/19 09:49:03 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/09 17:25:18 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/12 15:35:54 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			ft_check_wrong_line(t_data *data, char *line, int i)
 		while (line[i] != '\0')
 		{
 			if (line[i] != ' ')
-				return (ft_error(WRONG_LINE));
+				ft_error(WRONG_LINE);
 		}
 	}
 	return (0);

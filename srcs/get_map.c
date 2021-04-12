@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/03 13:09:54 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/09 16:59:06 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/12 15:33:30 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int		ft_get_map(t_data *data, char *line)
 	i = 0;
 	ret = 1;
 	if ((data->fd = open(line, O_RDONLY)) < 0)
-		return (ft_error(ERR_PLAYER));
+		ft_error(ERR_PLAYER);
 	data->map = ft_calloc(data->nb_lines + 1, sizeof(char*));
 	data->nb_total_lines = 0;
 	while ((ret = get_next_line(data->fd, &line)) > 0)
@@ -93,7 +93,7 @@ int		ft_get_map(t_data *data, char *line)
 		if (data->nb_total_lines >= data->start_map)
 		{
 			if (ft_check_empty_line(data, line) == ERROR)
-				return (ft_error(EMPTY_LINE));
+				ft_error(EMPTY_LINE);
 			i = ft_skip_spaces(line, i);
 			ft_copy_map(data, line);
 		}

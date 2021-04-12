@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/02/27 12:46:53 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/06 12:46:39 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/12 15:31:55 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,14 @@ int		ft_setup_textures(t_game *game, t_data *data, t_mlx *mlx)
 	t_img	*tex;
 
 	if (ft_load_texture(data->path_no, game->mlx, &game->tex[0]) == ERROR)
-		return (ft_error(TEX_ERR));
+		ft_error(TEX_ERR);
 	if (ft_load_texture(data->path_so, game->mlx, &game->tex[1]) == ERROR)
-		return (ft_error(TEX_ERR));
+		ft_error(TEX_ERR);
 	if (ft_load_texture(data->path_ea, game->mlx, &game->tex[2]) == ERROR)
-		return (ft_error(TEX_ERR));
+		ft_error(TEX_ERR);
 	if (ft_load_texture(data->path_we, game->mlx, &game->tex[3]) == ERROR)
-		return (ft_error(TEX_ERR));
+		ft_error(TEX_ERR);
 	if (ft_load_texture(data->path_sp, game->mlx, &game->tex[4]) == ERROR)
-		return (ft_error(TEX_ERR));
+		ft_error(TEX_ERR);
 	return (SUCCESS);
 }
