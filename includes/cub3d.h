@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/09 16:54:23 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/12 11:35:49 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@
 # include "./get_next_line.h"
 # include <mlx.h>
 # include <math.h>
-# include <time.h>
 # include <stdio.h>
 # include <fcntl.h>
 
@@ -131,23 +130,23 @@ typedef struct		s_s
 
 typedef struct		s_spr
 {
-	t_s					*s;
-	double				sprite_x;
-	double				sprite_y;
-	double				invdet;
-	double				transform_x;
-	double				transform_y;
-	int					sprite_screen_x;
-	int					sprite_h;
-	int					sprite_w;
-	int					draw_start_x;
-	int					draw_start_y;
-	int					draw_end_x;
-	int					draw_end_y;
-	int					tex_x;
-	int					tex_y;
-	double				*distance;
-	int					*order;
+	t_s				*s;
+	double			sprite_x;
+	double			sprite_y;
+	double			invdet;
+	double			transform_x;
+	double			transform_y;
+	int				sprite_screen_x;
+	int				sprite_h;
+	int				sprite_w;
+	int				draw_start_x;
+	int				draw_start_y;
+	int				draw_end_x;
+	int				draw_end_y;
+	int				tex_x;
+	int				tex_y;
+	double			*distance;
+	int				*order;
 }					t_spr;
 
 typedef struct		s_player
@@ -229,78 +228,80 @@ typedef struct		s_game
 	int				save;
 }					t_game;
 
-int		ft_init_game(t_game *game);
-int		ft_init_data_1(t_data *data);
-int		ft_init_data_2(t_data *data);
-int		ft_init_player(t_game *game);
-int		ft_init_img(t_game *game);
-int		ft_init_event(t_game *game);
-int		ft_init_mlx(t_game *game);
-int		ft_init_sprites(t_spr *spr);
-int		ft_parser(int argc, char **argv, t_data *data);
-int		ft_parse_line(t_data *data, char *line);
-int		ft_parse_info_map(t_data *data, char *line);
-int		ft_parse_config(t_data *data, char *line, int i);
-int		ft_parse_map(t_data *data, char *line);
-int		ft_check_arg(int argc, char **argv);
-int		ft_check_arg_ext(char *str);
-int		ft_check_tex_ext(char *str);
-int		ft_check_char(t_data *data, char *line);
-int		ft_check_char_first_line(t_data *data, char *line);
-int		ft_check_first_space(t_data *data);
-int		ft_is_player(char c);
-void	ft_get_player(t_data *data, int x, int y);
-int		ft_get_res(t_data *data, char *line);
-int		ft_get_nb(int i, char *line, t_data *data);
-int		ft_check_empty_line(t_data *data, char *line);
-int		ft_start_map(t_data *data, char *line);
-int		ft_get_map(t_data *data, char *line);
-int		ft_copy_map(t_data *data, char *line);
-int		ft_check_wall(t_data *data);
-int		ft_check_player(t_data *data);
-void	ft_replace_spaces(t_data *data);
-int		ft_check_map_size(t_data *data);
-int		ft_check_border(t_data *data);
-int		ft_check_neighborhood(t_data *data, int x, int y);
-int		ft_check_neighborhood_2(t_data *data, int x, int y);
-int		ft_check_config_done(t_data *data);
-int		ft_check_config_double(t_data *data);
-int		ft_check_config(t_data *data);
-int		ft_error(int error);
-int		ft_is_not_wall(char c);
-int		ft_get_path(t_data *data, char *line, int i);
-int		ft_check_map_size(t_data *data);
-int		ft_check_wrong_line(t_data *data, char *line, int i);
-int		ft_tex_path(t_data *data, char *line, int i);
-int		ft_skip_spaces(char *str, int i);
-int		ft_skip_spaces2(t_data *data, int x, int y);
-int		ft_press_key(int key, t_game *game);
-int		ft_release_key(int key, t_game *game);
-int		ft_exit(t_game *game);
-int		ft_key_events(t_game *game);
-void	ft_rot_right(t_player *player);
-void	ft_rot_left(t_player *player);
-void	ft_move_forward(t_data *data, t_player *player);
-void	ft_move_backward(t_data *data, t_player *player);
-void	ft_move_right(t_data *data, t_player *player);
-void	ft_move_left(t_data *data, t_player *player);
-int		ft_init_raycasting(t_game *game);
-int		ft_raycasting(t_game *game);
-int		ft_draw_start_end(t_game *game, t_data *data, t_ray *ray);
-int		ft_dda(t_ray *ray, t_data *data);
-int		ft_check_char_color(char *line, int i, int len);
-int		ft_get_nb_color(t_data *data, char *line, int i);
-int		ft_get_color(t_data *data, char *line, int i);
-void	ft_pos_north_south(t_player *player, t_data *data);
-void	ft_pos_west_east(t_player *player, t_data *data);
-int		ft_setup_player(t_player *player, t_data *data);
-int		ft_setup_textures(t_game *game, t_data *data, t_mlx *mlx);
-int		ft_load_textures(char *path, t_mlx *mlx, t_tex *tex);
-int		ft_select_textures(t_game *game);
-int		ft_render_walls(int x, t_game *game, t_data *data, t_tex *tex);
-void	ft_render_colors(int x, t_game *game, t_data *data, t_mlx *mlx);
-int		ft_sprite(t_game *game, t_spr *spr, t_s *s);
-int		ft_setup_sprites(t_game *game, t_data *data);
-int		ft_draw_sprite(t_game *game, t_spr *spr);
-int		ft_bmp(t_game *game);
+int					ft_init_game(t_game *game);
+int					ft_init_data_1(t_data *data);
+int					ft_init_data_2(t_data *data);
+int					ft_init_player(t_game *game);
+int					ft_init_img(t_game *game);
+int					ft_init_event(t_game *game);
+int					ft_init_mlx(t_game *game);
+int					ft_init_sprites(t_spr *spr);
+int					ft_parser(int argc, char **argv, t_data *data);
+int					ft_parse_line(t_data *data, char *line);
+int					ft_parse_info_map(t_data *data, char *line);
+int					ft_parse_config(t_data *data, char *line, int i);
+int					ft_parse_map(t_data *data, char *line);
+int					ft_check_arg(int argc, char **argv);
+int					ft_check_arg_ext(char *str);
+int					ft_check_tex_ext(char *str);
+int					ft_check_char(t_data *data, char *line);
+int					ft_check_char_first_line(t_data *data, char *line);
+int					ft_check_first_space(t_data *data);
+int					ft_is_player(char c);
+void				ft_get_player(t_data *data, int x, int y);
+int					ft_get_res(t_data *data, char *line);
+int					ft_get_nb(int i, char *line, t_data *data);
+int					ft_check_empty_line(t_data *data, char *line);
+int					ft_start_map(t_data *data, char *line);
+int					ft_get_map(t_data *data, char *line);
+int					ft_copy_map(t_data *data, char *line);
+int					ft_check_wall(t_data *data);
+int					ft_check_player(t_data *data);
+void				ft_replace_spaces(t_data *data);
+int					ft_check_map_size(t_data *data);
+int					ft_check_border(t_data *data);
+int					ft_check_neighborhood(t_data *data, int x, int y);
+int					ft_check_neighborhood_2(t_data *data, int x, int y);
+int					ft_check_config_done(t_data *data);
+int					ft_check_config_double(t_data *data);
+int					ft_check_config(t_data *data);
+int					ft_error(int error);
+int					ft_is_not_wall(char c);
+int					ft_get_path(t_data *data, char *line, int i);
+int					ft_check_map_size(t_data *data);
+int					ft_check_wrong_line(t_data *data, char *line, int i);
+int					ft_tex_path(t_data *data, char *line, int i);
+int					ft_skip_spaces(char *str, int i);
+int					ft_skip_spaces2(t_data *data, int x, int y);
+int					ft_press_key(int key, t_game *game);
+int					ft_release_key(int key, t_game *game);
+int					ft_exit(t_game *game);
+int					ft_key_events(t_game *game);
+void				ft_rot_right(t_player *player);
+void				ft_rot_left(t_player *player);
+void				ft_move_forward(t_data *data, t_player *player);
+void				ft_move_backward(t_data *data, t_player *player);
+void				ft_move_right(t_data *data, t_player *player);
+void				ft_move_left(t_data *data, t_player *player);
+int					ft_init_raycasting(t_game *game);
+int					ft_raycasting(t_game *game);
+int					ft_draw_start_end(t_game *game, t_data *data, t_ray *ray);
+int					ft_dda(t_ray *ray, t_data *data);
+int					ft_check_char_color(char *line, int i, int len);
+int					ft_get_nb_color(t_data *data, char *line, int i);
+int					ft_get_color(t_data *data, char *line, int i);
+void				ft_pos_north_south(t_player *player, t_data *data);
+void				ft_pos_west_east(t_player *player, t_data *data);
+int					ft_setup_player(t_player *player, t_data *data);
+int					ft_setup_textures(t_game *game, t_data *data, t_mlx *mlx);
+int					ft_load_textures(char *path, t_mlx *mlx, t_tex *tex);
+int					ft_select_textures(t_game *game);
+int					ft_render_walls(int x, t_game *game, t_data *data,
+t_tex *tex);
+void				ft_render_colors(int x, t_game *game, t_data *data,
+t_mlx *mlx);
+int					ft_sprite(t_game *game, t_spr *spr, t_s *s);
+int					ft_setup_sprites(t_game *game, t_data *data);
+int					ft_draw_sprite(t_game *game, t_spr *spr);
+int					ft_bmp(t_game *game);
 #endif

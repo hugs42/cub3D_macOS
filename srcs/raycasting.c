@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/02 14:45:47 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/07 12:52:18 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/12 11:28:40 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int		ft_step_side_dist(t_player *player, t_ray *ray)
 	return (0);
 }
 
-void	ft_init_rays(t_data *data, t_player *player, t_ray *ray, int x)
+void	ft_rays(t_data *data, t_player *player, t_ray *ray, int x)
 {
 	ray->cam_x = 2 * x / (double)data->screen_w - 1;
 	ray->ray_dir_x = player->dir_x + player->plan_x * ray->cam_x;
@@ -70,7 +70,7 @@ int		ft_raycasting(t_game *game)
 	game->z_buffer = ft_calloc(game->data.screen_w, sizeof(double));
 	while (x < game->data.screen_w)
 	{
-		ft_init_rays(&game->data, game->player, game->ray, x);
+		ft_rays(&game->data, game->player, game->ray, x);
 		ft_step_side_dist(game->player, game->ray);
 		ft_dda(game->ray, &game->data);
 		ft_calc_perp_height(&game->data, game->player, game->ray);

@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/16 11:50:39 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/08 11:28:46 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/12 14:42:12 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,16 @@
 int		ft_check_char_color(char *line, int i, int len)
 {
 	int		count;
+	int		count2;
 
 	count = 0;
+	count2 = 0;
 	while (i < len)
 	{
-		if (ft_isdigit(line[i]) || line[i] == ',' || ft_isspace(line[i]))
+		if (ft_isdigit(line[i]) || line[i] == ',' || line[i] == ' ')
 		{
+			if ((ft_isdigit(line[i])) && (!(ft_isdigit(line[i + 1]))))
+				count2++;
 			if (line[i] == ',')
 				count++;
 			i++;
@@ -28,7 +32,7 @@ int		ft_check_char_color(char *line, int i, int len)
 		else
 			return (ERROR);
 	}
-	if (count != 2)
+	if (count != 2 || count2 != 3)
 		return (ERROR);
 	return (SUCCESS);
 }

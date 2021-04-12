@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 17:05:06 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/09 17:25:00 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/12 14:47:12 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,20 +43,21 @@ int			ft_parse_res(t_data *data, char *line, int i)
 {
 	while (line[i])
 	{
-		if (ft_isspace(line[i]))
-			i++;
+		if (line[i] == ' ')
+			while (line[i] == ' ')
+				i++;
 		if (ft_isdigit(line[i]))
 		{
 			i += ft_get_nb(i, line, data);
 			data->is_width = 1;
 		}
 		else if (!(ft_isdigit(line[i]) && line[i] != ' '))
-			return (ft_error(RES_ERR));
+			ft_error(RES_ERR);
 		if (data->is_width == 1 && data->is_height == 1)
 		{
 			while (line[i] != '\0')
 				if (line[i++] != ' ')
-					return (ft_error(RES_ERR));
+					ft_error(RES_ERR);
 			break ;
 		}
 		i++;
@@ -75,9 +76,9 @@ int			ft_get_res(t_data *data, char *line)
 		i++;
 	ft_parse_res(data, line, i);
 	if (data->screen_w <= 0)
-		return (ft_error(RES_ERR));
+		ft_error(RES_ERR);
 	if (data->screen_h <= 0)
-		return (ft_error(RES_ERR));
+		ft_error(RES_ERR);
 	data->res += 1;
 	return (0);
 }

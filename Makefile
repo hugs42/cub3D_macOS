@@ -6,7 +6,7 @@
 #    By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/01/14 17:54:36 by hugsbord          #+#    #+#              #
-#    Updated: 2021/04/09 17:09:20 by hugsbord         ###   ########.fr        #
+#    Updated: 2021/04/12 15:02:04 by hugsbord         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ SRCS = ./srcs/cub3d.c \
 
 INC = -I./inc
 
-FLAGS = -Wall -Wextra -Werror# -fsanitize=address
+FLAGS = -Wall -Wextra -Werror
 
 LIBS=$(LIBS_MAC)
 MLX_D = ./minilibx-linux
@@ -76,4 +76,6 @@ re:
 	make fclean
 	make all
 
-.PHONY: all, clean, fclean, re
+bonus: $(NAME)
+
+.PHONY: all, clean, fclean, re, bonus

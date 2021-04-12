@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/04 13:16:16 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/06 15:30:41 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/12 14:52:38 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ int		ft_screen_bmp(t_game *game, int fd)
 	int x;
 	int y;
 
-	y = 0;
-	while (y <= game->data.screen_h)
+	y = game->data.screen_h;
+	while (y >= 0)
 	{
 		x = 0;
 		while (x < game->data.screen_w)
@@ -68,7 +68,7 @@ int		ft_screen_bmp(t_game *game, int fd)
 			write(fd, &game->img->addr[y * game->img->size_l / 4 + x], 4);
 			x++;
 		}
-		y++;
+		y--;
 	}
 	return (SUCCESS);
 }
@@ -78,7 +78,7 @@ int		ft_bmp(t_game *game)
 	int		fd;
 
 	if ((fd = open("screenshot.bmp", O_CREAT | O_RDWR, 0644)) == -1)
-		return (ft_error(BMP_ERR));
+		ft_error(BMP_ERR);
 	ft_file_header(game, fd);
 	ft_img_header(game, fd);
 	ft_screen_bmp(game, fd);
