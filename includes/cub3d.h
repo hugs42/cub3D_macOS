@@ -6,7 +6,7 @@
 /*   By: hugsbord <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 17:35:45 by hugsbord          #+#    #+#             */
-/*   Updated: 2021/04/12 11:35:49 by hugsbord         ###   ########.fr       */
+/*   Updated: 2021/04/14 11:49:49 by hugsbord         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@
 # define ERROR -1
 # define KEY_PRESS 2
 # define KEY_RELEASE 3
-# define KEY_FORWARD 13//119 //13
-# define KEY_BACK 1//115//1
-# define KEY_LEFT 0//97//0
+# define KEY_FORWARD 13
+# define KEY_BACK 1
+# define KEY_LEFT 0
 # define KEY_RIGHT 2
-# define KEY_LEFT_ROT 123//65361//123
-# define KEY_RIGHT_ROT 124//65363//124
+# define KEY_LEFT_ROT 123
+# define KEY_RIGHT_ROT 124
 # define KEY_EXIT 53
 # define EMPTY_LINE -2
 # define WRONG_CHAR -3
